@@ -1,0 +1,22 @@
+{
+  "name": "@sing-group/mtc-admin",
+  "version": "0.1.0-alpha1",
+  "private": true,
+  "dependencies": {
+    "admin-on-rest": "^1.2.1",
+    "flow-bin": "^0.51.1",
+    "morgan": "^1.8.2",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-scripts": "1.0.10",
+    "react-sortable-hoc": "^0.6.5",
+    "@sing-group/mtc-games" : "https://dev.sing-group.org/gitlab/mtc/mtc-games.git"
+  },
+  "scripts": {
+    "flow": "flow",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
