@@ -3,7 +3,7 @@ import React from 'react';
 import { jsonServerRestClient, Admin, Resource} from 'admin-on-rest';
 
 import messages from '../../i18n'
-
+import {DEFAULT_LOCALE} from '../../i18n/localesManager'
 import routes from '../../routes'
 import menu from '../Menu'
 import layout from '../Layout'
@@ -20,7 +20,7 @@ import auth from '../../utils/auth';
 console.log("TODOOO", todo)
 
 const App = () => (
-    <Admin appLayout={layout} customRoutes={routes} menu={menu} authClient={auth}  dashboard={Dashboard} restClient={jsonServerRestClient('http://jsonplaceholder.typicode.com')} locale='es' messages={messages}>
+    <Admin appLayout={layout} customRoutes={routes} menu={menu} authClient={auth}  dashboard={Dashboard} restClient={jsonServerRestClient('http://jsonplaceholder.typicode.com')} locale={DEFAULT_LOCALE} messages={messages}>
         <Resource name="posts" list={Sessions} create={SessionCreate} />
         <Resource name="comments"/>
     </Admin>

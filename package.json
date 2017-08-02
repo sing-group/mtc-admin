@@ -9,8 +9,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.10",
-    "react-sortable-hoc": "^0.6.5",
-    "@sing-group/mtc-games" : "https://dev.sing-group.org/gitlab/mtc/mtc-games.git"
+    "react-sortable-hoc": "^0.6.5"
   },
   "scripts": {
     "flow": "flow",

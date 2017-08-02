@@ -1,25 +1,48 @@
-module.exports = {
+import messages from '@sing-group/mtc-games/src/i18n/gl_ES'
+import {parseids} from '../../utils/parseKeys'
+ export default {
     common: {
         configuration : {
             title : "Opcions",
             languageSelector: 'Linguaxe'
         },
-        model : {
-            mindValues : {
-                car1 : "Retentiva GA",
-                car2 : "Mentalidad GA"
-            }
-        }
+         model : {
+            games : Object.keys(messages).reduce( (accum,key) => {
+                accum[parseids(key)] = messages[key]
+                return accum
+            }, {} )
+        },
+        languages : {
+            es : "Español",
+            en : "Inglés",
+            ga : "Galego"
+        },
+        multilanguagePicker : 'Introduce o valor para "%{idioma}"'
     },
     menu: {
         configurationItem : "Opcions"
     },
+    session:{
+        create: {
+            addGame : "Engadir xogo"
+        }
+    },
+    game : {
+        configurer : {
+            toolbar : {
+                options : "Opcións"
+            }
+        },
+        picker : {
+            title : "Escolla un xogo"
+        }
+    },
     resources: {
         posts: {
-            name: 'Sesion |||| Sesions',
+            name: 'Sesión |||| Sesións',
             fields: {
                 title: 'Titulo',
-                body: 'Contido'
+                content: 'Contido'
             },
         }
 
