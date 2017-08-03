@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import {translate} from 'admin-on-rest'
 import PropTypes from 'prop-types';
 import { Card, CardHeader, CardText, CardTitle } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -9,15 +9,15 @@ import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import IconButton from 'material-ui/IconButton';
 
-import { mindItems, buildIcon } from '../../../data/mindInfo'
-
+import { taskTypes, buildIcon } from '../../../data/taskTypes'
+import {parseids} from '../../../utils/parseKeys'
 const styles = {
     avatar: {
         margin: 2,
     },
     wrapper: {
         display: 'flex',
-        flexWrap: 'wrap',
+        flexWrap: 'wrap'
     },
 };
 
@@ -30,15 +30,21 @@ class GameCard extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps){
+        if(nextProps.expanded){
+            this.setState({expanded : nextProps.expanded})
+        }
+    }
+
     render() {
-        const { game } = this.props;
+        const { game , translate} = this.props;
         return (
             <Card expanded={this.state.expanded} onExpandChange={(expanded) => { this.state.expanded = expanded}}>
                 <CardHeader
-                    title={game.title}
-                    subtitle="Otros datos"
+                    title={translate("common.model.games."+parseids(game.id))}
                     actAsExpander={true}
                     showExpandableButton={true}
+                    onExpandChange={(bool) => this.setState({expanded: bool})}
                 />
                 <CardText expandable={true}>
                     CONFIGURACION AQUI
@@ -48,12 +54,13 @@ class GameCard extends Component {
                         <RaisedButton
                         label="Eliminar"
                         secondary={true}
-                        onTouchTap={() => this.props.onDeleteGame(game)}
+                        onTouchTap={() => this.props.onDeleteGame()}
                         />
-                        {Object.keys(game.values).map((key, index) => (
-                            buildIcon(styles.avatar, key, game.values[key])
+                        <div style={{display : "flex"}}>
+                        {game.tasks.map((key, index) => (
+                            buildIcon(styles.avatar, key._id,translate("common.model.games."+parseids(key.id)))
                         ))}
-                        
+                        </div>
                     </div>
                 </CardText>
             </Card>
@@ -66,4 +73,4 @@ GameCard.propTypes = {
     onDeleteGame : PropTypes.func
 };
 
-export default GameCard;
+export default translate(GameCard);

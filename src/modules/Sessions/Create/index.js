@@ -9,7 +9,7 @@ import MultiLanguageTextPicker from '../../../components/MultiLanguage'
 import Badge from 'material-ui/Badge';
 import IconButton from 'material-ui/IconButton';
 
-import { buildIconTooltiped } from '../../../data/mindInfo'
+import { buildIconTooltiped } from '../../../data/taskTypes'
 
 
 import { grey50 as bgColor } from 'material-ui/styles/colors';

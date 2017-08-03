@@ -21,6 +21,9 @@ import {parseids} from '../../utils/parseKeys'
         },
         multilanguagePicker : 'Introduce valor para "%{idioma}"'
     },
+    others:{
+        accept : "Aceptar",
+    },
     menu: {
         configurationItem : "Configuración"
     },
@@ -36,7 +39,8 @@ import {parseids} from '../../utils/parseKeys'
             }
         },
         picker : {
-            title : "Selecciona un juego"
+            title : "Selecciona un juego",
+            addGames : "Añadir juegos"
         }
     },
     resources: {

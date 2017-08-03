@@ -1,33 +1,45 @@
 import React from 'react';
 
-import {parseids} from '../../../utils/parseKeys'
+import { parseids } from '../../../utils/parseKeys'
 
 import { translate } from 'admin-on-rest'
+import PropTypes from 'prop-types';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
+import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 
-import GamesMetadata from '../../../data/games'
+import {games as GamesMetadata} from '../../../data/games'
 
 const styles = {
   radioButton: {
     marginTop: 16,
   },
+  cardSelected: {
+    marginTop: 10,
+    boxShadow: "0px 0px 5px 5px #B3E5FC"
+  },
+  cardUnSelected: {
+    marginTop: 10
+  }
 };
 
 /**
  * Dialog content can be scrollable.
  */
-export default translate(class GamePicker extends React.Component {
+class GamePicker extends React.Component {
 
   constructor(props) {
     super(props)
 
     this.state = {
-      open: props.open
+      gamesSelected: [],
+      open: props.open,
+      actual: undefined
     }
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,9 +53,34 @@ export default translate(class GamePicker extends React.Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false });
-    this.props.onClose();
+    this.setState({ open: false , gamesSelected : [], actual : undefined});
+    this.props.onRequestClose();
   };
+
+  handleCursorInGame(key) {
+    this.setState({ actual: key })
+  }
+
+  handleClickOnGame(key) {
+    const index = this.state.gamesSelected.lastIndexOf(key)
+    let aux = this.state.gamesSelected;
+    if (index < 0) {
+      aux.push(key)
+    } else {
+      aux.splice(index, 1)
+    }
+
+    this.setState({ gamesSelected: aux })
+  }
+
+  onConfirmGames(){
+    this.props.onGamesAdded(this.state.gamesSelected);
+    this.handleClose();
+  }
+
+  getStyle(key) {
+    return this.state.gamesSelected.lastIndexOf(key) < 0 ? styles.cardUnSelected : styles.cardSelected
+  }
 
   render() {
     const { translate } = this.props
@@ -53,9 +90,14 @@ export default translate(class GamePicker extends React.Component {
         label={translate('aor.action.cancel')}
         primary={true}
         onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label={translate('game.picker.addGames')}
+        primary={true}
+        disabled={this.state.gamesSelected.length == 0}
+        onTouchTap={() => this.onConfirmGames()}
       />
     ];
-    console.log("DATOS JUEGOS", GamesMetadata)
     return (
       <Dialog
         title={translate('game.picker.title')}
@@ -68,14 +110,29 @@ export default translate(class GamePicker extends React.Component {
         {Object.keys(GamesMetadata).map((key) => {
           const metadata = GamesMetadata[key].metadata
           return (
-            <div>
-              {translate("common.model.games." + parseids(metadata._nameId))}
-              {translate("common.model.games." + parseids(metadata._descriptionId))}
-            </div>
+            <Card style={this.getStyle(key)}
+              onMouseEnter={() => this.handleCursorInGame(key)}
+              onTouchTap={() => this.handleClickOnGame(key)}
+              zDepth={(this.state.actual == key) ? 3 : 1}>
+              <CardHeader
+                title={translate("common.model.games." + parseids(metadata._nameId))}
+              />
+              <CardText >
+                {translate("common.model.games." + parseids(metadata._descriptionId))}
+              </CardText>
+            </Card>
           )
         })
         }
       </Dialog>
     );
   }
-})
+}
+
+GamePicker.PropTypes = {
+    onGamesAdded: PropTypes.func.isRequired,
+    onRequestClose : PropTypes.func.isRequired,
+    open : PropTypes.bool.isRequired
+};
+
+export default translate(GamePicker)

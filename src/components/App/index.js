@@ -13,11 +13,8 @@ import Dashboard from '../Dashboard';
 import Sessions from '../../modules/Sessions/List';
 import SessionCreate from '../../modules/Sessions/Create';
 
-import todo from "../../data/games"
-
 import auth from '../../utils/auth';
 
-console.log("TODOOO", todo)
 
 const App = () => (
     <Admin appLayout={layout} customRoutes={routes} menu={menu} authClient={auth}  dashboard={Dashboard} restClient={jsonServerRestClient('http://jsonplaceholder.typicode.com')} locale={DEFAULT_LOCALE} messages={messages}>

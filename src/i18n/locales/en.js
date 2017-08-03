@@ -20,11 +20,12 @@ import {parseids} from '../../utils/parseKeys'
         },
         multilanguagePicker : 'Insert value for "%{idioma}"'
     },
-
+    others:{
+        accept : "Accept",
+    },
     menu: {
         configurationItem : "Configuration"
     },
-
     session:{
         create: {
             addGame : "Add Game"
@@ -37,7 +38,8 @@ import {parseids} from '../../utils/parseKeys'
             }
         },
         picker : {
-            title : "Select a game"
+            title : "Select a game",
+            addGames : "Add games"
         }
     },
     resources: {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
+import { SortableContainer, SortableElement, arrayMove, a } from 'react-sortable-hoc';
 import { Card, CardHeader, CardText, CardTitle } from 'material-ui/Card';
 
 import { translate } from 'admin-on-rest'
@@ -13,9 +13,10 @@ import GameCard from './GameCard'
 import MultiLanguageTextPicker from '../../../components/MultiLanguage'
 import Badge from 'material-ui/Badge';
 import IconButton from 'material-ui/IconButton';
+import {parseids} from '../../../utils/parseKeys'
 
-import { buildIconTooltiped } from '../../../data/mindInfo'
-
+import { buildIconTooltiped } from '../../../data/taskTypes'
+import { gameBuilder } from '../../../data/games'
 
 import { grey50 as bgColor } from 'material-ui/styles/colors';
 
@@ -35,14 +36,14 @@ const styles = {
     }
 };
 
-const SortableItem = SortableElement(({ value }) =>
-    <GameCard game={value} />
+const SortableItem = SortableElement(({ value , onDeleteGame}) =>
+    <GameCard game={value} onDeleteGame={() => onDeleteGame()} />
 );
 
-const Container = SortableContainer(({ games }) =>
+const Container = SortableContainer(({ games, onDeleteGame }) =>
     <div>
-        {games.map((game, index) => (
-            <SortableItem key={game.title} index={index} value={game} />
+        {games.map((game, index) => game && (
+            <SortableItem key={game.sortableKey} index={index} value={game} onDeleteGame={() => onDeleteGame(index)}/>
         ))}
     </div>
 );
@@ -66,14 +67,23 @@ export default translate(SortableContainer(class extends Component {
         });
     };
 
-    onGameRemove = (game) => {
+    onGameRemove = (index) => {
+        const games = this.state.games;
+        games.splice(index, 1);
 
+        this.setState({games : games})
     }
-    onGameAdded = (game) => {
 
+    onGamesAdded(games : string[]){
+        this.setState({
+            games : [
+                ...this.state.games,
+                ...games.map((key) => gameBuilder(key,{sortableKey : Math.random()}))
+            ]
+        })
     }
+
     render() {
-        const { games } = this.state
         const { translate } = this.props
         return (
             <div style={{ backgroundColor: "#bfbfbf", display: 'flex', flexDirection: 'column' }}>
@@ -82,13 +92,13 @@ export default translate(SortableContainer(class extends Component {
                         <CardHeader title={translate("game.configurer.toolbar.options")} />
                     </ToolbarGroup>
                     <ToolbarGroup >
-                        {generateSummarySession(games, translate)}
+                        {generateSummarySession(this.state.games, translate)}
                         <FontIcon className="material-icons" >sort</FontIcon>
                     </ToolbarGroup>
                 </Toolbar>
-                <Container games={this.state.games} onSortEnd={this.onSortEnd} />
+                <Container games={this.state.games} onSortEnd={this.onSortEnd} onDeleteGame={(index) => this.onGameRemove(index)} />
                 <RaisedButton style={{ margin: 5 }} label={translate("session.create.addGame")} onTouchTap={() => this.setState({ open: true })} />
-                <GamePicker open={this.state.open} onClose={() => this.setState({ open: false })} />
+                <GamePicker open={this.state.open} onRequestClose={() => this.setState({ open: false })} onGamesAdded={(games) => this.onGamesAdded(games)}/>
             </div>
         );
     }
@@ -96,16 +106,19 @@ export default translate(SortableContainer(class extends Component {
 
 
 function generateSummarySession(games = [], translate) {
-    const mindInfo = {}
+    console.log("GENERAR RESUMEN",games)
+    const taskInfo = {}
 
     games.forEach((game) => {
-        Object.keys(game.values).forEach((mindElement) => {
-            if (!mindInfo[mindElement]) { mindInfo[mindElement] = 0 }
-            mindInfo[mindElement] += game.values[mindElement]
+        console.log("GAME", game)
+        if (!game) return
+        game.tasks.forEach((taskElement) => {
+            if (!taskInfo[taskElement.id]) { taskInfo[taskElement.id] = 0 }
+            taskInfo[taskElement.id] += 1//game.tasks[taskElement._id]
         })
     });
-    return Object.keys(mindInfo).map((mindElement) => (
-        buildIconTooltiped(styles.avatar, mindElement, mindInfo[mindElement], translate("common.model.mindValues." + mindElement))
+    return Object.keys(taskInfo).map((taskElement) => (
+        buildIconTooltiped(styles.avatar, taskElement, taskInfo[taskElement], translate("common.model.games."+parseids(taskElement)))
     ))
 }
 
