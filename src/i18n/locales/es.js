@@ -44,11 +44,41 @@ import {parseids} from '../../utils/parseKeys'
         }
     },
     resources: {
-        posts: {
+        sessions: {
             name: 'Sesión |||| Sesiones',
             fields: {
                 title: 'Titulo',
                 content: 'Contenido'
+            },
+        },
+        centers: {
+            name: 'Centro |||| Centros',
+            fields: {
+                id : 'Identificador',
+                name: 'Nombre',
+                description: 'Descripción',
+                director_id: 'Director del centro'
+            },
+        },
+        therapists: {
+            name: 'Terapeuta |||| Terapeutas',
+            fields: {
+                id : 'Identificador',
+                name: 'Nombre',
+            },
+        },
+        patients: {
+            name: 'Paciente |||| Pacientes',
+            fields: {
+                id : 'Identificador',
+                name: 'Nombre',
+            },
+        },
+        directors: {
+            name: 'Director |||| Directores',
+            fields: {
+                id : 'Identificador',
+                name: 'Nombre',
             },
         }
 

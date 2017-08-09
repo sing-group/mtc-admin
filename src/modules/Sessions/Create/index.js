@@ -44,13 +44,13 @@ export default translate(class extends Component {
         return (
             <div>
                 <Card>
-                    <CardTitle title={translate("aor.page.create",{name : translate("resources.posts.name",{smart_count : 1})})} />
+                    <CardTitle title={translate("aor.page.create",{name : translate("resources.sessions.name",{smart_count : 1})})} />
                     <CardText>
                         <MultiLanguageTextPicker
-                            translateRoute="resources.posts.fields.title"
+                            translateRoute="resources.sessions.fields.title"
                             pickerStyle={styles.picker} />
                         <MultiLanguageTextPicker
-                            translateRoute="resources.posts.fields.content"
+                            translateRoute="resources.sessions.fields.content"
                             multiline={true}
                             rows={2}
                             pickerStyle={styles.picker} />

@@ -17,7 +17,7 @@ const SessionsGrid =({ ids, data, basePath, translate, locale }) => (
         {!console.log("RENDERIZANDO GRID", locale) && ids.map(id =>
             <Card key={id} style={sessionStyle} className='sessionCard'>
                 <CardHeader>
-                    {translate("resources.posts.name",{smart_count : 1})} {id}
+                    {translate("resources.sessions.name",{smart_count : 1})} {id}
                 </CardHeader>
                 <CardText>
                     <TextField record={data[id]} source="body" />

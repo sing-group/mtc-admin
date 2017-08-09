@@ -42,11 +42,42 @@ import {parseids} from '../../utils/parseKeys'
         }
     },
     resources: {
-        posts: {
+        sessions: {
             name: 'Sesión |||| Sesións',
             fields: {
+                id : 'Identificador',
                 title: 'Titulo',
                 content: 'Contido'
+            },
+        },
+        centers: {
+            name: 'Centro |||| Centros',
+            fields: {
+                id : 'Identificador',
+                name: 'Nome',
+                description: 'Descricion',
+                director_id: 'Director do centro'
+            },
+        },
+        therapists: {
+            name: 'Terapeuta |||| Terapeutas',
+            fields: {
+                id : 'Identificador',
+                name: 'Nome',
+            },
+        },
+        patients: {
+            name: 'Paciente |||| Pacientes',
+            fields: {
+                id : 'Identificador',
+                name: 'Nome',
+            },
+        },
+        directors: {
+            name: 'Director |||| Directores',
+            fields: {
+                id : 'Identificador',
+                name: 'Nome',
             },
         }
 
@@ -89,12 +120,12 @@ import {parseids} from '../../utils/parseKeys'
             about: 'Acerca de',
         },
         navigation: {
-            no_results: 'No se encontraron resultados',
-            page_out_of_boundaries: 'La página %{page} está fuera del limite',
-            page_out_from_end: 'No se puede ir después de la última página',
-            page_out_from_begin: 'No se puede ir antes de la página 1',
+            no_results: 'Non se atoparon resultados',
+            page_out_of_boundaries: 'A páxina %{page} está fora do limite',
+            page_out_from_end: 'Non se pode ir despois da última páxina',
+            page_out_from_begin: 'Non se pode ir antes da primera páxina',
             page_range_info: '%{offsetBegin}-%{offsetEnd} de %{total}',
-            next: 'Siguiente',
+            next: 'Seguinte',
             prev: 'Anterior',
         },
         auth: {
