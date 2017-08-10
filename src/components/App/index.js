@@ -33,6 +33,9 @@ import TherapistDelete from '../../modules/Therapists/Delete';
 
 import Patients from '../../modules/Patients/List';
 import PatientCreate from '../../modules/Patients/Create';
+import PatientShow from '../../modules/Patients/Show';
+import PatientEdit from '../../modules/Patients/Edit';
+import PatientDelete from '../../modules/Patients/Delete';
 
 import auth from '../../utils/auth';
 
@@ -79,7 +82,10 @@ const App = () => (
             name="patients"
             permissions="T"
             list={Patients}
-            create={PatientCreate} />
+            create={PatientCreate}
+            show={PatientShow}
+            edit={PatientEdit}
+            remove={PatientDelete} />
     </Admin>
 );
 

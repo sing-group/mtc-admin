@@ -1,12 +1,13 @@
 import React from 'react';
-import { List, Datagrid, TextField } from 'admin-on-rest';
+import { List, Datagrid, TextField, EditButton, ShowButton } from 'admin-on-rest';
 
 export default (props) => (
     <List {...props}>
         <Datagrid>
             <TextField source="id" />
-            <TextField source="title" />
-            <TextField source="body" />
+            <TextField source="name" />
+            <EditButton />
+            <ShowButton />
         </Datagrid>
     </List>
 );
