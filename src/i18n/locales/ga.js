@@ -64,6 +64,7 @@ import {parseids} from '../../utils/parseKeys'
             fields: {
                 id : 'Identificador',
                 name: 'Nome',
+                center_id: 'Centro'
             },
         },
         patients: {

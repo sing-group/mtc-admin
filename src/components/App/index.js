@@ -1,9 +1,9 @@
 // in src/App.js
 import React from 'react';
-import { jsonServerRestClient, Resource} from 'admin-on-rest';
+import { jsonServerRestClient, Resource } from 'admin-on-rest';
 import { Admin } from 'aor-permissions';
 import messages from '../../i18n'
-import {DEFAULT_LOCALE} from '../../i18n/localesManager'
+import { DEFAULT_LOCALE } from '../../i18n/localesManager'
 import routes from '../../routes'
 import menu from '../Menu'
 import layout from '../Layout'
@@ -27,55 +27,58 @@ import DirectorDelete from '../../modules/Directors/Delete';
 
 import Therapists from '../../modules/Therapists/List';
 import TherapistCreate from '../../modules/Therapists/Create';
+import TherapistShow from '../../modules/Therapists/Show';
+import TherapistEdit from '../../modules/Therapists/Edit';
+import TherapistDelete from '../../modules/Therapists/Delete';
 
 import Patients from '../../modules/Patients/List';
 import PatientCreate from '../../modules/Patients/Create';
 
 import auth from '../../utils/auth';
-import {resolveAccess} from '../../utils/permissions'
 
 const App = () => (
-    <Admin appLayout={layout} customRoutes={routes} menu={menu} authClient={auth}  dashboard={Dashboard} restClient={jsonServerRestClient('http://localhost:4000')} locale={DEFAULT_LOCALE} messages={messages}>
-        <Resource 
-            name="centers" 
+    <Admin appLayout={layout} customRoutes={routes} menu={menu} authClient={auth} dashboard={Dashboard} restClient={jsonServerRestClient('http://localhost:4000')} locale={DEFAULT_LOCALE} messages={messages}>
+        <Resource
+            name="directors"
             permissions="GA"
-            resolve={resolveAccess}
-            list={Centers} 
-            listPermissions={["GA","CD"]}
+            list={Directors}
+            listPermissions={["GA", "CD"]}
+            create={DirectorCreate}
+            show={DirectorShow}
+            showPermissions={["GA", "CD"]}
+            edit={DirectorEdit}
+            remove={DirectorDelete} />
+
+        <Resource
+            name="centers"
+            permissions={["GA", "CD"]}
+            list={Centers}
+            listPermissions={["GA", "CD"]}
             create={CenterCreate}
+            createPermissions={["GA"]}
             show={CenterShow}
             edit={CenterEdit}
-            remove={CenterDelete}/>
-
-        <Resource 
-            name="directors" 
-            permissions="GA"
-            resolve={resolveAccess}
-            list={Directors} 
-            create={DirectorCreate} 
-            show={DirectorShow}
-            edit={DirectorEdit}
-            remove={DirectorDelete}/>
-
-        <Resource 
-            name="therapists" 
+            editPermissions={["GA"]}
+            remove={CenterDelete} />
+        <Resource
+            name="therapists"
             permissions="CD"
-            resolve={resolveAccess}
-            list={Therapists} 
-            create={TherapistCreate} />
+            list={Therapists}
+            create={TherapistCreate}  
+            show={TherapistShow}
+            edit={TherapistEdit}
+            remove={TherapistDelete} />
 
-        <Resource 
-            name="sessions" 
+        <Resource
+            name="sessions"
             permissions="T"
-            resolve={resolveAccess}
-            list={Sessions} 
+            list={Sessions}
             create={SessionCreate} />
 
-         <Resource 
-            name="patients" 
+        <Resource
+            name="patients"
             permissions="T"
-            resolve={resolveAccess}
-            list={Patients} 
+            list={Patients}
             create={PatientCreate} />
     </Admin>
 );

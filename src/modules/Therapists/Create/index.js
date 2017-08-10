@@ -1,13 +1,19 @@
 import React from 'react';
-import { Create, Edit, SimpleForm, DisabledInput, TextInput, DateInput, LongTextInput, ReferenceManyField, Datagrid, TextField, DateField, EditButton } from 'admin-on-rest';
+import { Create, Edit, SimpleForm, DisabledInput, TextInput, DateInput, LongTextInput, ReferenceManyField, Datagrid, TextField, DateField, EditButton ,ReferenceInput, SelectInput} from 'admin-on-rest';
+import { required, minLength, maxLength, minValue, maxValue, number, regex, email, choices } from 'admin-on-rest';
 
 
 export default (props) => (
     <Create {...props}>
-        <SimpleForm>
-            <TextInput source="title" />
-            <TextInput source="teaser" options={{ multiLine: true }} />
-            <DateInput label="Publication date" source="published_at" defaultValue={new Date()} />
+        <SimpleForm redirect="list">
+            <TextInput source="name" validate={[required]}/>
+            <ReferenceInput
+                allowEmpty
+                source="center_id"
+                reference="centers"
+                validate={[required]}>
+                <SelectInput optionText="name" validate={[required]}/>
+            </ReferenceInput>
         </SimpleForm>
     </Create>
 );
