@@ -49,7 +49,7 @@ import {parseids} from '../../utils/parseKeys'
                 id : 'Identifier',
                 title: 'Title',
                 content: 'Content'
-            },
+            }
         },
         centers: {
             name: 'Center |||| Centers',
@@ -80,6 +80,9 @@ import {parseids} from '../../utils/parseKeys'
                 id : 'Identifier',
                 name: 'Name',
             },
+            references : {
+                centersList : "Centers"
+            }
         }
 
     },

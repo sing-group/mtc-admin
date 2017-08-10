@@ -4,9 +4,9 @@ import { required, minLength, maxLength, minValue, maxValue, number, regex, emai
 
 
 export default (props) => (
-    <Create {...props}>
-        <SimpleForm redirect="list">
-            <TextInput source="name" validate={[required]}/>
+    <Edit {...props}>
+        <SimpleForm>
+            <TextInput source="name" validate={required} />
         </SimpleForm>
-    </Create>
+    </Edit>
 );

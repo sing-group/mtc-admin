@@ -79,6 +79,9 @@ import {parseids} from '../../utils/parseKeys'
                 id : 'Identificador',
                 name: 'Nome',
             },
+            references : {
+                centersList : "Centros Asociados"
+            }
         }
 
     },
@@ -101,10 +104,10 @@ import {parseids} from '../../utils/parseKeys'
         },
         page: {
             list: 'Listaxe de %{name}',
-            edit: '%{name} #%{id}',
-            show: '%{name} #%{id}',
+            edit: 'Editar %{name}',
+            show: 'Datos %{name}',
             create: 'Engadir %{name}',
-            delete: 'Eliminar %{name} #%{id}',
+            delete: 'Eliminar %{name}',
             dashboard: 'Panel de control'
         },
         input: {

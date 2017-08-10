@@ -15,10 +15,15 @@ import SessionCreate from '../../modules/Sessions/Create';
 
 import Centers from '../../modules/Centers/List';
 import CenterCreate from '../../modules/Centers/Create';
+import CenterShow from '../../modules/Centers/Show';
+import CenterEdit from '../../modules/Centers/Edit';
+import CenterDelete from '../../modules/Centers/Delete';
 
 import Directors from '../../modules/Directors/List';
 import DirectorCreate from '../../modules/Directors/Create';
 import DirectorShow from '../../modules/Directors/Show';
+import DirectorEdit from '../../modules/Directors/Edit';
+import DirectorDelete from '../../modules/Directors/Delete';
 
 import Therapists from '../../modules/Therapists/List';
 import TherapistCreate from '../../modules/Therapists/Create';
@@ -36,7 +41,11 @@ const App = () => (
             permissions="GA"
             resolve={resolveAccess}
             list={Centers} 
-            create={CenterCreate} />
+            listPermissions={["GA","CD"]}
+            create={CenterCreate}
+            show={CenterShow}
+            edit={CenterEdit}
+            remove={CenterDelete}/>
 
         <Resource 
             name="directors" 
@@ -44,10 +53,12 @@ const App = () => (
             resolve={resolveAccess}
             list={Directors} 
             create={DirectorCreate} 
-            show={DirectorShow}/>
+            show={DirectorShow}
+            edit={DirectorEdit}
+            remove={DirectorDelete}/>
 
         <Resource 
-            name="terapists" 
+            name="therapists" 
             permissions="CD"
             resolve={resolveAccess}
             list={Therapists} 

@@ -7,6 +7,7 @@ const THERAPIST = "T"
     // resource = the requested resource (eg `posts`)
     // exact = the value of the `exact` prop
     // permissions = the result of the authClient call
+    console.log("resource",resource)
     console.log("arguments",resource.props.name, resource.props.permissions, permissions, exact, value)
     
 

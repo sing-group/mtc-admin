@@ -11,7 +11,7 @@ const validateCenterCreation = (values,{translate}) => {
 
 export default (props) => (
     <Create {...props}>
-        <SimpleForm validate={validateCenterCreation}>
+        <SimpleForm validate={validateCenterCreation} redirect="list">
             <TextInput source="name" validate={[required]}/>
             <TextInput source="description" options={{ multiLine: true }} validate={[required]} />
             <ReferenceInput
