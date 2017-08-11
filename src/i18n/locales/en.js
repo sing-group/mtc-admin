@@ -18,7 +18,8 @@ import {parseids} from '../../utils/parseKeys'
             en : "English",
             ga : "Galician"
         },
-        multilanguagePicker : 'Insert value for "%{idioma}"'
+        multilanguagePicker : 'Insert value for "%{idioma}"',
+        invalidCredentials : 'Invalid credentials'
     },
     others:{
         accept : "Accept",

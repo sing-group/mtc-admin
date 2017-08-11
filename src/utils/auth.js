@@ -5,15 +5,26 @@ import { AUTH_GET_PERMISSIONS } from 'aor-permissions';
 
 import {GENERAL_ADMIN, CENTER_DIRECTOR, THERAPIST} from './permissions'
 
-export default (type, params) => {
+import {create} from 'apisauce'
+
+const api = create({
+  baseURL: 'http://localhost:4000',
+})
+
+export default async (type, params) => {
     // called when the user attempts to log in
     if (type === AUTH_LOGIN) {
-        const { username } = params;
-        localStorage.setItem('username', username);
+        const { username , password} = params;
+        const response = await api.get(`/login?username=${username}&password=${password}`)
 
-        localStorage.setItem('permissions', (username == "administrador")? GENERAL_ADMIN : (username == "director")? CENTER_DIRECTOR :  THERAPIST );
-        // accept all username/password combinations
-        return Promise.resolve();
+        console.log("RESPUESTA", response)
+        if (response.status != 200)
+            return Promise.reject("common.invalidCredentials")
+
+        localStorage.setItem('username', username);
+        localStorage.setItem('permissions', response.data.permission);
+
+        return Promise.resolve({id : response.data.id});
     }
     // called when the user clicks on the logout button
     if (type === AUTH_LOGOUT) {

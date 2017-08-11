@@ -4,9 +4,6 @@ import { jsonServerRestClient, Resource } from 'admin-on-rest';
 import { Admin } from 'aor-permissions';
 import messages from '../../i18n'
 import { DEFAULT_LOCALE } from '../../i18n/localesManager'
-import routes from '../../routes'
-import menu from '../Menu'
-import layout from '../Layout'
 
 import Dashboard from '../Dashboard';
 
@@ -38,9 +35,13 @@ import PatientEdit from '../../modules/Patients/Edit';
 import PatientDelete from '../../modules/Patients/Delete';
 
 import auth from '../../utils/auth';
+import routes from '../../routes'
+import menu from '../Menu'
+import layout from '../Layout'
+import login from '../../customReducers/login'
 
 const App = () => (
-    <Admin appLayout={layout} customRoutes={routes} menu={menu} authClient={auth} dashboard={Dashboard} restClient={jsonServerRestClient('http://localhost:4000')} locale={DEFAULT_LOCALE} messages={messages}>
+    <Admin appLayout={layout} customRoutes={routes} menu={menu} customReducers={{login}} authClient={auth} dashboard={Dashboard} restClient={jsonServerRestClient('http://localhost:4000')} locale={DEFAULT_LOCALE} messages={messages}>
         <Resource
             name="directors"
             permissions="GA"

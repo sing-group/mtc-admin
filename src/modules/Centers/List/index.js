@@ -1,10 +1,13 @@
 import React from 'react';
 import { List, Datagrid, TextField, ReferenceField, EditButton, ShowButton } from 'admin-on-rest';
 import { Admin ,SwitchPermissions,Permission} from 'aor-permissions';
+import { connect } from 'react-redux';
 
 import auth from '../../../utils/auth';
 
-export default (props) => (
+const mapStateToProps = state => ( { idUser: state.login.id })
+
+export default connect(mapStateToProps)((props) => (
     <SwitchPermissions authClient={auth} {...props}>
         <Permission value="GA">
             <List {...props}>
@@ -21,7 +24,7 @@ export default (props) => (
             </List>
         </Permission>
         <Permission value={"CD"}>
-            <List {...props} /* TODO filter={{ director_id: }}*/>
+            <List {...props} filter={{ director_id: props.idUser }}>
                 <Datagrid>
                     <TextField source="id" />
                     <TextField source="name" />
@@ -30,4 +33,4 @@ export default (props) => (
             </List>
         </Permission>
     </SwitchPermissions>
-);
+));
