@@ -17,6 +17,7 @@ import {parseids} from '../../utils/parseKeys'
             en : "Inglés",
             ga : "Galego"
         },
+        multilanguagePickerTitle : 'Linguaxes',
         multilanguagePicker : 'Introduce o valor para "%{idioma}"',
         invalidCredentials : 'Usuario non válido'
     },

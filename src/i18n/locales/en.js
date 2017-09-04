@@ -18,6 +18,7 @@ import {parseids} from '../../utils/parseKeys'
             en : "English",
             ga : "Galician"
         },
+        multilanguagePickerTitle : 'Languages',
         multilanguagePicker : 'Insert value for "%{idioma}"',
         invalidCredentials : 'Invalid credentials'
     },

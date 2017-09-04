@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import auth from '../../../utils/auth';
 
-const mapStateToProps = state => ( { idUser: state.login.id })
+const mapStateToProps = state => ({ idUser: state.login.id })
 
 export default connect(mapStateToProps)((props) => (
     <SwitchPermissions authClient={auth} {...props}>

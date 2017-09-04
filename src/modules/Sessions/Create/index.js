@@ -34,26 +34,32 @@ export default translate(class extends Component {
 
     constructor(props) {
         super(props);
-
+        this.state = {
+            expanded: true,
+          };
         console.log("PROPIEDADES ARRAY SELECT", props)
         
     }
+
+    handleExpandChange = (expanded) => {
+        this.setState({expanded: expanded});
+      };
 
     render() {
         const { translate } = this.props
         return (
             <div>
-                <Card>
-                    <CardTitle title={translate("aor.page.create",{name : translate("resources.sessions.name",{smart_count : 1})})} />
-                    <CardText>
+                <Card expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
+                    <CardTitle title={translate("aor.page.create",{name : translate("resources.sessions.name",{smart_count : 1})})} 
+                    actAsExpander={true}
+                    showExpandableButton={true}/>
+                    <CardText expandable={true}>
                         <MultiLanguageTextPicker
-                            translateRoute="resources.sessions.fields.title"
-                            pickerStyle={styles.picker} />
+                            translateRoute="resources.sessions.fields.title"/>
                         <MultiLanguageTextPicker
                             translateRoute="resources.sessions.fields.content"
-                            multiline={true}
-                            rows={2}
-                            pickerStyle={styles.picker} />
+                            multiLine={true}
+                            rows={4} />
                     </CardText>
 
                 </Card>
