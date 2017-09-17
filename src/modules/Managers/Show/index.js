@@ -6,7 +6,7 @@ export default translate(({translate, ...props}) => (
     <Show {...props}>
         <SimpleShowLayout>
             <TextField source="name" />
-            <ReferenceManyField label={translate("resources.directors.references.centersList")} reference="centers" target="director_id">
+            <ReferenceManyField label={translate("resources.managers.references.centersList")} reference="centers" target="manager_id">
                 <Datagrid>
                     <TextField source="id" />
                     <TextField source="name" />

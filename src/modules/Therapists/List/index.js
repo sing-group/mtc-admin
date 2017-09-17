@@ -3,14 +3,13 @@ import { List, Datagrid, TextField, ReferenceField, EditButton, ShowButton } fro
 import { connect } from 'react-redux';
 
 
-const mapStateToProps = state => ( { idUser: state.login.id })
+const mapStateToProps = state => ( { userLogin: state.login.userLogin })
 
 export default connect(mapStateToProps)((props) => (
-    <List {...props} filter={{director_id :props.idUser}}> 
+    <List {...props}> 
         <Datagrid >
-            <TextField source="id" />
             <TextField source="name" />
-            <ReferenceField source="center_id" reference="centers" linkType="none">
+            <ReferenceField source="institution" reference="center" linkType="none">
                 <TextField source="name" />
             </ReferenceField>
             <EditButton />

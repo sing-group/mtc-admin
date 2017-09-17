@@ -4,9 +4,11 @@ import { List, Datagrid, ChipField, ReferenceManyField, SingleFieldList, TextFie
 export default translate(({translate, ...props}) => (
     <List {...props}>
         <Datagrid>
-            <TextField source="id" />
+            <TextField source="login" />
             <TextField source="name" />
-            <ReferenceManyField label={translate("resources.directors.references.centersList")}reference="centers" target="director_id">
+            <TextField source="surname" />
+            <TextField source="email" />
+            <ReferenceManyField label={translate("resources.manager.references.institutionsList")} reference="centers" target="manager">
                 <SingleFieldList>
                     <ChipField source="name" />
                 </SingleFieldList>

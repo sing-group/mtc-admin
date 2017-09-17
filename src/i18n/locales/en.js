@@ -45,7 +45,7 @@ import {parseids} from '../../utils/parseKeys'
         }
     },
     resources: {
-        sessions: {
+        session: {
             name: 'Session |||| Sessions',
             fields: {
                 id : 'Identifier',
@@ -53,38 +53,42 @@ import {parseids} from '../../utils/parseKeys'
                 content: 'Content'
             }
         },
-        centers: {
-            name: 'Center |||| Centers',
+        institution: {
+            name: 'institution |||| institutions',
             fields: {
                 id : 'Identifier',
                 name: 'Name',
+                address: 'Address',
                 description: 'Description',
-                director_id: 'Centre director'
+                manager: 'Institution manager'
             },
         },
-        therapists: {
+        therapist: {
             name: 'Therapist |||| Therapists',
             fields: {
                  id : 'Identifier',
                 name: 'Name',
-                center_id: 'Centre'
+                institution: 'Centre'
             },
         },
-        patients: {
+        patient: {
             name: 'Patient |||| Patients',
             fields: {
                 id : 'Identifier',
                 name: 'Name',
             },
         },
-        directors: {
-            name: 'Director |||| Directors',
+        manager: {
+            name: 'Manager |||| Managers',
             fields: {
-                id : 'Identifier',
                 name: 'Name',
+                surname: 'Surname',
+                password: 'Password',
+                login: 'Login',
+                email: 'Email'
             },
             references : {
-                centersList : "Centers"
+                institutionsList : "institutions"
             }
         }
 

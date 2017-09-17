@@ -46,45 +46,49 @@ import {parseids} from '../../utils/parseKeys'
         }
     },
     resources: {
-        sessions: {
+        session: {
             name: 'Sesión |||| Sesiones',
             fields: {
                 title: 'Titulo',
                 content: 'Contenido'
             },
         },
-        centers: {
+        institution: {
             name: 'Centro |||| Centros',
             fields: {
                 id : 'Identificador',
                 name: 'Nombre',
+                address: 'Dirección',
                 description: 'Descripción',
-                director_id: 'Director del centro'
+                manager: 'Director del centro'
             },
         },
-        therapists: {
+        therapist: {
             name: 'Terapeuta |||| Terapeutas',
             fields: {
                 id : 'Identificador',
                 name: 'Nombre',
-                center_id: 'Centro'
+                institution: 'Centro'
             },
         },
-        patients: {
+        patient: {
             name: 'Paciente |||| Pacientes',
             fields: {
                 id : 'Identificador',
                 name: 'Nombre',
             },
         },
-        directors: {
+        manager: {
             name: 'Director |||| Directores',
             fields: {
-                id : 'Identificador',
                 name: 'Nombre',
+                surname: 'Apellidos',
+                password: 'Contraseña',
+                login: 'Login',
+                email: 'Correo electrónico'
             },
             references : {
-                centersList : "Centros Asociados"
+                institutionsList : "Centros Asociados"
             }
         }
 
@@ -101,6 +105,7 @@ import {parseids} from '../../utils/parseKeys'
             refresh: 'Actualizar',
             add_filter: 'Añadir filtro',
             remove_filter: 'Eliminar filtro',
+            back: 'Atras'
         },
         boolean: {
             true: 'Sí',
@@ -112,7 +117,8 @@ import {parseids} from '../../utils/parseKeys'
             show: 'Datos %{name}',
             create: 'Crear %{name}',
             delete: 'Eliminar %{name}',
-            dashboard: 'Panel de control'
+            dashboard: 'Panel de control',
+            not_found: 'Página no encontrada'
         },
         input: {
             image: {
@@ -124,7 +130,9 @@ import {parseids} from '../../utils/parseKeys'
             yes: 'Sí',
             no: 'No',
             are_you_sure: '¿Estás seguro?',
+            not_found: 'No se encuentra el elemento',
             about: 'Acerca de',
+
         },
         navigation: {
             no_results: 'No se encontraron resultados',
@@ -150,6 +158,9 @@ import {parseids} from '../../utils/parseKeys'
         },
         validation: {
             required: 'Requerido',
+            email: 'Formato no válido',
+            minLength: 'Debe tener %{min} caracteres como mínimo',
+            maxLength: 'Debe tener %{max} caracteres como máximo'
         },
     },
 };

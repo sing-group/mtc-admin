@@ -1,7 +1,6 @@
 // in src/App.js
 import React from 'react';
-import { jsonServerRestClient, Resource } from 'admin-on-rest';
-import { Admin } from 'aor-permissions';
+import { jsonServerRestClient, Resource, Admin } from 'admin-on-rest';
 import messages from '../../i18n'
 import { DEFAULT_LOCALE } from '../../i18n/localesManager'
 
@@ -10,17 +9,17 @@ import Dashboard from '../Dashboard';
 import Sessions from '../../modules/Sessions/List';
 import SessionCreate from '../../modules/Sessions/Create';
 
-import Centers from '../../modules/Centers/List';
-import CenterCreate from '../../modules/Centers/Create';
-import CenterShow from '../../modules/Centers/Show';
-import CenterEdit from '../../modules/Centers/Edit';
-import CenterDelete from '../../modules/Centers/Delete';
+import Institutions from '../../modules/Institutions/List';
+import InstitutionCreate from '../../modules/Institutions/Create';
+import InstitutionShow from '../../modules/Institutions/Show';
+import InstitutionEdit from '../../modules/Institutions/Edit';
+import InstitutionDelete from '../../modules/Institutions/Delete';
 
-import Directors from '../../modules/Directors/List';
-import DirectorCreate from '../../modules/Directors/Create';
-import DirectorShow from '../../modules/Directors/Show';
-import DirectorEdit from '../../modules/Directors/Edit';
-import DirectorDelete from '../../modules/Directors/Delete';
+import Managers from '../../modules/Managers/List';
+import ManagerCreate from '../../modules/Managers/Create';
+import ManagerShow from '../../modules/Managers/Show';
+import ManagerEdit from '../../modules/Managers/Edit';
+import ManagerDelete from '../../modules/Managers/Delete';
 
 import Therapists from '../../modules/Therapists/List';
 import TherapistCreate from '../../modules/Therapists/Create';
@@ -35,58 +34,59 @@ import PatientEdit from '../../modules/Patients/Edit';
 import PatientDelete from '../../modules/Patients/Delete';
 
 import auth from '../../utils/auth';
+import ApiClient from '../../utils/apiClient';
 import routes from '../../routes'
 import menu from '../Menu'
 import layout from '../Layout'
 import login from '../../customReducers/login'
 
 const App = () => (
-    <Admin appLayout={layout} customRoutes={routes} menu={menu} customReducers={{login}} authClient={auth} dashboard={Dashboard} restClient={jsonServerRestClient('http://localhost:4000')} locale={DEFAULT_LOCALE} messages={messages}>
-        <Resource
-            name="directors"
-            permissions="GA"
-            list={Directors}
-            listPermissions={["GA", "CD"]}
-            create={DirectorCreate}
-            show={DirectorShow}
-            showPermissions={["GA", "CD"]}
-            edit={DirectorEdit}
-            remove={DirectorDelete} />
+    <Admin /*appLayout={layout}*/ customRoutes={routes} /*menu={menu} */ customReducers={{ login }} authClient={auth} dashboard={Dashboard} restClient={ApiClient("http://localhost:8080/mtc/rest/api")} locale={DEFAULT_LOCALE} messages={messages}>
+        {permissions => [
+            permissions === 'ADMIN' ?
+                <Resource
+                    name="manager"
+                    list={permissions === 'ADMIN' || permissions === 'MANAGER' ? Managers : null}
+                    create={ManagerCreate}
+                    show={permissions === 'ADMIN' || permissions === 'MANAGER' ? ManagerShow : null}
+                    edit={permissions === 'ADMIN' || permissions === 'MANAGER' ? ManagerEdit : null}
+                    remove={ManagerDelete} />
 
-        <Resource
-            name="centers"
-            permissions={["GA", "CD"]}
-            list={Centers}
-            listPermissions={["GA", "CD"]}
-            create={CenterCreate}
-            createPermissions={["GA"]}
-            show={CenterShow}
-            edit={CenterEdit}
-            editPermissions={["GA"]}
-            remove={CenterDelete} />
-        <Resource
-            name="therapists"
-            permissions="CD"
-            list={Therapists}
-            create={TherapistCreate}  
-            show={TherapistShow}
-            edit={TherapistEdit}
-            remove={TherapistDelete} />
-
-        <Resource
-            name="sessions"
-            permissions="T"
-            list={Sessions}
-            create={SessionCreate} />
-
-        <Resource
-            name="patients"
-            permissions="T"
-            list={Patients}
-            create={PatientCreate}
-            show={PatientShow}
-            edit={PatientEdit}
-            remove={PatientDelete} />
+                : undefined,
+            permissions === 'ADMIN' || permissions === 'MANAGER'?
+                <Resource
+                    name="institution"
+                    list={permissions === 'ADMIN'|| permissions === 'MANAGER' ? Institutions : null}
+                    create={permissions === 'ADMIN'? InstitutionCreate : null}
+                    show={InstitutionShow}
+                    edit={permissions === 'ADMIN'  ? InstitutionEdit : null}
+                    remove={InstitutionDelete} />
+                : undefined,
+                permissions === 'ADMIN' || permissions === 'MANAGER' ?
+                <Resource
+                    name="therapist"
+                    list={Therapists}
+                    create={permissions === 'ADMIN'?  null : TherapistCreate}
+                    show={TherapistShow}
+                    edit={permissions === 'ADMIN' ?  null : TherapistEdit}
+                    remove={permissions === 'ADMIN' ? null : TherapistDelete} />
+                : undefined,
+                permissions === 'ADMIN' || permissions === 'THERAPIST' ?
+                <Resource
+                    name="session"
+                    list={Sessions}
+                    create={permissions === 'ADMIN' ?  null : SessionCreate} />
+                : undefined,
+                permissions === 'ADMIN' || permissions === 'THERAPIST' ?
+                <Resource
+                    name="patient"
+                    list={Patients}
+                    create={permissions === 'ADMIN'?  null : PatientCreate}
+                    show={PatientShow}
+                    edit={permissions === 'ADMIN' ?  null : PatientEdit}
+                    remove={permissions === 'ADMIN' ?  null : PatientDelete} />
+                : undefined
+        ]}
     </Admin>
 );
 

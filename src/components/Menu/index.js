@@ -67,7 +67,7 @@ Menu.propTypes = {
     hasDashboard: PropTypes.bool,
     logout: PropTypes.element,
     onMenuTap: PropTypes.func,
-    resources: PropTypes.array.isRequired,
+    resources: PropTypes.array,
 };
 
 Menu.defaultProps = {
