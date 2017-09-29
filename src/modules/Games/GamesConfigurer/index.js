@@ -97,7 +97,7 @@ export default translate(SortableContainer(class extends Component {
                     </ToolbarGroup>
                 </Toolbar>
                 <Container games={this.state.games} onSortEnd={this.onSortEnd} onDeleteGame={(index) => this.onGameRemove(index)} />
-                <RaisedButton style={{ margin: 5 }} label={translate("session.create.addGame")} onTouchTap={() => this.setState({ open: true })} />
+                <RaisedButton style={{ margin: 5 }} label={translate("session.create.addGame")} onTouchTap={() => this.setState({ open: true })} onClick={() => this.setState({ open: true })} />
                 <GamePicker open={this.state.open} onRequestClose={() => this.setState({ open: false })} onGamesAdded={(games) => this.onGamesAdded(games)}/>
             </div>
         );

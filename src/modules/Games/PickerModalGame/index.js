@@ -90,12 +90,14 @@ class GamePicker extends React.Component {
         label={translate('aor.action.cancel')}
         primary={true}
         onTouchTap={this.handleClose}
+        onClick={this.handleClose}
       />,
       <FlatButton
         label={translate('game.picker.addGames')}
         primary={true}
         disabled={this.state.gamesSelected.length == 0}
         onTouchTap={() => this.onConfirmGames()}
+        onClick={() => this.onConfirmGames()}
       />
     ];
     return (
@@ -110,8 +112,9 @@ class GamePicker extends React.Component {
         {Object.keys(GamesMetadata).map((key) => {
           const metadata = GamesMetadata[key].metadata
           return (
-            <Card style={this.getStyle(key)}
+            <Card style={this.getStyle(key)} key={key}
               onMouseEnter={() => this.handleCursorInGame(key)}
+              onClick={() => this.handleClickOnGame(key)}
               onTouchTap={() => this.handleClickOnGame(key)}
               zDepth={(this.state.actual == key) ? 3 : 1}>
               <CardHeader

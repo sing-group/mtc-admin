@@ -110,6 +110,7 @@ class MultiLanguajeTextPicker extends Component {
     }
 
     handleOpen = () => {
+        console.log("HOLA")
         this.setState({open: true});
       };
     
@@ -134,10 +135,14 @@ class MultiLanguajeTextPicker extends Component {
     render() {
         const locales = SupportedLocales
         const { locale, translate, pickerStyle, translateRoute } = this.props
-        
+        const mainTextProps = this.state.configurations.mainTextProps
+
+        delete mainTextProps.translateRoute
+        delete mainTextProps.translate
+        delete mainTextProps.locale
         return (
             <div style={{display:"flex"}}>
-                <TextField ref="main" {...this.state.configurations.mainTextProps} hintText={translate("common.multilanguagePicker",{idioma : translate("common.languages."+this.state.currentLocale)})} style={{width: '100%'}} value={(this.state.messages[this.state.currentLocale])? this.state.messages[this.state.currentLocale]: ""} onChange={( e) => this.handleChange(e, this.state.currentLocale)}
+                <TextField ref="main" {...mainTextProps} hintText={translate("common.multilanguagePicker",{idioma : translate("common.languages."+this.state.currentLocale)})} style={{width: '100%'}} value={(this.state.messages[this.state.currentLocale])? this.state.messages[this.state.currentLocale]: ""} onChange={( e) => this.handleChange(e, this.state.currentLocale)}
                         floatingLabelText={translate(translateRoute)}
                         floatingLabelFixed={true}
                         floatingLabelStyle={{ fontSize : 18}}
@@ -148,26 +153,28 @@ class MultiLanguajeTextPicker extends Component {
                         onBlur={ (e) => this.changeToNormalMode()}
                         floatingLabelFocusStyle={{ fontSize : 23}}
                         />
-                <div style={{alignSelf : "flex-start"}}>
+                <div style={{marginTop : 25,alignSelf : "flex-start"}}>
                     <FlatButton 
                         icon={
                             <img src={Logos[this.state.currentLocale]} />
                         }
-                        onTouchTap={this.handleOpen}
+                        onClick={() =>!console.log("HOLA") && this.handleOpen() }
+                        onTouchTap={() =>!console.log("HOLA") && this.handleOpen() }
                     />
                 </div>
                 <Dialog
                     title={
                         <div>
                             {translate(translateRoute) }
-                            <span style={closeImg} onTouchTap={this.handleClose}>X</span>
+                            <span style={closeImg} 
+                            onClick={this.handleClose }onTouchTap={this.handleClose}>X</span>
                         </div>
                     }
                     modal={true}
                     open={this.state.open}
                     >
                     {
-                        SupportedLocales.map(l => <div style={{display:"flex"}}>
+                        SupportedLocales.map(l => <div style={{display:"flex"}} key={l}>
                             <TextField ref={l} {...(this.state.configurations[l])? this.state.configurations[l] : this.state.configurations.closed } hintText={translate("common.multilanguagePicker",{idioma : translate("common.languages."+l)})} style={{width: '100%'}} value={(this.state.messages[l])? this.state.messages[l]: ""} onChange={( e) => this.handleChange(e, l)}
                                 floatingLabelStyle={{ fontSize : 18}}
                                 floatingLabelFocusStyle={{ fontSize : 23}}
