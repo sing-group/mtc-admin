@@ -1,6 +1,6 @@
-const GENERAL_ADMIN = "GA"
-const CENTER_DIRECTOR = "CD"
-const THERAPIST = "T"
+const ADMIN = "ADMIN"
+const MANAGER = "MANAGER"
+const THERAPIST = "THERAPIST"
 
 
  const resolveAccess = ({ resource, permissions, exact, value, action }) => {
@@ -18,8 +18,8 @@ const THERAPIST = "T"
 
 
  export {
-    GENERAL_ADMIN,
-    CENTER_DIRECTOR,
+    ADMIN,
+    MANAGER,
     THERAPIST,
     resolveAccess,
  }
