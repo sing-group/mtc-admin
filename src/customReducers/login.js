@@ -3,9 +3,9 @@ import { USER_LOGIN_SUCCESS, USER_LOGOUT } from 'admin-on-rest';
 export default (previousState = {}, { type, payload }) => {
     if (type == USER_LOGIN_SUCCESS)
     {
-        console.log("ALMACENADO USUARIO", payload.login)
+        console.log("ALMACENADO USUARIO", payload.loginUser)
         return {
-            userLogin : payload.login
+            loginUser : payload.loginUser
         }
     }
 
