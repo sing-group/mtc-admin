@@ -2,7 +2,9 @@ import React from 'react';
 import { Create, Edit, SimpleForm, DisabledInput, TextInput, DateInput, LongTextInput, ReferenceManyField, Datagrid, TextField, DateField, EditButton } from 'admin-on-rest';
 import { required, minLength, maxLength, minValue, maxValue, number, regex, email, choices } from 'admin-on-rest';
 
-const postDefaultValue = { role: "MANAGER" };
+import {ADMIN,MANAGER,THERAPIST} from '../../../customControllers/PermissionsController'
+
+const postDefaultValue = { role: MANAGER };
 export default (props) => (
     <Create {...props}>
         <SimpleForm redirect="list" defaultValue={postDefaultValue}>

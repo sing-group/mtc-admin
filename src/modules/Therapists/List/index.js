@@ -9,7 +9,7 @@ export default connect(mapStateToProps)((props) => (
     <List {...props}> 
         <Datagrid >
             <TextField source="name" />
-            <ReferenceField source="institution" reference="center" linkType="none">
+            <ReferenceField source="institution" reference="institution" linkType="none">
                 <TextField source="name" />
             </ReferenceField>
             <EditButton />

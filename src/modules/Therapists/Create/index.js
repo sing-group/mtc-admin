@@ -3,8 +3,10 @@ import { Create, Edit, SimpleForm, DisabledInput, TextInput, DateInput, LongText
 import { connect } from 'react-redux';
 
 
-const mapStateToProps = state => ({ userLogin: state.login.userLogin })
-const postDefaultValue = { role: "THERAPIST" };
+import {ADMIN,MANAGER,THERAPIST} from '../../../customControllers/PermissionsController'
+
+const mapStateToProps = state => ({ /*userLogin: state.login.userLogin */})
+const postDefaultValue = { role: THERAPIST };
 export default connect(mapStateToProps)((props) => (
     <Create {...props}>
         <SimpleForm redirect="list" defaultValue={postDefaultValue}>
@@ -16,9 +18,9 @@ export default connect(mapStateToProps)((props) => (
             <ReferenceInput
                 allowEmpty
                 source="institution"
-                reference="center"
+                reference="institution"
                 validate={[required]}
-                filter={{ manager: props.userLogin }}>
+                /*filter={{ manager: props.userLogin }} ESTE FILTRO NO HACE FALTA SI LOS QUE RETORNAN SON YA LOS PERMITIDOS*/> 
                 <SelectInput optionText="name" validate={[required]} />
             </ReferenceInput>
         </SimpleForm>

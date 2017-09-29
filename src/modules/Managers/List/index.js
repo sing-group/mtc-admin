@@ -8,7 +8,7 @@ export default translate(({translate, ...props}) => (
             <TextField source="name" />
             <TextField source="surname" />
             <TextField source="email" />
-            <ReferenceManyField label={translate("resources.manager.references.institutionsList")} reference="centers" target="manager">
+            <ReferenceManyField label={translate("resources.manager.references.institutionsList")} reference="institution" target="manager">
                 <SingleFieldList>
                     <ChipField source="name" />
                 </SingleFieldList>

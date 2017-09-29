@@ -50,14 +50,14 @@ export default translate(class extends Component {
         return (
             <div>
                 <Card expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
-                    <CardTitle title={translate("aor.page.create",{name : translate("resources.sessions.name",{smart_count : 1})})} 
+                    <CardTitle title={translate("aor.page.create",{name : translate("resources.session.name",{smart_count : 1})})} 
                     actAsExpander={true}
                     showExpandableButton={true}/>
                     <CardText expandable={true}>
                         <MultiLanguageTextPicker
-                            translateRoute="resources.sessions.fields.title"/>
+                            translateRoute="resources.session.fields.title"/>
                         <MultiLanguageTextPicker
-                            translateRoute="resources.sessions.fields.content"
+                            translateRoute="resources.session.fields.content"
                             multiLine={true}
                             rows={4} />
                     </CardText>
