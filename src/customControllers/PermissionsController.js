@@ -1,6 +1,7 @@
 const ADMIN = "ADMIN"
 const MANAGER = "MANAGER"
 const THERAPIST = "THERAPIST"
+const PATIENT = "PATIENT"
 
 
  const resolveAccess = ({ resource, permissions, exact, value, action }) => {
@@ -21,6 +22,7 @@ const THERAPIST = "THERAPIST"
     ADMIN,
     MANAGER,
     THERAPIST,
+    PATIENT,
     resolveAccess,
  }
 

@@ -1,6 +1,15 @@
 import { BaseHandler } from './BaseHandler'
 import {stringify} from 'query-string'
 
+import {
+    LOCAL_STORAGE_USER_ROLE_KEY,
+    LOCAL_STORAGE_USER_NAME_KEY
+} from '../../customControllers/AuthController'
+
+import {
+    THERAPIST
+} from '../../customControllers/PermissionsController'
+
 //relation between the default key for items in AOR and API for this entity
 const MTC_KEY_ATTRIBUTE = 'id'
 const AOR_KEY_ATTRIBUTE = 'id' // <- Its the same in all objects
@@ -22,7 +31,7 @@ export class SessionHandler extends BaseHandler {
      */
     GET_LIST({ pagination: { page, perPage }, sort: { field, order }, filter }) {
 
-        const loginUser = filter.loginUser || localStorage.getItem("username")
+        const loginUser = filter.loginUser || localStorage.getItem(LOCAL_STORAGE_USER_NAME_KEY)
         delete filter.loginUser
 
         field = field == AOR_KEY_ATTRIBUTE ? MTC_KEY_ATTRIBUTE : field
@@ -35,7 +44,7 @@ export class SessionHandler extends BaseHandler {
      * @param {*string} resource The resoruce name
      */
     CREATE({ data }) {
-        const loginUser = localStorage.getItem("username")
+        const loginUser = localStorage.getItem(LOCAL_STORAGE_USER_NAME_KEY)
         return super.CREATE({ data },`therapist/${loginUser}/gamesession`)
      }
 

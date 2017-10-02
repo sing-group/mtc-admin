@@ -5,7 +5,7 @@ export default (props) => (
     <Show {...props}>
         <SimpleShowLayout>
             <TextField source="name" />
-            <ReferenceField source="director_id" reference="centers" linkType="false">
+            <ReferenceField source="manager" reference="manager" linkType="false">
                 <TextField source="name" />
             </ReferenceField>
         </SimpleShowLayout>

@@ -14,6 +14,7 @@ const api = create({
 
 export const LOCAL_STORAGE_USER_CREDENTIALS_KEY = "token"
 export const LOCAL_STORAGE_USER_ROLE_KEY = "role"
+export const LOCAL_STORAGE_USER_NAME_KEY = "loginUser"
 
 export default async (type, params) => {
     // called when the user attempts to log in
@@ -31,7 +32,7 @@ export default async (type, params) => {
 
         console.log("LOGGED USER", token, permission)
         // saves the user credentials anb role
-        localStorage.setItem("loginUser", username);
+        localStorage.setItem(LOCAL_STORAGE_USER_NAME_KEY, username);
         localStorage.setItem(LOCAL_STORAGE_USER_CREDENTIALS_KEY, token);
         localStorage.setItem(LOCAL_STORAGE_USER_ROLE_KEY, permission);
 
