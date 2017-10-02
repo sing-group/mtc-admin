@@ -15,12 +15,23 @@ const games = {
     }
 }
 
+console.log("JUEGOS", games)
 function gameBuilder(key, aditionalProps){
     console.log("CONTRUYENDO", key)
+    const parametersValues = {
+
+    }
+
+    games[key].metadata.parameters.forEach ( param => {
+        parametersValues[param.id] = param.defaultValue
+    })
     const game = {
         ...aditionalProps,
         id : games[key].metadata.nameId,
-        tasks : games[key].metadata.taskTypes
+        parameters: games[key].metadata.parameters,
+        parametersValues,
+        tasks : games[key].metadata.taskTypes,
+        valid: true,
     }
     
     console.log("CONSTRUIDO", game)

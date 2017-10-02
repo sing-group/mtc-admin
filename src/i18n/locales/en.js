@@ -30,7 +30,8 @@ import {parseids} from '../../utils/parseKeys'
     },
     session:{
         create: {
-            addGame : "Add Game"
+            addGame : "Add Game",
+            endConfiguration: "Finalize"
         }
     },
     game : {

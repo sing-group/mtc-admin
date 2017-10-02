@@ -15,8 +15,8 @@ import Badge from 'material-ui/Badge';
 import IconButton from 'material-ui/IconButton';
 import {parseids} from '../../../utils/parseKeys'
 
-import { buildIconTooltiped } from '../../../data/taskTypes'
-import { gameBuilder } from '../../../data/games'
+import { buildIconTooltiped } from '../../../data/Games/taskTypes'
+import { gameBuilder } from '../../../data/Games/games'
 
 import { grey50 as bgColor } from 'material-ui/styles/colors';
 
@@ -36,19 +36,19 @@ const styles = {
     }
 };
 
-const SortableItem = SortableElement(({ value , onDeleteGame}) =>
-    <GameCard game={value} onDeleteGame={() => onDeleteGame()} />
+const SortableItem = SortableElement(({ value , onDeleteGame, onModifyPropGame}) =>
+    <GameCard onModifyPropGame={(p,v) => !console.log("AQUI2") && onModifyPropGame(p,v)} game={value} onDeleteGame={() => onDeleteGame()} />
 );
 
-const Container = SortableContainer(({ games, onDeleteGame }) =>
+const Container = SortableContainer(({ games, onDeleteGame, onModifyPropGame }) =>
     <div>
         {games.map((game, index) => game && (
-            <SortableItem key={game.sortableKey} index={index} value={game} onDeleteGame={() => onDeleteGame(index)}/>
+            <SortableItem key={game.sortableKey} index={index} value={game} onDeleteGame={() => onDeleteGame(index)} onModifyPropGame={ (prop,newValue) => !console.log("AQUI1") && onModifyPropGame(index,prop,newValue)}/>
         ))}
     </div>
 );
 
-export default translate(SortableContainer(class extends Component {
+export default translate(class extends Component {
 
     constructor(props) {
         super(props);
@@ -82,11 +82,23 @@ export default translate(SortableContainer(class extends Component {
             ]
         })
     }
+    gameModified = (index, prop, newValue) => {
 
+       this.state.games[index].parametersValues[prop] = newValue
+        let valid = true
+        this.state.games[index].parameters.forEach(param => {
+            if (valid){
+                valid = param.isValid(this.state.games[index].parametersValues[param.id])
+            }
+        })
+        console.log("VALIDO", newValue, valid)
+       this.state.games[index].valid = valid
+       this.forceUpdate()
+    }
     render() {
-        const { translate } = this.props
+        const { translate , onConfigurationEnd } = this.props
         return (
-            <div style={{ backgroundColor: "#bfbfbf", display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', flexDirection: 'column' }} ><div style={{ backgroundColor: "#bfbfbf", display: 'flex', flexDirection: 'column' }}>
                 <Toolbar >
                     <ToolbarGroup firstChild={true}>
                         <CardHeader title={translate("game.configurer.toolbar.options")} />
@@ -96,13 +108,15 @@ export default translate(SortableContainer(class extends Component {
                         <FontIcon className="material-icons" >sort</FontIcon>
                     </ToolbarGroup>
                 </Toolbar>
-                <Container games={this.state.games} onSortEnd={this.onSortEnd} onDeleteGame={(index) => this.onGameRemove(index)} />
+                <Container games={this.state.games} onSortEnd={this.onSortEnd} onDeleteGame={(index) => this.onGameRemove(index)} onModifyPropGame={this.gameModified}/>
                 <RaisedButton style={{ margin: 5 }} label={translate("session.create.addGame")} onTouchTap={() => this.setState({ open: true })} onClick={() => this.setState({ open: true })} />
+                <RaisedButton primary={true}  style={{ margin: 5 }} label={translate("session.create.endConfiguration")} onTouchTap={() => onConfigurationEnd(this.state.games)} onClick={() => onConfigurationEnd(this.state.games)} />
                 <GamePicker open={this.state.open} onRequestClose={() => this.setState({ open: false })} onGamesAdded={(games) => this.onGamesAdded(games)}/>
             </div>
+                </div>
         );
     }
-}))
+})
 
 
 function generateSummarySession(games = [], translate) {

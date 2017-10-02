@@ -9,7 +9,9 @@ import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import IconButton from 'material-ui/IconButton';
 
-import { taskTypes, buildIcon } from '../../../data/taskTypes'
+import { InputBuilder } from '../../../data/Games/Parameters'
+
+import { taskTypes, buildIcon } from '../../../data/Games/taskTypes'
 import {parseids} from '../../../utils/parseKeys'
 const styles = {
     avatar: {
@@ -37,26 +39,35 @@ class GameCard extends Component {
     }
 
     render() {
-        const { game , translate} = this.props;
+        const { game , translate, onModifyPropGame} = this.props;
+        console.log("GAME CARD GAME", game, onModifyPropGame)
         return (
-            <Card expanded={this.state.expanded} onExpandChange={(expanded) => { this.state.expanded = expanded}}>
+            <Card initiallyExpanded={this.state.expanded} onExpandChange={(expanded) => { this.state.expanded = expanded}} key={game}>
                 <CardHeader
-                    title={translate("common.model.games."+parseids(game.id))}
+                    title={<span style={{color : game.valid ? 'black': 'red'}}>{translate("common.model.games."+parseids(game.id))}</span>}
                     actAsExpander={true}
                     showExpandableButton={true}
-                    onExpandChange={(bool) => this.setState({expanded: bool})}
                 />
                 <CardText expandable={true}>
-                    CONFIGURACION AQUI
+                    <div style={{display : 'flex', flexDirection: "column"}}>
+                    {
+                        game.parameters.map( param => {
+                            return InputBuilder(game.parametersValues[param.id],param,onModifyPropGame)
+                        })
+                    }
+                    </div>
                 </CardText>
                 <CardText expandable={true}>
-                    <div style={styles.wrapper}>
+                    <div style={{display:'flex'}}>
+                        <div style={{ display:'flex'}}>
                         <RaisedButton
                         label="Eliminar"
                         secondary={true}
                         onTouchTap={() => this.props.onDeleteGame()}
                         />
-                        <div style={{display : "flex"}}>
+                        </div>
+
+                        <div style={{display : "flex", flexBasis: '100%', justifyContent: 'flex-end'}}>
                         {game.tasks.map((key, index) => (
                             buildIcon(styles.avatar, key._id,translate("common.model.games."+parseids(key.id)))
                         ))}

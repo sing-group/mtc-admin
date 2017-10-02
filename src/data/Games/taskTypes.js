@@ -10,7 +10,7 @@ import UserIcon from 'material-ui/svg-icons/action/account-circle';
 
 import * as colors from 'material-ui/styles/colors';
 
-import { messages } from '../i18n/'
+import { messages } from '../../i18n/'
 
 const GameTaskType = require("@sing-group/mtc-games/src/game/metadata/GameTaskType").default
 
@@ -45,13 +45,13 @@ export { taskTypes }
 export function buildIconTooltiped(style, taskElement, number, tooltip) {
     console.log("CONSTRUYENDO ICONO", taskElement)
     return (
-        <IconButton  style={{ paddingLeft: 10, paddingRight: 0 }} tooltip={tooltip}>
+        <IconButton  key={taskElement+"Icon"} style={{ paddingLeft: 10, paddingRight: 0 }} tooltip={tooltip}>
             <Avatar key={taskElement} style={style} size={25} color={taskTypes[taskElement].subColor} backgroundColor={taskTypes[taskElement].color}> {number} </Avatar>
         </IconButton>)
 }
 
 export function buildIcon(style, taskElement, message = "") {
-    return <Chip style={style} color={taskTypes[taskElement].subColor} backgroundColor={taskTypes[taskElement].color}>{message}</Chip>
+    return <Chip key={taskElement+"chip"}style={style} color={taskTypes[taskElement].subColor} backgroundColor={taskTypes[taskElement].color}>{message}</Chip>
 }
 /*
 export function buildIcon(style, taskElement, message = "") {

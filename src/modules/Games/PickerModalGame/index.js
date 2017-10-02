@@ -11,7 +11,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 
-import {games as GamesMetadata} from '../../../data/games'
+import {games as GamesMetadata} from '../../../data/Games/games'
 
 const styles = {
   radioButton: {

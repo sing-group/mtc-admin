@@ -2,7 +2,7 @@ import messages from '@sing-group/mtc-games/src/i18n/es_ES'
 import {parseids} from '../../utils/parseKeys'
 
 
- export default {
+const me = {
     common: {
         configuration : {
             title : "Configuración",
@@ -31,7 +31,8 @@ import {parseids} from '../../utils/parseKeys'
     },
     session:{
         create: {
-            addGame : "Añadir juego"
+            addGame : "Añadir juego",
+            endConfiguration: "Finalizar configuración"
         }
     },
     game : {
@@ -160,7 +161,11 @@ import {parseids} from '../../utils/parseKeys'
             required: 'Requerido',
             email: 'Formato no válido',
             minLength: 'Debe tener %{min} caracteres como mínimo',
-            maxLength: 'Debe tener %{max} caracteres como máximo'
+            maxLength: 'Debe tener %{max} caracteres como máximo',
+            minValue: 'Mínimo %{min}',
+            maxValue: 'Máximo %{max}',
         },
     },
 };
+console.log(me)
+export default me

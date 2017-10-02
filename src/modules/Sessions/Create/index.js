@@ -9,7 +9,7 @@ import MultiLanguageTextPicker from '../../../components/MultiLanguage'
 import Badge from 'material-ui/Badge';
 import IconButton from 'material-ui/IconButton';
 
-import { buildIconTooltiped } from '../../../data/taskTypes'
+import { buildIconTooltiped } from '../../../data/Games/taskTypes'
 
 
 import { grey50 as bgColor } from 'material-ui/styles/colors';
@@ -45,10 +45,14 @@ export default translate(class extends Component {
         this.setState({expanded: expanded});
       };
 
+
+    handleConfigurationEnd = (games) => {
+        alert(JSON.stringify(games))
+    }
     render() {
         const { translate } = this.props
         return (
-            <div>
+            <div key="PRINCIPAL">
                 <Card expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
                     <CardTitle title={translate("aor.page.create",{name : translate("resources.session.name",{smart_count : 1})})} 
                     actAsExpander={true}
@@ -63,7 +67,7 @@ export default translate(class extends Component {
                     </CardText>
 
                 </Card>
-                <GameConfigurer  />
+                <GameConfigurer  onConfigurationEnd={this.handleConfigurationEnd}/>
             </div>
         )
     }

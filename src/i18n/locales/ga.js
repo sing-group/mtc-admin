@@ -29,7 +29,8 @@ import {parseids} from '../../utils/parseKeys'
     },
     session:{
         create: {
-            addGame : "Engadir xogo"
+            addGame : "Engadir xogo",
+            endConfiguration: "Rematar"
         }
     },
     game : {
@@ -158,7 +159,9 @@ import {parseids} from '../../utils/parseKeys'
             required: 'Requerido',
             email: 'O formato do email non e válido',
             minLength: 'Debe ter %{min} caracteres como mínimo',
-            maxLength: 'Debe ter %{max} caracteres como máximo'
+            maxLength: 'Debe ter %{max} caracteres como máximo',
+            minValue: 'Mínimo %{min}',
+            maxValue: 'Máximo %{max}',
         },
     },
 };
