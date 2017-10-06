@@ -64,7 +64,7 @@ const App = () => (
                     edit={permissions === ADMIN  ? InstitutionEdit : null}
                     remove={InstitutionDelete} />
                 : undefined,
-                permissions === ADMIN || permissions === MANAGER ?
+                 permissions === MANAGER ?
                 <Resource
                     name="therapist"
                     list={Therapists}
@@ -73,13 +73,13 @@ const App = () => (
                     edit={permissions === ADMIN ?  null : TherapistEdit}
                     remove={permissions === ADMIN ? null : TherapistDelete} />
                 : undefined,
-                permissions === ADMIN || permissions === THERAPIST ?
+                permissions === THERAPIST ?
                 <Resource
                     name="session"
                     list={Sessions}
                     create={permissions === ADMIN ?  null : SessionCreate} />
                 : undefined,
-                permissions === ADMIN || permissions === THERAPIST ?
+                permissions === THERAPIST ?
                 <Resource
                     name="patient"
                     list={Patients}
