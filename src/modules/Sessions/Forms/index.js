@@ -79,11 +79,21 @@ export default translate(class extends Component {
                 [prop]: {
                     ...this.state.record[prop],
                     values: [
-                        ...(this.state.record[prop] ? this.state.record[prop]["values"] : []),
-                        {
-                            key: keyLocale,
-                            value
-                        }
+                        ...(this.state.record[prop] ? this.state.record[prop]["values"].map( actualTranslation => {
+                            return {
+                                key: actualTranslation.key,
+                                value: keyLocale === actualTranslation.key ? value : actualTranslation.value
+                            }
+                        }) : [{
+                            key: "es_ES",
+                            value : keyLocale === "es_ES" ? value : ""
+                        },{
+                            key: "en_US",
+                            value : keyLocale === "en_US" ? value : ""
+                        },{
+                            key: "gl_ES",
+                            value : keyLocale === "gl_ES" ? value : ""
+                        },])
                     ]
                 }
             }

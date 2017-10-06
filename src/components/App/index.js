@@ -8,6 +8,7 @@ import Dashboard from '../Dashboard';
 
 import Sessions from '../../modules/Sessions/List';
 import SessionCreate from '../../modules/Sessions/Create';
+import SessionEdit from '../../modules/Sessions/Edit';
 
 import Institutions from '../../modules/Institutions/List';
 import InstitutionCreate from '../../modules/Institutions/Create';
@@ -77,6 +78,7 @@ const App = () => (
                 <Resource
                     name="session"
                     list={Sessions}
+                   // edit={SessionEdit}
                     create={permissions === ADMIN ?  null : SessionCreate} />
                 : undefined,
                 permissions === THERAPIST ?

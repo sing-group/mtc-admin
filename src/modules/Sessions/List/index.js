@@ -17,24 +17,21 @@ const sessionStyle = {
 const mapStateToProps = state => ({ loginUser: state.login.loginUser })
 
 const SessionsGrid =({ ids, data, basePath, translate, locale }) => (
-    !console.log("DATOS SESIONES",ids, data, locale) && <div style={{ margin: '1em', display: "flex", flexWrap: "wrap",  }}>
-        {ids.map(id =>
-            <Card key={id} style={{ margin : 10, minWidth : 200, width : "25%" }}className='sessionCard'>
+    !console.log("DATOS SESIONES",ids, data, locale) && <div style={{ margin: '1em', display: "flex", flexWrap: "wrap", justifyContent : "center"  }}>
+        {ids.map(id => 
+            <Card key={id} style={{ margin : 10, minWidth : 200, width : "23%" }}className='sessionCard'>
                 
                 <CardHeader
                     title={data[id].name.values.find( t => t.key === locale).value }
                     subtitle={data[id].description.values.find( t => t.key === locale).value }>
                 
                 </CardHeader>
-                <CardText>
-                    
-                </CardText>
-                <CardText>
+                <CardActions style={{ textAlign: 'right' }}>
                 {generateSummarySession(data[id].gameConfiguration.map(g =>{
                     const game = Object.keys(GamesMetadata).find( key => GamesMetadata[key].metadata._id === g.gameId)
                     return GamesMetadata[game]
-                }) , translate)}
-                </CardText>
+                }) , translate)}<EditButton resource="session" basePath={basePath} record={data[id]} />
+            </CardActions>
             </Card>
         )}
     </div>
