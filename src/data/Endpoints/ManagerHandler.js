@@ -63,8 +63,10 @@ export class ManagerHandler extends BaseHandler {
      * @param {*array} item Manager JSON from MTC API
      */
     objectBuilder(item){
+        
         const aux = {
             ...item,
+            institutions: (item.institutions && item.institutions.map( i => i.id)) || [],
             [AOR_KEY_ATTRIBUTE] : item[MTC_KEY_ATTRIBUTE]
         }
         return aux

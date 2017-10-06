@@ -62,10 +62,10 @@ export class BaseHandler {
      * @param {*string} resource The resource name ej 'therapist'
      */
     GET_LIST({ pagination: { page, perPage }, sort: { field, order }, filter }, resource) {
-        console.log("REQUESTING GET_LIST",{ pagination: { page, perPage }, sort: { field, order }, filter }, this.Path || resource)
+        console.log("REQUESTING GET_LIST",{ pagination: { page, perPage }, sort: { field, order }, filter }, resource || this.Path)
 
         const query = this.queryBuilder({ pagination: { page, perPage }, sort: { field, order }, filter })
-        const url = `${this.URL}/${this.Path ||  resource}?${stringify(query)}`;
+        const url = `${this.URL}/${resource || this.Path}?${stringify(query)}`;
 
         console.log("URL GET_LIST", url)
         return { url, options: {} }
@@ -77,8 +77,8 @@ export class BaseHandler {
      * @param {*string} resource The resource name ej 'therapist'
      */
     GET_ONE({ id }, resource) { 
-        console.log("REQUESTING GET_ONE",{ id }, this.Path || resource)
-        const url = `${this.URL}/${this.Path || resource}/${id}`;
+        console.log("REQUESTING GET_ONE",{ id }, resource || this.Path)
+        const url = `${this.URL}/${resource || this.Path}/${id}`;
         console.log("URL GET_ONE", url)
         return { url, options: {} }
     }
@@ -89,8 +89,8 @@ export class BaseHandler {
      * @param {*string} resource The resoruce name
      */
     CREATE({ data }, resource) {
-        console.log("REQUESTING CREATE",{ data }, this.Path || resource)
-        const url = `${this.URL}/${this.Path || resource}`;
+        console.log("REQUESTING CREATE",{ data }, resource || this.Path)
+        const url = `${this.URL}/${resource || this.Path}`;
 
         const options = {}
 
@@ -107,8 +107,8 @@ export class BaseHandler {
      * @param {*} resource The resource name
      */
     UPDATE({ id, data, previousData },resource) { 
-        console.log("REQUESTING UPDATE",{ id, data, previousData }, this.Path || resource)
-        const url = `${this.URL}/${this.Path || resource}/${id}`;
+        console.log("REQUESTING UPDATE",{ id, data, previousData }, resource || this.Path)
+        const url = `${this.URL}/${resource || this.Path}/${id}`;
         
         const options = {}
 
@@ -124,8 +124,8 @@ export class BaseHandler {
      * @param {*string} resource The resource name
      */
     DELETE({ id, previousData }, resource) {
-        console.log("REQUESTING DELETE",{ id, previousData }, this.Path || resource)
-        const url = `${this.URL}/${this.Path || resource}/${id}`;
+        console.log("REQUESTING DELETE",{ id, previousData }, resource || this.Path)
+        const url = `${this.URL}/${resource || this.Path}/${id}`;
         
         const options = {}
         options.method = 'DELETE';
@@ -179,7 +179,7 @@ export class BaseHandler {
     }
 
     RESPONSE_CREATE ({ headers, json }, params,resource) {
-        return { data: { ...params.data, id: json && json.id || "NOIDRECIBIDO"} }; //TODO: borrar esto. El ID recibido se debe usar cuando se quiere hacer una redirección del elemento creado a la vista "Show". Por ahora en los elementos tras crearlo se redirige a "List" donde se recargan los items de la API y ya vienen con el ID correcto
+        return { data: { ...params.data, id: headers && headers.get('Location') || "NOIDRECIBIDO"} }; //TODO: borrar esto. El ID recibido se debe usar cuando se quiere hacer una redirección del elemento creado a la vista "Show". Por ahora en los elementos tras crearlo se redirige a "List" donde se recargan los items de la API y ya vienen con el ID correcto
     }
 
     RESPONSE_DELETE ({ headers, json }, params,resource) {
