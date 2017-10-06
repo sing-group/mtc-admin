@@ -12,9 +12,11 @@ import IconButton from 'material-ui/IconButton';
 import { buildIconTooltiped } from '../../../data/Games/taskTypes'
 
 
+import { CREATE , Create} from 'admin-on-rest';
+
 import { grey50 as bgColor } from 'material-ui/styles/colors';
 
-import GameConfigurer from '../../Games/GamesConfigurer'
+import SessionForm from '../Forms'
 
 const styles = {
     avatar: {
@@ -32,43 +34,12 @@ const styles = {
 
 export default translate(class extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            expanded: true,
-          };
-        console.log("PROPIEDADES ARRAY SELECT", props)
-        
-    }
-
-    handleExpandChange = (expanded) => {
-        this.setState({expanded: expanded});
-      };
-
-
-    handleConfigurationEnd = (games) => {
-        alert(JSON.stringify(games))
-    }
     render() {
         const { translate } = this.props
         return (
-            <div key="PRINCIPAL">
-                <Card expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
-                    <CardTitle title={translate("aor.page.create",{name : translate("resources.session.name",{smart_count : 1})})} 
-                    actAsExpander={true}
-                    showExpandableButton={true}/>
-                    <CardText expandable={true}>
-                        <MultiLanguageTextPicker
-                            translateRoute="resources.session.fields.title"/>
-                        <MultiLanguageTextPicker
-                            translateRoute="resources.session.fields.content"
-                            multiLine={true}
-                            rows={4} />
-                    </CardText>
-
-                </Card>
-                <GameConfigurer  onConfigurationEnd={this.handleConfigurationEnd}/>
-            </div>
+            <Create {...this.props}>
+                <SessionForm />
+            </Create>
         )
     }
 })

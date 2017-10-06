@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 
 import { ADMIN, MANAGER, THERAPIST } from '../../../customControllers/PermissionsController'
 
-const mapStateToProps = state => ({ /*tokenUser: state.login.token*/ })
+const mapStateToProps = state => ({ loginUser: state.login.loginUser })
 
 export default connect(mapStateToProps)((props) => (
-    <List {...props}>
+    <List {...props} >
         {permissions => {
             return (permissions === ADMIN &&
                 (<Datagrid>
@@ -22,7 +22,7 @@ export default connect(mapStateToProps)((props) => (
                     <ShowButton />
                 </Datagrid>)
             ) || (permissions === MANAGER &&
-                (<Datagrid>
+                (<Datagrid filter={{ manager: props.loginUser }}>
                     <TextField source="id" />
                     <TextField source="name" />
                     <TextField source="description" />

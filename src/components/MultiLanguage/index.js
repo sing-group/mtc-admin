@@ -124,6 +124,7 @@ class MultiLanguajeTextPicker extends Component {
         const event = args[0]
         const currentLocale = locale ?  locale : this.state.currentLocale ;
         const messages = this.state.messages
+        this.props.onChangeValue(currentLocale,event.target.value)
         this.setState({
             messages : {
                 ...messages,

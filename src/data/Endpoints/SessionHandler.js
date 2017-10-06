@@ -96,10 +96,8 @@ export class SessionHandler extends BaseHandler {
      * @param {*array} item Manager JSON from MTC API
      */
     objectBuilder(item){
-        const institutionURL = item.institution.split("/")
         const aux = {
             ...item,
-            institution: institutionURL[institutionURL.length -1],
             [AOR_KEY_ATTRIBUTE] : item[MTC_KEY_ATTRIBUTE]
         }
         return aux

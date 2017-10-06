@@ -27,7 +27,8 @@ function gameBuilder(key, aditionalProps){
     })
     const game = {
         ...aditionalProps,
-        id : games[key].metadata.nameId,
+        id : games[key].metadata.id,
+        nameId : games[key].metadata.nameId,
         parameters: games[key].metadata.parameters,
         parametersValues,
         tasks : games[key].metadata.taskTypes,

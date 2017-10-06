@@ -15,9 +15,9 @@ const me = {
             }, {} )
         },
         languages : {
-            es : "Español",
-            en : "Inglés",
-            ga : "Gallego"
+            es_ES : "Español",
+            en_US : "Inglés",
+            gl_ES : "Gallego"
         },
         multilanguagePickerTitle : 'Idiomas',
         multilanguagePicker : 'Introduce valor para "%{idioma}"',

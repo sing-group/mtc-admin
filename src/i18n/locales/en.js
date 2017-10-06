@@ -14,9 +14,9 @@ import {parseids} from '../../utils/parseKeys'
             }, {} )
         },
         languages : {
-            es : "Spanish",
-            en : "English",
-            ga : "Galician"
+            es_ES : "Spanish",
+            en_US : "English",
+            gl_ES : "Galician"
         },
         multilanguagePickerTitle : 'Languages',
         multilanguagePicker : 'Insert value for "%{idioma}"',

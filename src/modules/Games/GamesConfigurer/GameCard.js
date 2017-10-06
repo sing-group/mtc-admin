@@ -44,7 +44,7 @@ class GameCard extends Component {
         return (
             <Card initiallyExpanded={this.state.expanded} onExpandChange={(expanded) => { this.state.expanded = expanded}} key={game}>
                 <CardHeader
-                    title={<span style={{color : game.valid ? 'black': 'red'}}>{translate("common.model.games."+parseids(game.id))}</span>}
+                    title={<span style={{color : game.valid ? 'black': 'red'}}>{translate("common.model.games."+parseids(game.nameId))}</span>}
                     actAsExpander={true}
                     showExpandableButton={true}
                 />
