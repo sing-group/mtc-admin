@@ -1,5 +1,13 @@
 import { BaseHandler } from './BaseHandler'
 
+import {
+    checkLoggedUser
+} from '../../customControllers/AuthController'
+
+import {
+    MANAGER
+} from '../../customControllers/PermissionsController'
+
 //relation between the default key for items in AOR and API for this entity
 const MTC_KEY_ATTRIBUTE = 'login'
 const AOR_KEY_ATTRIBUTE = 'id' // <- Its the same in all objects
@@ -20,8 +28,12 @@ export class TherapistHandler extends BaseHandler {
      * @param {*string} resource The resource name ej 'therapist'
      */
     GET_LIST({ pagination: { page, perPage }, sort: { field, order }, filter }) {
-        field = field == AOR_KEY_ATTRIBUTE ? MTC_KEY_ATTRIBUTE : field
-        return super.GET_LIST({ pagination: { page, perPage }, sort: { field, order }, filter })
+        let manager = undefined
+        if (manager = checkLoggedUser(MANAGER)) {
+            return super.GET_LIST({ pagination: { page, perPage }, sort: { field, order }, filter })
+        }
+        else
+            return super.GET_LIST({ pagination: { page, perPage }, sort: { field, order }, filter })
     }
 
 

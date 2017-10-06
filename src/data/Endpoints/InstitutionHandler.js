@@ -1,6 +1,15 @@
 import { BaseHandler } from './BaseHandler'
 import {stringify} from 'query-string'
 
+
+import {
+    checkLoggedUser
+} from '../../customControllers/AuthController'
+
+import {
+    MANAGER
+} from '../../customControllers/PermissionsController'
+
 //relation between the default key for items in AOR and API for this entity
 const MTC_KEY_ATTRIBUTE = 'id'
 const AOR_KEY_ATTRIBUTE = 'id' // <- Its the same in all objects
@@ -15,6 +24,20 @@ export class InstitutionHandler extends BaseHandler {
      */
     constructor(_urlApi) {
         super(_urlApi, resourceName)
+    }
+
+    /**
+     * Handles GET actions to API
+     * @param {*Object} param0 Params to build the url
+     * @param {*string} resource The resource name ej 'therapist'
+     */
+    GET_LIST({ pagination: { page, perPage }, sort: { field, order }, filter }) {
+        let manager = undefined
+        if (manager = checkLoggedUser(MANAGER)) {
+            return super.GET_LIST({ pagination: { page, perPage }, sort: { field, order }, filter }, `manager/${manager}/institution`)
+        }
+        else
+            return super.GET_LIST({ pagination: { page, perPage }, sort: { field, order }, filter })
     }
 
      /**

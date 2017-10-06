@@ -16,6 +16,10 @@ export const LOCAL_STORAGE_USER_CREDENTIALS_KEY = "token"
 export const LOCAL_STORAGE_USER_ROLE_KEY = "role"
 export const LOCAL_STORAGE_USER_NAME_KEY = "loginUser"
 
+export const checkLoggedUser = (ROLE) => {
+    return ROLE === localStorage.getItem(LOCAL_STORAGE_USER_ROLE_KEY) ? localStorage.getItem(LOCAL_STORAGE_USER_NAME_KEY): undefined;
+}
+
 export default async (type, params) => {
     // called when the user attempts to log in
     if (type === AUTH_LOGIN) {
@@ -47,9 +51,12 @@ export default async (type, params) => {
     // called when the API returns an error
     if (type === AUTH_ERROR) {
         const { status } = params;
+        
+        console.log("ERROR AUTH", params)
         if (status === 401 || status === 403) {
             localStorage.removeItem(LOCAL_STORAGE_USER_CREDENTIALS_KEY);
             localStorage.removeItem(LOCAL_STORAGE_USER_ROLE_KEY);
+            localStorage.removeItem(LOCAL_STORAGE_USER_NAME_KEY);
             return Promise.reject();
         }
         return Promise.resolve();
@@ -58,9 +65,10 @@ export default async (type, params) => {
     if (type === AUTH_CHECK) {
         // TODO: ask API is valid user???.
         // saves the user credentials anb role
+        console.log("CHECK")
         const token = atob(localStorage.getItem(LOCAL_STORAGE_USER_CREDENTIALS_KEY))
-        console.log("USUARIO",token)
-        return localStorage.getItem(LOCAL_STORAGE_USER_CREDENTIALS_KEY) ? Promise.resolve({loginUser: token.split(":")[0]}) : Promise.reject();
+        console.log("USUARIO",token, localStorage.getItem(LOCAL_STORAGE_USER_CREDENTIALS_KEY))
+        return localStorage.getItem(LOCAL_STORAGE_USER_CREDENTIALS_KEY) ? !console.log("SI") && Promise.resolve({loginUser: token.split(":")[0]}) : !console.log("NO") && Promise.reject();
     }
 
     if (type === AUTH_GET_PERMISSIONS) {
