@@ -1,4 +1,5 @@
 import { BaseHandler } from './BaseHandler'
+import {stringify} from 'query-string'
 
 import {
     LOCAL_STORAGE_USER_ROLE_KEY,
@@ -9,50 +10,52 @@ import {
     THERAPIST
 } from '../../customControllers/PermissionsController'
 
-
-
 //relation between the default key for items in AOR and API for this entity
-const MTC_KEY_ATTRIBUTE = 'login'
+const MTC_KEY_ATTRIBUTE = 'id'
 const AOR_KEY_ATTRIBUTE = 'id' // <- Its the same in all objects
 
-export class PatientHandler extends BaseHandler {
+export class AssignedSessionHandler extends BaseHandler {
     /**
      * 
      * @param {*string} _urlApi The base path to api root
      * @param {*string} _path The path to resource
      */
     constructor(_urlApi) {
-        super(_urlApi, "patient")
+        super(_urlApi, null) //its null cause the resource will be set on each method
     }
+
 
     /**
-     * Handles GET actions to API
-     * @param {*Object} param0 Params to build the url
-     * @param {*string} resource The resource name ej 'therapist'
-     */
-    GET_LIST({ pagination: { page, perPage }, sort: { field, order }, filter }) {
-        field = field == AOR_KEY_ATTRIBUTE ? MTC_KEY_ATTRIBUTE : field
-        return super.GET_LIST({ pagination: { page, perPage }, sort: { field, order }, filter })
-    }
-
-     /**
      * Handles POST new item actions to API
      * @param {*Object} param0 Object with the prop 'data' that contais the values to create the resource item
      * @param {*string} resource The resoruce name
      */
     CREATE({ data }) {
-        const loginUser = localStorage.getItem(LOCAL_STORAGE_USER_NAME_KEY)
-        const permission = localStorage.getItem(LOCAL_STORAGE_USER_ROLE_KEY)
+        const patient = data.patient
+        data.startDate = new Date(data.startDate).getTime()
+        data.endDate = new Date(data.endDate).getTime()
 
-        if (!data.therapist){
-            if (permission == THERAPIST)
-                data.therapist = loginUser
-            else
-                throw new Error("Must specify a therapist")
-        }
-        return super.CREATE({ data })
+        delete data.patient
+        return super.CREATE({ data },`patient/${patient}/games-session/assigned`)
      }
 
+    /**
+     * Handles GET by ID actions to API 
+     * @param {*Object} param0 Object with the prop id of the resource to get
+     * @param {*string} resource The resource name ej 'therapist'
+     */
+    GET_ONE({ id }) { 
+        return super.GET_ONE({id},"games-session/assigned")
+    }
+
+    /**
+     * Handles de delete actions of an item to API
+     * @param {*Object} param0 Object with the id and the previous data of the item to remove
+     * @param {*string} resource The resource name
+     */
+    DELETE({ id, previousData }) {
+        return super.DELETE({id, previousData}, "games-session/assigned")
+     }
 
     RESPONSE_GET_LIST(response, params) {
         console.log("HANDLE GET_LIST", response, params)
@@ -94,7 +97,7 @@ export class PatientHandler extends BaseHandler {
     objectBuilder(item){
         const aux = {
             ...item,
-            assignedSession : item.assignedSession ? item.assignedSession.map( as => as.id): [],
+            session: item.gamesSession ? item.gamesSession.id: null,
             [AOR_KEY_ATTRIBUTE] : item[MTC_KEY_ATTRIBUTE]
         }
         return aux

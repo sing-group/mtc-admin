@@ -54,7 +54,7 @@ export class SessionHandler extends BaseHandler {
      * @param {*string} resource The resource name ej 'therapist'
      */
     GET_ONE({ id }) { 
-        return super.GET_ONE({id},"game/session")
+        return super.GET_ONE({id},"games-session")
     }
 
 
@@ -96,8 +96,11 @@ export class SessionHandler extends BaseHandler {
      * @param {*array} item Manager JSON from MTC API
      */
     objectBuilder(item){
+        const plainNameLocales = {}
+        item.name.values && item.name.values.forEach( n => plainNameLocales["name"+n.key] = n.value)
         const aux = {
             ...item,
+            ...plainNameLocales,
             [AOR_KEY_ATTRIBUTE] : item[MTC_KEY_ATTRIBUTE]
         }
         return aux

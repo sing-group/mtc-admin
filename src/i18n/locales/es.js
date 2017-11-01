@@ -74,9 +74,23 @@ const me = {
         },
         patient: {
             name: 'Paciente |||| Pacientes',
+
+            fields: {
+                id : 'Login',
+                password : 'Contraseña',
+                assignedSession : 'Sesiones Asignadas'
+            },
+        },
+        assignedSession: {
+            name: 'Asignación |||| Asignaciones',
+
             fields: {
                 id : 'Identificador',
-                name: 'Nombre',
+                session : 'Sesión',
+                assignmentDate : 'Fecha de asignación',
+                startDate : 'Comienzo de sesión',
+                endDate : 'Finalización de sesión',
+                gamesSessionId : 'Sesión'
             },
         },
         manager: {

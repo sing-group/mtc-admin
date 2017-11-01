@@ -75,8 +75,21 @@ import {parseids} from '../../utils/parseKeys'
         patient: {
             name: 'Patient |||| Patients',
             fields: {
+                id : 'Login',
+                password : 'Password',
+                assignedSession : 'Assigned Sessions'
+            },
+        },
+        assignedSession: {
+            name: 'Assignment |||| Assignments',
+
+            fields: {
                 id : 'Identifier',
-                name: 'Name',
+                session : 'Session',
+                assignmentDate : 'Assignment Date',
+                startDate : 'Session Starts',
+                endDate : 'Session Ends',
+                gamesSessionId : 'Session'
             },
         },
         manager: {

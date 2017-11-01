@@ -86,12 +86,23 @@ const customApi = (apiUrl = API_URL, httpClient = httpClientDefault) => {
      * @returns {Promise} the Promise for a REST response
      */
     return (type, resource, params) => {
+        console.log("API HANDLING",type, resource, params)
         // For support where in request call mny times a GET_ONE
         if (type === GET_MANY) {
             return Promise.all(
-                params.ids.map(id => httpClient(`${apiUrl}/${resource}/${id}`))
+                params.ids.map(id => {
+                    const { url, options } = convertRESTRequestToHTTP(
+                        'GET_ONE',
+                        resource,
+                        { id }
+                    )
+                   return httpClient(url, options)
+                })
             ).then(responses => ({
-                data: responses.map(response => response.json),
+                data: responses.map(response => {
+                    const toret = convertHTTPResponseToREST(response, 'GET_ONE', resource, {  })
+                    return toret.data
+                }),
             }));
         }
         const { url, options } = convertRESTRequestToHTTP(

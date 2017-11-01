@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardText, CardTitle } from 'material-ui/Card';
 
-import { translate } from 'admin-on-rest'
+import { translate,Edit } from 'admin-on-rest'
 
 import  Paper from 'material-ui/Paper'
 import  RaisedButton  from 'material-ui/RaisedButton'
@@ -37,9 +37,9 @@ export default translate(class extends Component {
     render() {
         const { translate } = this.props
         return (
-            <Create {...this.props}>
+            <Edit {...this.props}>
                 <SessionForm />
-            </Create>
+            </Edit>
         )
     }
 })

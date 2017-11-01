@@ -1,6 +1,6 @@
 // in src/App.js
 import React from 'react';
-import { jsonServerRestClient, Resource, Admin } from 'admin-on-rest';
+import { jsonServerRestClient, Resource, Admin, Delete } from 'admin-on-rest';
 import messages from '../../i18n'
 import { DEFAULT_LOCALE } from '../../i18n/localesManager'
 
@@ -33,6 +33,9 @@ import PatientCreate from '../../modules/Patients/Create';
 import PatientShow from '../../modules/Patients/Show';
 import PatientEdit from '../../modules/Patients/Edit';
 import PatientDelete from '../../modules/Patients/Delete';
+
+import AssignedSessionCreate from '../../modules/AssignedSessions/Create';
+import AssignedSessionDelete from '../../modules/AssignedSessions/Delete';
 
 import {ADMIN,MANAGER,THERAPIST} from '../../customControllers/PermissionsController'
 
@@ -78,7 +81,7 @@ const App = () => (
                 <Resource
                     name="session"
                     list={Sessions}
-                   // edit={SessionEdit}
+                    edit={SessionEdit}
                     create={permissions === ADMIN ?  null : SessionCreate} />
                 : undefined,
                 permissions === THERAPIST ?
@@ -86,9 +89,16 @@ const App = () => (
                     name="patient"
                     list={Patients}
                     create={permissions === ADMIN?  null : PatientCreate}
-                    show={PatientShow}
+                    //show={PatientShow}
                     edit={permissions === ADMIN ?  null : PatientEdit}
                     remove={permissions === ADMIN ?  null : PatientDelete} />
+                : undefined,
+                permissions === THERAPIST ?
+                <Resource
+                    name="assignedSession"
+                    create={permissions === ADMIN ?  null : AssignedSessionCreate}
+                    remove={permissions === ADMIN ?  null : AssignedSessionDelete}
+                   />
                 : undefined
         ]}
     </Admin>

@@ -17,20 +17,24 @@ const sessionStyle = {
 const mapStateToProps = state => ({ loginUser: state.login.loginUser })
 
 const SessionsGrid =({ ids, data, basePath, translate, locale }) => (
-    !console.log("DATOS SESIONES",ids, data, locale) && <div style={{ margin: '1em', display: "flex", flexWrap: "wrap", justifyContent : "center"  }}>
+    !console.log("DATOS SESIONES",ids, data, locale) 
+    && <div style={{ margin: '1em', display: "flex", flexWrap: "wrap", justifyContent : "center", alignItems: "center" , height:"min-content" }}>
         {ids.map(id => 
-            <Card key={id} style={{ margin : 10, minWidth : 200, width : "23%" }}className='sessionCard'>
-                
+            <Card key={id} style={{  margin : 10, minWidth : 200, maxWidth : 200 , height: "100%"}} >
                 <CardHeader
                     title={data[id].name.values.find( t => t.key === locale).value }
                     subtitle={data[id].description.values.find( t => t.key === locale).value }>
                 
                 </CardHeader>
-                <CardActions style={{ textAlign: 'right' }}>
+                <CardText style={{flexBasis: "100%"}}>
                 {generateSummarySession(data[id].gameConfiguration.map(g =>{
                     const game = Object.keys(GamesMetadata).find( key => GamesMetadata[key].metadata._id === g.gameId)
                     return GamesMetadata[game]
-                }) , translate)}<EditButton resource="session" basePath={basePath} record={data[id]} />
+                }) , translate)}
+                    </CardText>
+                <CardActions style={{ textAlign: 'right', backgroundColor: "#eaeaea"}}>
+                
+                <EditButton resource="session" basePath={basePath} record={data[id]} />
             </CardActions>
             </Card>
         )}

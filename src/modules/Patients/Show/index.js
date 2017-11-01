@@ -5,7 +5,7 @@ import { Show, SimpleShowLayout, Edit, Datagrid, SimpleForm, DisabledInput, Date
 export default translate(({translate, ...props}) => (
     <Show {...props}>
         <SimpleShowLayout>
-            <TextField source="name" />
+            <TextField source="login" />
         </SimpleShowLayout>
     </Show>
 ));
