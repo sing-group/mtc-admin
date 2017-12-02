@@ -10,9 +10,12 @@ import {
     THERAPIST
 } from '../../customControllers/PermissionsController'
 
+
 //relation between the default key for items in AOR and API for this entity
 const MTC_KEY_ATTRIBUTE = 'id'
 const AOR_KEY_ATTRIBUTE = 'id' // <- Its the same in all objects
+
+
 
 export class AssignedSessionHandler extends BaseHandler {
     /**
@@ -23,7 +26,24 @@ export class AssignedSessionHandler extends BaseHandler {
     constructor(_urlApi) {
         super(_urlApi, null) //its null cause the resource will be set on each method
     }
+    /**
+     * Handles GET actions to API
+     * @param {*Object} param0 Params to build the url
+     * @param {*string} resource The resource name ej 'therapist'
+     */
+    GET_LIST({ pagination: { page, perPage }, sort: { field, order }, filter }) {
 
+        
+
+        if (filter.patient){
+            const patient = filter.patient
+            delete filter.patient
+            return super.GET_LIST({ pagination: { page, perPage }, sort: { field, order }, filter },`patient/${patient}/games-session/assigned`)
+            
+        }
+
+        return super.GET_LIST({ pagination: { page, perPage }, sort: { field, order }, filter })
+    }
 
     /**
      * Handles POST new item actions to API
@@ -47,7 +67,18 @@ export class AssignedSessionHandler extends BaseHandler {
     GET_ONE({ id }) { 
         return super.GET_ONE({id},"games-session/assigned")
     }
-
+    /**
+     * Handle the puts actions to update a item
+     * @param {*Object} param0 Object with props 'id', 'data' and 'previousData' that contais the id of item to update, data to update and de previous data if its needed
+     * @param {*} resource The resource name
+     */
+    UPDATE({ id, data, previousData }) { 
+        const dataNew = {
+            startDate : data.startDate,
+            endDate : data.endDate
+        }
+        return super.UPDATE({ id,dataNew,previousData},"games-session/assigned")
+    }
     /**
      * Handles de delete actions of an item to API
      * @param {*Object} param0 Object with the id and the previous data of the item to remove
@@ -97,7 +128,9 @@ export class AssignedSessionHandler extends BaseHandler {
     objectBuilder(item){
         const aux = {
             ...item,
+            gamesSessionId: item.gamesSession ? item.gamesSession.id: null,
             session: item.gamesSession ? item.gamesSession.id: null,
+            patient: item.patient ? item.patient.login: null,
             [AOR_KEY_ATTRIBUTE] : item[MTC_KEY_ATTRIBUTE]
         }
         return aux

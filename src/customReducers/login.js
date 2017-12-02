@@ -1,11 +1,21 @@
 import { USER_LOGIN_SUCCESS, USER_LOGOUT } from 'admin-on-rest';
 
-export default (previousState = {}, { type, payload }) => {
+import {
+LOCAL_STORAGE_USER_NAME_KEY,
+LOCAL_STORAGE_USER_ROLE_KEY
+} from '../customControllers/AuthController'
+
+const initialState = {
+    loginUser : localStorage.getItem(LOCAL_STORAGE_USER_NAME_KEY),
+    permission : localStorage.getItem(LOCAL_STORAGE_USER_ROLE_KEY)
+}
+export default (previousState = initialState, { type, payload }) => {
     if (type == USER_LOGIN_SUCCESS)
     {
-        console.log("ALMACENADO USUARIO", payload.loginUser)
+        console.log("ALMACENADO USUARIO", payload)
         return {
-            loginUser : payload.loginUser
+            loginUser : payload.loginUser,
+            permission : payload.permission
         }
     }
 

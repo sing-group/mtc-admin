@@ -40,7 +40,7 @@ export default async (type, params) => {
         localStorage.setItem(LOCAL_STORAGE_USER_CREDENTIALS_KEY, token);
         localStorage.setItem(LOCAL_STORAGE_USER_ROLE_KEY, permission);
 
-        return Promise.resolve({loginUser: username}); // returns a promise with the credentials of logged user. Will be saved in state
+        return Promise.resolve({loginUser: username, permission : permission}); // returns a promise with the credentials of logged user. Will be saved in state
     }
     // called when the user clicks on the logout button
     if (type === AUTH_LOGOUT) {

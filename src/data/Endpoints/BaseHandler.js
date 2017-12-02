@@ -19,7 +19,7 @@ export class BaseHandler {
         this.URL = _urlApi
     }
 
-    queryBuilder({ pagination: { page, perPage }, sort: { field, order }, filter }) {
+    queryBuilder({ pagination: { page = 1, perPage = 10 }, sort: { field, order }, filter }) {
         //Query params
         const query = {
             /**
@@ -46,7 +46,8 @@ export class BaseHandler {
              */
             ...flattenObject(filter)
         };
-
+        if (Number.isNaN(page))
+            page = 1
         //fills the object query with the params needed
         query[API_CONTRACT.sortByFieldQuery] = field
         query[API_CONTRACT.sortSpecificationQuery] = order
@@ -70,6 +71,7 @@ export class BaseHandler {
         console.log("URL GET_LIST", url)
         return { url, options: {} }
     }
+
 
     /**
      * Handles GET by ID actions to API 
@@ -108,7 +110,7 @@ export class BaseHandler {
      */
     UPDATE({ id, data, previousData },resource) { 
         console.log("REQUESTING UPDATE",{ id, data, previousData }, resource || this.Path)
-        const url = `${this.URL}/${resource || this.Path}/${id}`;
+        const url = `${this.URL}/${resource || this.Path }/${id}`;
         
         const options = {}
 

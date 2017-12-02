@@ -13,28 +13,13 @@ import { Link } from 'react-router-dom';
 import FlatButton from 'material-ui/FlatButton';
 import Back from 'material-ui/svg-icons/hardware/keyboard-backspace';
 
-const mapStateToProps = state => ({patient : state.context.patient.editing})
+const mapStateToProps = state => ({})
 export default translate(connect(mapStateToProps)((props) => !console.log("CREATING ASSIGNED", props) && (
-    <Create {...props} >
-        <SimpleForm defaultValue={{ patient: props.patient }} redirect="list">
+    <Edit {...props} >
+        <SimpleForm redirect={false}>
             <DateInput source="startDate" validate={[required]} />
             <DateInput source="endDate" validate={[required]} />
 
-            <ReferenceInput
-                allowEmpty
-                source="gamesSessionId"
-                reference="session"
-                validate={[required]}>
-                <SelectInput optionText={'name' + props.locale} validate={[required]} />
-            </ReferenceInput>
-
         </SimpleForm>
-    </Create>
+    </Edit>
 )));
-
-const cardActionStyle = {
-    zIndex: 2,
-    display: 'inline-block',
-    float: 'right',
-};
-

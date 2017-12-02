@@ -1,6 +1,6 @@
 import messages from '@sing-group/mtc-games/src/i18n/gl_ES'
 import {parseids} from '../../utils/parseKeys'
- export default {
+const me =  {
     common: {
         configuration : {
             title : "Opcions",
@@ -28,6 +28,7 @@ import {parseids} from '../../utils/parseKeys'
         configurationItem : "Opcions"
     },
     session:{
+        noTranslation : 'Sen valor en galego',
         create: {
             addGame : "Engadir xogo",
             endConfiguration: "Rematar"
@@ -76,8 +77,14 @@ import {parseids} from '../../utils/parseKeys'
             fields: {
                 id : 'Login',
                 password : 'Contrasinal',
-                assignedSession : 'Sesións Asignadas'
+                assignedSession : 'Sesións Asignadas',
+                assignmentDataEdit : 'Editar Asignacions'
             },
+            parcialEdits : {
+                personalData : 'Datos do paciente',
+                assignmentData : 'Asignacion das sesions',
+                assignmentDataEdit : 'Editar Asignacions'
+            }
         },
         assignedSession: {
             name: 'Asignación |||| Asignacións',
@@ -178,3 +185,6 @@ import {parseids} from '../../utils/parseKeys'
         },
     },
 };
+
+console.log("GA",me)
+export default me

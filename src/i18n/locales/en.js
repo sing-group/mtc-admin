@@ -1,11 +1,11 @@
 import messages from '@sing-group/mtc-games/src/i18n/en_US'
 import {parseids} from '../../utils/parseKeys'
 
- export default {
+const   me =  {
     common: {
         configuration : {
             title : "Configuration",
-            languageSelector: 'Language'
+            languageSelector: 'Languague'
         },
         model : {
             games : Object.keys(messages).reduce( (accum,key) => {
@@ -29,6 +29,7 @@ import {parseids} from '../../utils/parseKeys'
         configurationItem : "Configuration"
     },
     session:{
+        noTranslation : 'No english value',
         create: {
             addGame : "Add Game",
             endConfiguration: "Finalize"
@@ -79,6 +80,11 @@ import {parseids} from '../../utils/parseKeys'
                 password : 'Password',
                 assignedSession : 'Assigned Sessions'
             },
+            parcialEdits : {
+                personalData : 'Patient Data',
+                assignmentData : 'Session Assignment',
+                assignmentDataEdit : 'Edit Assignments'
+            }
         },
         assignedSession: {
             name: 'Assignment |||| Assignments',
@@ -108,3 +114,6 @@ import {parseids} from '../../utils/parseKeys'
 
     },
 }
+
+console.log("EN",me)
+export default me

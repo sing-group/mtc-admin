@@ -22,8 +22,8 @@ const SessionsGrid =({ ids, data, basePath, translate, locale }) => (
         {ids.map(id => 
             <Card key={id} style={{  margin : 10, minWidth : 200, maxWidth : 200 , height: "100%"}} >
                 <CardHeader
-                    title={data[id].name.values.find( t => t.key === locale).value }
-                    subtitle={data[id].description.values.find( t => t.key === locale).value }>
+                    title={data[id].name.values.find( t => t.key === locale) ? data[id].name.values.find( t => t.key === locale).value : translate('session.noTranslation') }
+                    subtitle={data[id].description.values.find( t => t.key === locale) ? data[id].description.values.find( t => t.key === locale) .value : translate('session.noTranslation') }>
                 
                 </CardHeader>
                 <CardText style={{flexBasis: "100%"}}>

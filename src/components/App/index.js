@@ -33,9 +33,12 @@ import PatientCreate from '../../modules/Patients/Create';
 import PatientShow from '../../modules/Patients/Show';
 import PatientEdit from '../../modules/Patients/Edit';
 import PatientDelete from '../../modules/Patients/Delete';
+import PatientSagas from '../../modules/Patients/Sagas';
 
 import AssignedSessionCreate from '../../modules/AssignedSessions/Create';
 import AssignedSessionDelete from '../../modules/AssignedSessions/Delete';
+import AssignedSessionList from '../../modules/AssignedSessions/List';
+import AssignedSessionEdit from '../../modules/AssignedSessions/Edit';
 
 import {ADMIN,MANAGER,THERAPIST} from '../../customControllers/PermissionsController'
 
@@ -45,9 +48,12 @@ import routes from '../../routes'
 import menu from '../Menu'
 import layout from '../Layout'
 import login from '../../customReducers/login'
+import actionLogger from '../../customReducers/actionLogger'
+import context from '../../customReducers/context'
+import patientsSaga from '../../modules/Patients/Sagas';
 
 const App = () => (
-    <Admin /*appLayout={layout}*/ customRoutes={routes} /*menu={menu} */ customReducers={{ login }} authClient={auth} dashboard={Dashboard} restClient={ApiClient(/*Url string param HERE overrides the API_URL in config.js*/)} locale={DEFAULT_LOCALE} messages={messages}>
+    <Admin /*appLayout={layout}*/ customRoutes={routes} customSagas={[PatientSagas]} menu={menu}  customReducers={{ login,context, actionLogger  }} authClient={auth} dashboard={Dashboard} restClient={ApiClient(/*Url string param HERE overrides the API_URL in config.js*/)} locale={DEFAULT_LOCALE} messages={messages}>
         {permissions => [
             permissions === ADMIN ?
                 <Resource
@@ -97,6 +103,10 @@ const App = () => (
                 <Resource
                     name="assignedSession"
                     create={permissions === ADMIN ?  null : AssignedSessionCreate}
+
+                    showList={false}
+                    list={permissions === ADMIN ?  null : AssignedSessionList}
+                    edit={permissions === ADMIN ?  null : AssignedSessionEdit}
                     remove={permissions === ADMIN ?  null : AssignedSessionDelete}
                    />
                 : undefined

@@ -118,7 +118,9 @@ export class SessionHandler extends BaseHandler {
         responseData.forEach(function(item) {
             aux.push(this.objectBuilder(item))
         },this);
-        return aux
+        return aux.sort(function(a, b) {
+            return a.id < b.id;
+        });
     }
 
 }

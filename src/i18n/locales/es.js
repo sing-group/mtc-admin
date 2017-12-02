@@ -30,6 +30,7 @@ const me = {
         configurationItem : "Configuración"
     },
     session:{
+        noTranslation : 'Sin valor en español',
         create: {
             addGame : "Añadir juego",
             endConfiguration: "Finalizar configuración"
@@ -80,6 +81,11 @@ const me = {
                 password : 'Contraseña',
                 assignedSession : 'Sesiones Asignadas'
             },
+            parcialEdits : {
+                personalData : 'Datos paciente',
+                assignmentData : 'Asignacion Sesiones',
+                assignmentDataEdit : 'Editar Asiganciones'
+            }
         },
         assignedSession: {
             name: 'Asignación |||| Asignaciones',
@@ -181,5 +187,5 @@ const me = {
         },
     },
 };
-console.log(me)
+console.log("ES",me)
 export default me

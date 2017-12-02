@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { changeLocale as changeLocaleAction, translate } from 'admin-on-rest';
+import { changeLocale as changeLocaleAction, translate, MenuItemLink } from 'admin-on-rest';
 
 import MenuItem from 'material-ui/MenuItem';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
@@ -23,14 +23,14 @@ class LanguageSwitcher extends Component {
                 rightIcon={<ArrowDropRight />}
                 leftIcon={<SettingsIcon />}
                 menuItems={[
-                    <MenuItem  onTouchTap={onMenuTap} primaryText="English" onClick={() => {
-                        this.changeLang('en')
+                    <MenuItem  primaryText="English" onClick={() => {
+                        this.changeLang('en_US')
                     }} />,
-                    <MenuItem onTouchTap={onMenuTap}  primaryText="Galego" onClick={() => {
-                        this.changeLang('ga')
+                    <MenuItem  primaryText="Galego" onClick={() => {
+                        this.changeLang('gl_ES')
                     }} />,
-                    <MenuItem onTouchTap={onMenuTap}  primaryText="Español" onClick={() => {
-                        this.changeLang('es')
+                    <MenuItem primaryText="Español" onClick={() => {
+                        this.changeLang('es_ES')
                     }} />,
                 ]}
             />
