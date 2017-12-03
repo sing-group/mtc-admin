@@ -15,6 +15,11 @@ const games = {
     }
 }
 
+const relation = {
+    'recognition' : games.RECOGNITION,
+    'verbalFluency' : games.VERBAL_FLUENCY
+}
+
 console.log("JUEGOS", games)
 function gameBuilder(key, aditionalProps){
     console.log("CONTRUYENDO", key)
@@ -39,7 +44,25 @@ function gameBuilder(key, aditionalProps){
     return game
 }
 
-export { games, gameBuilder }
+function gameAdapter(game){
+    const key = game.gameId
+    console.log("Adaptando",game, key)
+    const parametersValues = game.parameter.reduce( (p,c) =>{p[c.key] = c.value; return p},{})
+
+    const adaptedGame = {
+        id : relation[key].metadata.id,
+        nameId : relation[key].metadata.nameId,
+        parameters: relation[key].metadata.parameters,
+        parametersValues,
+        tasks : relation[key].metadata.taskTypes,
+        valid: true,
+    }
+    
+    console.log("CONSTRUIDO", adaptedGame)
+    return adaptedGame
+}
+
+export { games, gameBuilder, gameAdapter }
 
 
 

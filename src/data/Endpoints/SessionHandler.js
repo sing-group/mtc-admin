@@ -47,6 +47,16 @@ export class SessionHandler extends BaseHandler {
         const loginUser = localStorage.getItem(LOCAL_STORAGE_USER_NAME_KEY)
         return super.CREATE({ data },`therapist/${loginUser}/gamesession`)
      }
+     UPDATE({id,data,previousData}) {
+         console.log("PREHANDLINGS", {id,data,previousData})
+         const sendData = {
+             game : data.game,
+             name : data.name,
+             description : data.description
+         }
+        return super.UPDATE({id,data: sendData,previousData},`games-session`)
+     }
+
 
     /**
      * Handles GET by ID actions to API 

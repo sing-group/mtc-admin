@@ -52,6 +52,7 @@ class GameCard extends Component {
                     <div style={{display : 'flex', flexDirection: "column"}}>
                     {
                         game.parameters.map( param => {
+                            console.log("ESTABLECIENDO INPUT", param, param.id,game.parametersValues[param.id], game)
                             return InputBuilder(game.parametersValues[param.id],param,onModifyPropGame)
                         })
                     }

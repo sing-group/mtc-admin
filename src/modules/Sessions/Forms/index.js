@@ -38,7 +38,7 @@ export default translate(class extends Component {
         super(props);
         this.state = {
             expanded: true,
-            record: {}
+            record: props.record? props.record : {}
         };
         console.log("PROPIEDADES ARRAY SELECT", props)
 
@@ -102,20 +102,40 @@ export default translate(class extends Component {
     render() {
         const { translate } = this.props
         console.log("Propiedades recibidas el formulario", this.props)
+        const names = {
+
+        }
+
+        const descriptions = {
+
+        }
+        if (this.props.record.name ){
+            this.props.record.name.values.forEach(t => {
+                names[t.key] = t.value
+            });
+        }
+        if (this.props.record.description ){
+
+            this.props.record.description.values.forEach(t => {
+                descriptions[t.key] = t.value
+            });
+        }
         return (
             <div key="PRINCIPAL">
                 <div style={{ marginLeft: 20 }}>
                     <MultiLanguageTextPicker
+                        messages={names}
                         translateRoute="resources.session.fields.title"
                         onChangeValue={(k, v) => this.handleChange("name", k, v)} />
                     <MultiLanguageTextPicker
                         translateRoute="resources.session.fields.content"
+                        messages={descriptions}
                         multiLine={true}
                         rows={4}
                         onChangeValue={(k, v) => this.handleChange("description", k, v)} />
 
                 </div>
-                <GamesInput onConfigurationEnd={this.handleConfigurationEnd} />
+                <GamesInput games={ this.props.record.gameConfiguration? this.props.record.gameConfiguration : []} onConfigurationEnd={this.handleConfigurationEnd} />
             </div>
         )
     }

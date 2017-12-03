@@ -49,7 +49,7 @@ class MultiLanguajeTextPicker extends Component {
             },
             currentLocale: props.locale,
             open : false,
-            messages : {}
+            messages : props.messages ? props.messages : {}
         }
 
         let textArea = propsNormal

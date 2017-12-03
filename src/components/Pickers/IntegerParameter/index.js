@@ -17,11 +17,11 @@ const Input = translate(class TextFieldExampleControlled extends React.Component
     };
   }
   componentDidMount() {
-
     this.check(this.props.value)
   }
 
   check = (v) => {
+    console.log("CHEKING ", v)
     const value = parseInt(v)
     const max = this.props.parameter._max
     const min = this.props.parameter._min

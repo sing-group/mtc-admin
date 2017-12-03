@@ -38,7 +38,7 @@ export default translate(class extends Component {
         const { translate } = this.props
         return (
             <Edit {...this.props}>
-                <SessionForm />
+                <SessionForm {...this.props}/>
             </Edit>
         )
     }

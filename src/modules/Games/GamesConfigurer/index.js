@@ -16,7 +16,7 @@ import IconButton from 'material-ui/IconButton';
 import {parseids} from '../../../utils/parseKeys'
 
 import { buildIconTooltiped } from '../../../data/Games/taskTypes'
-import { gameBuilder } from '../../../data/Games/games'
+import { gameBuilder , gameAdapter } from '../../../data/Games/games'
 
 import { grey50 as bgColor } from 'material-ui/styles/colors';
 
@@ -52,12 +52,10 @@ export default translate(class extends Component {
 
     constructor(props) {
         super(props);
-
+        console.log("PROPIEDAES GAME", props)
         this.state = {
             open: false,
-            games: [
-                
-            ]
+            games: props.games.map(g => gameAdapter(g))
         }
     }
 
@@ -75,6 +73,7 @@ export default translate(class extends Component {
     }
 
     onGamesAdded(games : string[]){
+        console.log("JUEGOS ", this.state.games)
         this.setState({
             games : [
                 ...this.state.games,
