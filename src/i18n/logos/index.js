@@ -1,8 +1,8 @@
 import {SupportedLocales} from '../localesManager'
 
 
-const Logos = {}
+const Logos = {};
 
-SupportedLocales.map( locale => Logos[locale] = require(`./${locale}.png`))
+SupportedLocales.map(locale => Logos[locale] = require(`./${locale}.png`));
 
-export { Logos }
+export {Logos}

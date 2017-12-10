@@ -1,20 +1,19 @@
-import { USER_LOGIN_SUCCESS, USER_LOGOUT } from 'admin-on-rest';
-import { parse} from 'query-string';
+import {USER_LOGIN_SUCCESS, USER_LOGOUT} from 'admin-on-rest';
+import {parse} from 'query-string';
 
 const initialState = {
-    patient : {
-        editing : null
-    }
-}
+  patient: {
+    editing: null
+  }
+};
 
-export default (previousState = initialState, { type, payload }) => {
-    const newContexto = previousState
-    if (type == '@@router/LOCATION_CHANGE')
-    {
-        if (payload.pathname == "/assignedSession" && parse(payload.search).patient != undefined){
-            newContexto.patient.editing = parse(payload.search).patient
-        }
+export default (previousState = initialState, {type, payload}) => {
+  const newContext = previousState;
+  if (type == '@@router/LOCATION_CHANGE') {
+    if (payload.pathname == "/assignedSession" && parse(payload.search).patient != undefined) {
+      newContext.patient.editing = parse(payload.search).patient
     }
+  }
 
-    return newContexto;
+  return newContext;
 }

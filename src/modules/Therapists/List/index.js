@@ -1,19 +1,19 @@
 import React from 'react';
-import { List, Datagrid, TextField, ReferenceField, EditButton, ShowButton } from 'admin-on-rest';
-import { connect } from 'react-redux';
+import {Datagrid, EditButton, List, ReferenceField, ShowButton, TextField} from 'admin-on-rest';
+import {connect} from 'react-redux';
 
 
-const mapStateToProps = state => ( { userLogin: state.login.userLogin })
+const mapStateToProps = state => ({userLogin: state.login.userLogin});
 
 export default connect(mapStateToProps)((props) => (
-    <List {...props}> 
-        <Datagrid >
-            <TextField source="name" />
-            <ReferenceField source="institution" reference="institution" linkType="none">
-                <TextField source="name" />
-            </ReferenceField>
-            <EditButton />
-            <ShowButton />
-        </Datagrid>
-    </List>
+  <List {...props}>
+    <Datagrid>
+      <TextField source="name"/>
+      <ReferenceField source="institution" reference="institution" linkType="none">
+        <TextField source="name"/>
+      </ReferenceField>
+      <EditButton/>
+      <ShowButton/>
+    </Datagrid>
+  </List>
 ));

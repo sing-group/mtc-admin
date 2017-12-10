@@ -1,18 +1,41 @@
 import React from 'react';
-import { Create, Edit, SimpleForm, DisabledInput, TextInput, DateInput, LongTextInput, ReferenceManyField, Datagrid, TextField, DateField, EditButton , ReferenceInput, SelectInput} from 'admin-on-rest';
-import { required, minLength, maxLength, minValue, maxValue, number, regex, email, choices } from 'admin-on-rest';
-import { connect } from 'react-redux';
+import {
+  choices,
+  Create,
+  Datagrid,
+  DateField,
+  DateInput,
+  DisabledInput,
+  Edit,
+  EditButton,
+  email,
+  LongTextInput,
+  maxLength,
+  maxValue,
+  minLength,
+  minValue,
+  number,
+  ReferenceInput,
+  ReferenceManyField,
+  regex,
+  required,
+  SelectInput,
+  SimpleForm,
+  TextField,
+  TextInput
+} from 'admin-on-rest';
+import {connect} from 'react-redux';
 
 
-const mapStateToProps = state => ({ idUser: state.login.id })
+const mapStateToProps = state => ({idUser: state.login.id});
 
 export default connect(mapStateToProps)((props) => (
-    <Edit {...props}>
-        <SimpleForm>
-            <TextInput source="name" validate={required} />
-            <ReferenceInput source="institution" reference="institution" filter={{ director_id: props.idUser }}>
-                <SelectInput optionText="name" />
-            </ReferenceInput>
-        </SimpleForm>
-    </Edit>
+  <Edit {...props}>
+    <SimpleForm>
+      <TextInput source="name" validate={required}/>
+      <ReferenceInput source="institution" reference="institution" filter={{director_id: props.idUser}}>
+        <SelectInput optionText="name"/>
+      </ReferenceInput>
+    </SimpleForm>
+  </Edit>
 ));

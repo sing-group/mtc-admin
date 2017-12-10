@@ -1,7 +1,6 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
-import Configuration from './components/Configuration';
+import {Route} from 'react-router-dom';
 
 export default [
-    //<Route exact path="/configuration" component={Configuration} />,
+  //<Route exact path="/configuration" component={Configuration} />,
 ];

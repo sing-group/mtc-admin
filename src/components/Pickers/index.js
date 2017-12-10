@@ -4,9 +4,9 @@ import MinutesParameter from './MinutesParameter'
 import SecondsParameter from './SecondsParameter'
 
 export default {
-    BooleanParameter,
-    IntegerParameter,
-    MinutesParameter,
-    SecondsParameter
+  BooleanParameter,
+  IntegerParameter,
+  MinutesParameter,
+  SecondsParameter
 }
 
