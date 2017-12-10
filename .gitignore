@@ -9,6 +9,18 @@
 # production
 /build
 
+# WebStrom
+.idea
+
+# VSCode
+.vscode
+
+# NPM
+.npmrc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
 # misc
 .DS_Store
 .env.local
@@ -16,6 +28,3 @@
 .env.test.local
 .env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
