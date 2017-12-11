@@ -68,6 +68,8 @@ export class BaseHandler {
   CREATE({data}, resource) {
     const url = `${this.url}/${resource || this.path}`;
 
+    delete data.role;
+
     const options = {
       method: 'POST',
       body: JSON.stringify(data)

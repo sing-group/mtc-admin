@@ -1,23 +1,9 @@
 import React from 'react';
 import {
-  choices,
-  Create,
-  Datagrid,
-  DateField,
-  DateInput,
-  DisabledInput,
   Edit,
-  EditButton,
   email,
-  LongTextInput,
-  maxLength,
-  maxValue,
   minLength,
-  minValue,
-  number,
   ReferenceInput,
-  ReferenceManyField,
-  regex,
   required,
   SelectInput,
   SimpleForm,
@@ -32,9 +18,13 @@ const mapStateToProps = state => ({idUser: state.login.id});
 export default connect(mapStateToProps)((props) => (
   <Edit {...props}>
     <SimpleForm>
-      <TextInput source="name" validate={required}/>
+      <TextField source="login"/>
+      <TextInput source="password" validate={[minLength(6)]}/>
+      <TextInput source="email" validate={[required, email]}/>
+      <TextInput source="name" validate={[required]}/>
+      <TextInput source="surname" validate={[required]}/>
       <ReferenceInput source="institution" reference="institution" filter={{director_id: props.idUser}}>
-        <SelectInput optionText="name"/>
+        <SelectInput optionText="name" validate={[required]}/>
       </ReferenceInput>
     </SimpleForm>
   </Edit>

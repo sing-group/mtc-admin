@@ -1,29 +1,11 @@
 import React from 'react';
 import {
-  choices,
   Create,
-  Datagrid,
-  DateField,
-  DateInput,
-  DisabledInput,
-  Edit,
-  EditButton,
-  email,
-  LongTextInput,
-  maxLength,
-  maxValue,
-  minLength,
-  minValue,
-  number,
   ReferenceInput,
-  ReferenceManyField,
-  regex,
   required,
   SelectInput,
   SimpleForm,
-  TextField,
   TextInput,
-  translate
 } from 'admin-on-rest';
 
 const validateInstitutionCreation = (values, {translate}) => {
@@ -44,7 +26,7 @@ export default (props) => (
         source="manager"
         reference="manager"
         validate={[required]}>
-        <SelectInput optionText="login" validate={[required]}/>
+        <SelectInput optionText="fullname" validate={[required]}/>
       </ReferenceInput>
     </SimpleForm>
   </Create>

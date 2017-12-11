@@ -1,12 +1,14 @@
 import React from 'react';
-import {DateField, EditButton, ReferenceField, RichTextField, Show, SimpleShowLayout, TextField} from 'admin-on-rest';
+import {ReferenceField, Show, SimpleShowLayout, TextField} from 'admin-on-rest';
 
 export default (props) => (
   <Show {...props}>
     <SimpleShowLayout>
       <TextField source="name"/>
+      <TextField source="description"/>
+      <TextField source="address"/>
       <ReferenceField source="manager" reference="manager" linkType="false">
-        <TextField source="name"/>
+        <TextField source="fullname"/>
       </ReferenceField>
     </SimpleShowLayout>
   </Show>

@@ -7,6 +7,7 @@ import {DashboardMenuItem, MenuItemLink, translate} from 'admin-on-rest';
 import Divider from 'material-ui/Divider';
 
 import {getPermissions} from '../../customControllers/PermissionsController';
+import { getResources } from "admin-on-rest/lib/reducer"
 
 import LanguageSwitcher from '../LanguageSwitcher';
 
@@ -35,15 +36,17 @@ const translatedResourceName = (resource, translate) =>
 class Menu extends Component {
   render() {
     const {hasDashboard, onMenuTap, resources, logout, translate} = this.props;
+
     return (
       <div style={styles.main}>
         {hasDashboard && <DashboardMenuItem onClick={onMenuTap}/>}
         {
           resources.map(resource => (
             <MenuItemLink
-              key={resource}
-              to={`/${resource}`}
-              primaryText={translatedResourceName(resource, translate)}
+              leftIcon={<resource.icon />}
+              key={resource.name}
+              to={`/${resource.name}`}
+              primaryText={translatedResourceName(resource.name, translate)}
               onClick={onMenuTap}
             />
           ))
@@ -62,7 +65,8 @@ Menu.propTypes = {
   logout: PropTypes.element,
   onMenuTap: PropTypes.func,
   resources: PropTypes.array,
-  translate: PropTypes.func
+  translate: PropTypes.func,
+  resourceEntities: PropTypes.array
 };
 
 Menu.defaultProps = {
@@ -70,7 +74,7 @@ Menu.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  resources: getPermissions(state.login.permission) || []
+  resources: getResources(state)
 });
 
 export default translate(connect(mapStateToProps)(Menu));

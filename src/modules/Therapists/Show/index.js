@@ -1,23 +1,22 @@
 import React from 'react';
 import {
-  Datagrid,
-  DateField,
-  DisabledInput,
-  Edit,
-  EditButton,
-  ReferenceManyField,
+  ReferenceField,
   Show,
-  SimpleForm,
   SimpleShowLayout,
   TextField,
-  TextInput,
   translate
 } from 'admin-on-rest';
 
 export default translate(({translate, ...props}) => (
   <Show {...props}>
     <SimpleShowLayout>
+      <TextField source="login"/>
       <TextField source="name"/>
+      <TextField source="surname"/>
+      <TextField source="email"/>
+      <ReferenceField source="institution" reference="institution" linkType="false">
+        <TextField source="name"/>
+      </ReferenceField>
     </SimpleShowLayout>
   </Show>
 ));

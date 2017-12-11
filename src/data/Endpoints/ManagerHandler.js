@@ -20,11 +20,9 @@ export class ManagerHandler extends BaseHandler {
    * @param {*} resource The resource name
    */
   UPDATE({id, data, previousData}, resource) {
-    const url = `${this.url}/${resource || this.path }`;
+    const url = `${this.url}/${resource || this.path }/${data.login}`;
 
     const managerData = {
-      role: data.role,
-      login: data.login,
       email: data.email,
       name: data.name,
       surname: data.surname

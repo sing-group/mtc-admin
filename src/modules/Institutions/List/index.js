@@ -3,10 +3,8 @@ import {
   Datagrid,
   EditButton,
   List,
-  Permission,
   ReferenceField,
   ShowButton,
-  SwitchPermissions,
   TextField
 } from 'admin-on-rest';
 import {connect} from 'react-redux';
@@ -33,9 +31,9 @@ export default connect(mapStateToProps)((props) => (
         )
         || (permissions === MANAGER &&
           (<Datagrid filter={{manager: props.loginUser}}>
-            <TextField source="id"/>
             <TextField source="name"/>
             <TextField source="description"/>
+            <TextField source="address"/>
           </Datagrid>)
         )
       }

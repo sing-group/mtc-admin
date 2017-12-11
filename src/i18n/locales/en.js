@@ -68,8 +68,11 @@ const me = {
     therapist: {
       name: 'Therapist |||| Therapists',
       fields: {
-        id: 'Identifier',
         name: 'Name',
+        surname: 'Surname',
+        password: 'Password',
+        login: 'Login',
+        email: 'Email',
         institution: 'Center'
       }
     },

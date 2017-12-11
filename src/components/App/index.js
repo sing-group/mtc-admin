@@ -3,6 +3,13 @@ import {Admin, Resource} from 'admin-on-rest';
 import messages from '../../i18n';
 import {DEFAULT_LOCALE} from '../../i18n/localesManager';
 
+import ManagerIcon from 'material-ui/svg-icons/action/supervisor-account';
+import InstitutionIcon from 'material-ui/svg-icons/social/location-city';
+import TherapistIcon from 'material-ui/svg-icons/social/person';
+import PatientIcon from 'material-ui/svg-icons/social/person-outline';
+import SessionIcon from 'material-ui/svg-icons/notification/event-note';
+import AssignedSessionIcon from 'material-ui/svg-icons/notification/event-available';
+
 import Dashboard from '../Dashboard';
 
 import Sessions from '../../modules/Sessions/List';
@@ -64,6 +71,7 @@ const App = () => (
       permissions === ADMIN ?
         <Resource
           name="manager"
+          icon={ManagerIcon}
           list={permissions === ADMIN || permissions === MANAGER ? Managers : null}
           create={ManagerCreate}
           show={permissions === ADMIN || permissions === MANAGER ? ManagerShow : null}
@@ -73,6 +81,7 @@ const App = () => (
       permissions === ADMIN || permissions === MANAGER ?
         <Resource
           name="institution"
+          icon={InstitutionIcon}
           list={permissions === ADMIN || permissions === MANAGER ? Institutions : null}
           create={permissions === ADMIN ? InstitutionCreate : null}
           show={InstitutionShow}
@@ -82,6 +91,7 @@ const App = () => (
       permissions === MANAGER ?
         <Resource
           name="therapist"
+          icon={TherapistIcon}
           list={Therapists}
           create={permissions === ADMIN ? null : TherapistCreate}
           show={TherapistShow}
@@ -90,14 +100,8 @@ const App = () => (
         : undefined,
       permissions === THERAPIST ?
         <Resource
-          name="session"
-          list={Sessions}
-          edit={SessionEdit}
-          create={permissions === ADMIN ? null : SessionCreate}/>
-        : undefined,
-      permissions === THERAPIST ?
-        <Resource
           name="patient"
+          icon={PatientIcon}
           list={Patients}
           create={permissions === ADMIN ? null : PatientCreate}
           //show={PatientShow}
@@ -106,9 +110,17 @@ const App = () => (
         : undefined,
       permissions === THERAPIST ?
         <Resource
+          name="session"
+          icon={SessionIcon}
+          list={Sessions}
+          edit={SessionEdit}
+          create={permissions === ADMIN ? null : SessionCreate}/>
+        : undefined,
+      permissions === THERAPIST ?
+        <Resource
           name="assignedSession"
+          icon={AssignedSessionIcon}
           create={permissions === ADMIN ? null : AssignedSessionCreate}
-
           showList={false}
           list={permissions === ADMIN ? null : AssignedSessionList}
           edit={permissions === ADMIN ? null : AssignedSessionEdit}
