@@ -24,7 +24,6 @@ const SessionsGrid = ({ids, data, basePath, translate, locale}) => (
         <CardHeader
           title={data[id].name.values.find(t => t.key === locale) ? data[id].name.values.find(t => t.key === locale).value : translate('session.noTranslation')}
           subtitle={data[id].description.values.find(t => t.key === locale) ? data[id].description.values.find(t => t.key === locale).value : translate('session.noTranslation')}>
-
         </CardHeader>
         <CardText style={{flexBasis: "100%"}}>
           {generateSummarySession(data[id].gameConfiguration.map(g => {
@@ -33,7 +32,6 @@ const SessionsGrid = ({ids, data, basePath, translate, locale}) => (
           }), translate)}
         </CardText>
         <CardActions style={{textAlign: 'right', backgroundColor: "#eaeaea"}}>
-
           <EditButton resource="session" basePath={basePath} record={data[id]}/>
         </CardActions>
       </Card>
@@ -64,7 +62,6 @@ export default connect(mapStateToProps)(
   ))
 )
 
-
 const styles = {
   avatar: {
     backgroundColor: "red"
@@ -83,7 +80,6 @@ function generateSummarySession(games = [], translate) {
   const taskInfo = {};
 
   games.forEach((game) => {
-    console.log("GAME", game);
     if (!game) return;
     game.metadata.taskTypes.forEach((taskElement) => {
       if (!taskInfo[taskElement.id]) {

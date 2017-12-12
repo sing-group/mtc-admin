@@ -97,7 +97,8 @@ const me = {
         assignmentDate: 'Assignment Date',
         startDate: 'Session Starts',
         endDate: 'Session Ends',
-        gamesSessionId: 'Session'
+        gamesSessionId: 'Session',
+        patient: 'Patient'
       }
     },
     manager: {

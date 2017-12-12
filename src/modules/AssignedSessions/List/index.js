@@ -1,32 +1,57 @@
-import React from 'react';
+import React, {Component} from 'react';
+
+import PropTypes from 'prop-types';
+
 import {
-  ChipField,
   Datagrid,
   DateField,
   DeleteButton,
   EditButton,
   List,
-  ReferenceManyField,
-  ShowButton,
-  SingleFieldList,
   TextField,
+  ReferenceField,
   translate
 } from 'admin-on-rest';
 
-import {parse} from 'query-string'
-import {connect} from 'react-redux'
+import {parse} from 'query-string';
 
-const mapStateToProps = state => (!console.log("STATE LIST", state) && {patient: state.context.patient.editing});
-export default translate(connect(mapStateToProps)((props) => !console.log("PROPIEDADES LIST", props) && (
-  <List {...props}
-        filter={parse(props.location.search).patient ? parse(props.location.search) : {patient: props.patient}}
-        title={null}>
-    <Datagrid>
-      <TextField source="id"/>
-      <DateField source="startDate"/>
-      <DateField source="endDate"/>
-      <EditButton/>
-      <DeleteButton/>
-    </Datagrid>
-  </List>
-)));
+class AssignedSessionList extends Component {
+  constructor(props) {
+    super(props);
+
+    console.log(props);
+  }
+
+  render() {
+    const filter = {};
+
+    const parsedPath = parse(this.props.location.search);
+    if (this.props.patient) {
+      filter.patient = this.props.patient;
+    } else if (parsedPath.patient) {
+      filter.patient = parsedPath.patient;
+    }
+
+    return <List {...this.props}>
+      <Datagrid>
+        <ReferenceField
+          source="gamesSessionId"
+          reference="session">
+          <TextField source={'name' + this.props.locale}/>
+        </ReferenceField>
+        <DateField source="startDate"/>
+        <DateField source="endDate"/>
+        <EditButton/>
+        <DeleteButton/>
+      </Datagrid>
+    </List>;
+  }
+}
+
+AssignedSessionList.propTypes = {
+  location: PropTypes.object,
+  patient: PropTypes.object,
+  locale: PropTypes.string
+};
+
+export default translate(AssignedSessionList);

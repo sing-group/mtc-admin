@@ -6,15 +6,16 @@ const initialState = {
   loginUser: localStorage.getItem(LOCAL_STORAGE_USER_NAME_KEY),
   permission: localStorage.getItem(LOCAL_STORAGE_USER_ROLE_KEY)
 };
+
 export default (previousState = initialState, {type, payload}) => {
-  if (type == USER_LOGIN_SUCCESS) {
+  if (type === USER_LOGIN_SUCCESS) {
     return {
       loginUser: payload.loginUser,
       permission: payload.permission
     };
   }
 
-  if (type == USER_LOGOUT) {
+  if (type === USER_LOGOUT) {
     return {};
   }
 

@@ -44,7 +44,10 @@ export class BaseHandler {
     const query = this.queryBuilder(
       {pagination: {page, perPage}, sort: {field, order}, filter}
     );
+
     const url = `${this.url}/${resource || this.path}?${stringify(query)}`;
+
+    console.log("GET_LIST", url);
 
     return {url, options: {}};
   }
@@ -56,6 +59,8 @@ export class BaseHandler {
    */
   GET_ONE({id}, resource) {
     const url = `${this.url}/${resource || this.path}/${id}`;
+
+    console.log("GET_ONE", url);
 
     return {url, options: {}};
   }
@@ -119,10 +124,11 @@ export class BaseHandler {
    */
   GET_MANY_REFERENCE({target, id, pagination: {page, perPage}, sort: {field, order}, filter}, resource) {
     const query = this.queryBuilder({pagination: {page, perPage}, sort: {field, order}, filter});
-
     query[target] = id;
 
     const url = `${this.url}/${this.path || resource}?${stringify(query)}`;
+
+    console.log("GET_MANY_REFERENCE", url);
 
     return {url, options: {}};
   }
@@ -135,6 +141,8 @@ export class BaseHandler {
 
     if (headers.has('X-Total-Count')) {
       data.total = parseInt(headers.get('X-Total-Count'));
+    } else if (data.data instanceof Array) {
+      data.total = data.data.length;
     }
 
     return data;

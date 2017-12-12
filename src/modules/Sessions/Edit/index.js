@@ -1,36 +1,12 @@
-import React, {Component} from 'react';
-import {Card, CardHeader, CardText, CardTitle} from 'material-ui/Card';
+import React from 'react';
 
-import {CREATE, Create, Edit, translate} from 'admin-on-rest'
+import {Edit, translate} from 'admin-on-rest';
 
-import {grey50 as bgColor} from 'material-ui/styles/colors';
+import SessionForm from '../Forms';
 
-import SessionForm from '../Forms'
-
-const styles = {
-  avatar: {
-    backgroundColor: "red"
-  },
-  wrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    backgroundColor: bgColor
-  },
-  picker: {
-    display: 'flex',
-  }
-};
-
-export default translate(class extends Component {
-
-  render() {
-    const {translate} = this.props;
-    return (
-      <Edit {...this.props}>
-        <SessionForm {...this.props}/>
-      </Edit>
-    )
-  }
-})
-
+export default translate((props) => (
+  <Edit {...props}>
+    <SessionForm {...props}/>
+  </Edit>
+));
 

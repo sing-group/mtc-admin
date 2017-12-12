@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import {translate} from 'admin-on-rest';
 import {SupportedLocales} from '../../i18n/localesManager';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 
 import Dialog from 'material-ui/Dialog';
@@ -26,9 +25,8 @@ class MultiLanguageTextPicker extends Component {
 
     const propsNormal = {
       ...props,
-      //multiLine : false,
-      rows: 1,//undefined,
-      rowsMax: 1//undefined
+      rows: 1,
+      rowsMax: 1
     };
 
     this.state = {
@@ -92,11 +90,11 @@ class MultiLanguageTextPicker extends Component {
 
   handleOpen() {
     this.setState({open: true});
-  };
+  }
 
   handleClose() {
     this.setState({open: false});
-  };
+  }
 
   handleChange(...args) {
     const locale = args[1];
@@ -110,7 +108,7 @@ class MultiLanguageTextPicker extends Component {
         [currentLocale]: event.target.value
       }
     });
-  };
+  }
 
   componentWillReceiveProps(nextProps) {
     this.setState({currentLocale: nextProps.locale});
@@ -124,6 +122,7 @@ class MultiLanguageTextPicker extends Component {
     delete mainTextProps.translateRoute;
     delete mainTextProps.translate;
     delete mainTextProps.locale;
+
     return (
       <div style={{display: "flex"}}>
         <TextField ref="main" {...mainTextProps}
@@ -136,7 +135,7 @@ class MultiLanguageTextPicker extends Component {
                    floatingLabelStyle={{fontSize: 18}}
                    onFocus={(e) => {
                      this.changeToAreaMode();
-                     e.target.focus()
+                     e.target.focus();
                    }}
                    onBlur={(e) => this.changeToNormalMode()}
                    floatingLabelFocusStyle={{fontSize: 23}}
@@ -146,8 +145,8 @@ class MultiLanguageTextPicker extends Component {
             icon={
               <img src={Logos[this.state.currentLocale]}/>
             }
-            onClick={() => !console.log("HOLA") && this.handleOpen()}
-            onTouchTap={() => !console.log("HOLA") && this.handleOpen()}
+            onClick={() => this.handleOpen()}
+            onTouchTap={() => this.handleOpen()}
           />
         </div>
         <Dialog
@@ -155,7 +154,7 @@ class MultiLanguageTextPicker extends Component {
             <div>
               {translate(translateRoute)}
               <span style={closeImg}
-                    onClick={this.handleClose} onTouchTap={this.handleClose}>X</span>
+                    onClick={() => this.handleClose()} onTouchTap={() => this.handleClose()}>X</span>
             </div>
           }
           modal={true}
@@ -186,13 +185,12 @@ class MultiLanguageTextPicker extends Component {
             )
           }
         </Dialog>
-
       </div>
     );
   }
 }
 
-MultiLanguageTextPicker.PropTypes = {
+MultiLanguageTextPicker.propTypes = {
   translate: PropTypes.func,
   pickerStyle: PropTypes.object
 };

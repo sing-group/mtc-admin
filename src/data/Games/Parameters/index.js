@@ -9,12 +9,14 @@ const SecondsParameter = require("@sing-group/mtc-games/src/game/metadata/parame
 
 
 const InputBuilder = (actualValue, parameter, valueModificationFunction, initialValue) => {
-  console.log("INPUT GENERATION", actualValue, parameter.constructor.name);
-
   const Component = pickers[parameter.constructor.name];
-  return (<Component initialValue={initialValue} value={actualValue} key={parameter.id}
-                     onValueChange={(newValue) => valueModificationFunction(parameter.id, newValue)}
-                     parameter={parameter}/>)
+
+  return <Component key={parameter.id}
+                    initialValue={initialValue}
+                    value={actualValue}
+                    onValueChange={(newValue) => valueModificationFunction(parameter.id, newValue)}
+                    parameter={parameter}
+         />;
 };
 
 export {

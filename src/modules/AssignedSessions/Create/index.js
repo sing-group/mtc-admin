@@ -1,62 +1,88 @@
-import React from 'react';
+import React, {Component} from 'react';
+
+import PropTypes from 'prop-types';
+
+import pure from 'recompose/pure';
+
 import {
-  choices,
   Create,
-  Datagrid,
-  DateField,
   DateInput,
-  DisabledInput,
-  Edit,
-  EditButton,
-  email,
-  LongTextInput,
-  maxLength,
-  maxValue,
-  minLength,
-  minValue,
-  number,
-  ReferenceField,
   ReferenceInput,
-  ReferenceManyField,
-  regex,
   required,
-  SaveButton,
   SelectInput,
-  ShowButton,
   SimpleForm,
-  TextField,
-  TextInput,
-  Toolbar,
   translate
 } from 'admin-on-rest';
 import {connect} from 'react-redux';
 
-import {CardActions} from 'material-ui/Card';
+const CustomTextField = ({ value, elStyle }) => {
+  return <span style={elStyle}>{value}</span>;
+};
 
-import {Link} from 'react-router-dom';
+CustomTextField.propTypes = {
+  addLabel: PropTypes.bool,
+  elStyle: PropTypes.object,
+  label: PropTypes.string,
+  record: PropTypes.object,
+  source: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired
+};
+
+const PureTextField = pure(CustomTextField);
+
+PureTextField.defaultProps = {
+  addLabel: true,
+};
 
 const mapStateToProps = state => ({patient: state.context.patient.editing});
-export default translate(connect(mapStateToProps)((props) => !console.log("CREATING ASSIGNED", props) && (
-  <Create {...props} >
-    <SimpleForm defaultValue={{patient: props.patient}} redirect="list">
-      <DateInput source="startDate" validate={[required]}/>
-      <DateInput source="endDate" validate={[required]}/>
 
-      <ReferenceInput
+class CreateAssignedSessions extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    let patientField = null;
+    let defaultValues = {};
+
+    if (this.props.patient) {
+      defaultValues = {patient: this.props.patient};
+      patientField = <PureTextField
+        label="resources.assignedSession.fields.patient"
+        source="patient"
+        value={this.props.patient}
+      />
+    } else {
+      patientField = <ReferenceInput
         allowEmpty
-        source="gamesSessionId"
-        reference="session"
+        source="patient"
+        reference="patient"
         validate={[required]}>
-        <SelectInput optionText={'name' + props.locale} validate={[required]}/>
-      </ReferenceInput>
+        <SelectInput optionText="login" validate={[required]}/>
+      </ReferenceInput>;
+    }
 
-    </SimpleForm>
-  </Create>
-)));
+    return <Create {...this.props}>
+      <SimpleForm redirect="list" defaultValue={defaultValues}>
+        {patientField}
+        <ReferenceInput
+          allowEmpty
+          source="gamesSessionId"
+          reference="session"
+          validate={[required]}>
+          <SelectInput optionText={'name' + this.props.locale} validate={[required]}/>
+        </ReferenceInput>
+        <DateInput source="startDate" validate={[required]}/>
+        <DateInput source="endDate" validate={[required]}/>
+      </SimpleForm>
+    </Create>;
+  }
+}
 
-const cardActionStyle = {
-  zIndex: 2,
-  display: 'inline-block',
-  float: 'right',
-};
+CreateAssignedSessions.propTypes = {
+  patient: PropTypes.object,
+  locale: PropTypes.string
+}
+
+export default translate(connect(mapStateToProps)(CreateAssignedSessions));
 

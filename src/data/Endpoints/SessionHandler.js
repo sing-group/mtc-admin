@@ -1,6 +1,6 @@
-import {BaseHandler} from './BaseHandler'
+import {BaseHandler} from './BaseHandler';
 
-import {LOCAL_STORAGE_USER_NAME_KEY} from '../../customControllers/AuthController'
+import {LOCAL_STORAGE_USER_NAME_KEY} from '../../customControllers/AuthController';
 
 //relation between the default key for items in AOR and API for this entity
 const MTC_KEY_ATTRIBUTE = 'id';
@@ -22,7 +22,6 @@ export class SessionHandler extends BaseHandler {
    * @param {*string} resource The resource name ej 'therapist'
    */
   GET_LIST({pagination: {page, perPage}, sort: {field, order}, filter}) {
-
     const loginUser = filter.loginUser || localStorage.getItem(LOCAL_STORAGE_USER_NAME_KEY);
     delete filter.loginUser;
 
@@ -31,7 +30,7 @@ export class SessionHandler extends BaseHandler {
       pagination: {page, perPage},
       sort: {field, order},
       filter
-    }, `therapist/${loginUser}/gamesession`)
+    }, `therapist/${loginUser}/games-session`)
   }
 
   /**
@@ -41,19 +40,17 @@ export class SessionHandler extends BaseHandler {
    */
   CREATE({data}) {
     const loginUser = localStorage.getItem(LOCAL_STORAGE_USER_NAME_KEY);
-    return super.CREATE({data}, `therapist/${loginUser}/gamesession`)
+    return super.CREATE({data}, `therapist/${loginUser}/games-session`)
   }
 
   UPDATE({id, data, previousData}) {
-    console.log("PREHANDLINGS", {id, data, previousData});
     const sendData = {
       game: data.game,
       name: data.name,
       description: data.description
     };
-    return super.UPDATE({id, data: sendData, previousData}, `games-session`)
+    return super.UPDATE({id, data: sendData, previousData}, "games-session");
   }
-
 
   /**
    * Handles GET by ID actions to API
@@ -61,40 +58,35 @@ export class SessionHandler extends BaseHandler {
    * @param {*string} resource The resource name ej 'therapist'
    */
   GET_ONE({id}) {
-    return super.GET_ONE({id}, "games-session")
+    return super.GET_ONE({id}, "games-session");
   }
 
-
   RESPONSE_GET_LIST(response, params) {
-    console.log("HANDLE GET_LIST", response, params);
     const parsedResponse = super.RESPONSE_GET_LIST(response, params);
+
     parsedResponse.data = this.responseTransform(parsedResponse.data);
-    console.log("HANDLE GET_LIST PARSED", parsedResponse);
-    return parsedResponse
+
+    parsedResponse.data.sort((a, b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+
+    return parsedResponse;
   }
 
   RESPONSE_GET_MANY_REFERENCE(response, params) {
-    console.log("HADLE GET_MANY_REFERENCE", response, params);
     return this.RESPONSE_GET_LIST(response, params)
   }
 
   RESPONSE_CREATE(response, params) {
-    console.log("HANDLE CREATE", response, params);
-    const parsedResponse = {
-      data: params.data
+    return {
+      data: this.responseTransform(params.data)
     };
-    parsedResponse.data = this.responseTransform(parsedResponse.data);
-    console.log("HANDLE CREATE PARSED", parsedResponse);
-    return parsedResponse
   }
 
   RESPONSE(response, params) {
-    console.log("HANDLE RESPONSE", response, params);
     const parsedResponse = super.RESPONSE(response, params);
+
     parsedResponse.data = this.responseTransform(parsedResponse.data);
 
-    console.log("HANDLE RESPONSE PARSED", parsedResponse);
-    return parsedResponse
+    return parsedResponse;
   }
 
 
@@ -106,29 +98,11 @@ export class SessionHandler extends BaseHandler {
   objectBuilder(item) {
     const plainNameLocales = {};
     item.name.values && item.name.values.forEach(n => plainNameLocales["name" + n.key] = n.value);
+
     return {
       ...item,
       ...plainNameLocales,
       [AOR_KEY_ATTRIBUTE]: item[MTC_KEY_ATTRIBUTE]
     };
   }
-
-  responseTransform(responseData) {
-
-    if (!responseData)
-      return !console.log("NO HAY DATOS") && responseData;
-
-    if (!(responseData instanceof Array)) {
-      return !console.log("ES OBJETO") && this.objectBuilder(responseData)
-    }
-
-    const aux = [];
-    responseData.forEach(function (item) {
-      aux.push(this.objectBuilder(item))
-    }, this);
-    return aux.sort(function (a, b) {
-      return a.id < b.id;
-    });
-  }
-
 }

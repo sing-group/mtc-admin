@@ -1,21 +1,23 @@
 import React, {Component} from 'react';
 
-import {a, arrayMove, SortableContainer, SortableElement} from 'react-sortable-hoc';
-import {Card, CardHeader, CardText, CardTitle} from 'material-ui/Card';
+import PropTypes from 'prop-types';
 
-import {translate} from 'admin-on-rest'
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import {arrayMove, SortableContainer, SortableElement} from 'react-sortable-hoc';
+import {CardHeader} from 'material-ui/Card';
+
+import {translate} from 'admin-on-rest';
+import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 import FontIcon from 'material-ui/FontIcon';
-import RaisedButton from 'material-ui/RaisedButton'
-import GameCard from './GameCard'
-import {parseids} from '../../../utils/parseKeys'
+import RaisedButton from 'material-ui/RaisedButton';
+import GameCard from './GameCard';
+import {parseids} from '../../../utils/parseKeys';
 
-import {buildIconTooltiped} from '../../../data/Games/taskTypes'
-import {gameAdapter, gameBuilder} from '../../../data/Games/games'
+import {buildIconTooltiped} from '../../../data/Games/taskTypes';
+import {gameAdapter, gameBuilder} from '../../../data/Games/games';
 
 import {grey50 as bgColor} from 'material-ui/styles/colors';
 
-import GamePicker from '../../Games/PickerModalGame'
+import GamePicker from '../../Games/PickerModalGame';
 
 const styles = {
   avatar: {
@@ -31,68 +33,106 @@ const styles = {
   }
 };
 
-const SortableItem = SortableElement(({value, onDeleteGame, onModifyPropGame}) =>
-  <GameCard onModifyPropGame={(p, v) => !console.log("AQUI2") && onModifyPropGame(p, v)} game={value}
-            onDeleteGame={() => onDeleteGame()}/>
-);
+const SortableItem = SortableElement(({value, onDeleteGame, onModifyPropGame}) => {
+  return <GameCard game={value}
+    onModifyPropGame={(p, v) => onModifyPropGame(p, v)}
+    onDeleteGame={() => onDeleteGame()}
+  />;
+});
 
 const Container = SortableContainer(({games, onDeleteGame, onModifyPropGame}) =>
   <div>
     {games.map((game, index) => game && (
-      <SortableItem key={game.sortableKey} index={index} value={game} onDeleteGame={() => onDeleteGame(index)}
-                    onModifyPropGame={(prop, newValue) => !console.log("AQUI1") && onModifyPropGame(index, prop, newValue)}/>
+      <SortableItem key={game.sortableKey}
+                    index={index}
+                    value={game}
+                    onDeleteGame={() => onDeleteGame(index)}
+                    onModifyPropGame={(prop, newValue) => onModifyPropGame(index, prop, newValue)}
+      />
     ))}
   </div>
 );
 
-export default translate(class extends Component {
+function generateSummarySession(games = [], translate) {
+  const taskInfo = {};
 
-  onSortEnd = ({oldIndex, newIndex}) => {
+  games.forEach((game) => {
+    if (!game) return;
+    game.tasks.forEach((taskElement) => {
+      if (!taskInfo[taskElement.id]) {
+        taskInfo[taskElement.id] = 0
+      }
+      taskInfo[taskElement.id] += 1//game.tasks[taskElement._id]
+    })
+  });
+
+  return Object.keys(taskInfo).map((taskElement) => (
+    buildIconTooltiped(styles.avatar, taskElement, taskInfo[taskElement], translate("common.model.games." + parseids(taskElement)))
+  ))
+}
+
+class GamesConfigurer extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      open: false,
+      games: props.games.map(g => gameAdapter(g))
+    };
+  }
+
+  onSortEnd({oldIndex, newIndex}) {
     this.setState({
-      games: arrayMove(this.state.games, oldIndex, newIndex),
+      games: arrayMove(this.state.games, oldIndex, newIndex)
     });
-  };
-  onGameRemove = (index) => {
+  }
+
+  onGameRemove(index) {
     const games = this.state.games;
     games.splice(index, 1);
 
     this.setState({games: games})
-  };
-  gameModified = (index, prop, newValue) => {
+  }
 
-    this.state.games[index].parametersValues[prop] = newValue;
+  gameModified(index, prop, newValue) {
+    const newState = {
+      games: [
+        ...this.state.games
+      ]
+    };
+
+    newState.games[index].parametersValues[prop] = newValue;
+
     let valid = true;
-    this.state.games[index].parameters.forEach(param => {
+    newState.games[index].parameters.forEach(param => {
       if (valid) {
         valid = param.isValid(this.state.games[index].parametersValues[param.id])
       }
-    });
-    console.log("VALIDO", newValue, valid);
-    this.state.games[index].valid = valid;
-    this.forceUpdate()
-  };
 
-  constructor(props) {
-    super(props);
-    console.log("PROPIEDAES GAME", props);
-    this.state = {
-      open: false,
-      games: props.games.map(g => gameAdapter(g))
-    }
+    });
+    newState.games[index].valid = valid;
+
+    this.setState(newState);
+
+    this.forceUpdate();
   }
 
-  onGamesAdded(games: string[]) {
-    console.log("JUEGOS ", this.state.games);
+  onGamesAdded(games) {
     this.setState({
       games: [
         ...this.state.games,
         ...games.map((key) => gameBuilder(key, {sortableKey: Math.random()}))
       ]
-    })
+    });
+  }
+
+  handleConfigurationEnd() {
+    this.props.onConfigurationEnd(this.state.games);
   }
 
   render() {
-    const {translate, onConfigurationEnd} = this.props;
+    const {translate} = this.props;
+
     return (
       <div style={{display: 'flex', flexDirection: 'column'}}>
         <div style={{backgroundColor: "#bfbfbf", display: 'flex', flexDirection: 'column'}}>
@@ -105,38 +145,33 @@ export default translate(class extends Component {
               <FontIcon className="material-icons">sort</FontIcon>
             </ToolbarGroup>
           </Toolbar>
-          <Container games={this.state.games} onSortEnd={this.onSortEnd}
-                     onDeleteGame={(index) => this.onGameRemove(index)} onModifyPropGame={this.gameModified}/>
-          <RaisedButton style={{margin: 5}} label={translate("session.create.addGame")}
-                        onTouchTap={() => this.setState({open: true})} onClick={() => this.setState({open: true})}/>
-          <RaisedButton primary={true} style={{margin: 5}} label={translate("session.create.endConfiguration")}
-                        onTouchTap={() => onConfigurationEnd(this.state.games)}
-                        onClick={() => onConfigurationEnd(this.state.games)}/>
-          <GamePicker open={this.state.open} onRequestClose={() => this.setState({open: false})}
+          <Container games={this.state.games}
+                     onSortEnd={({oldIndex, newIndex}) => this.onSortEnd({oldIndex, newIndex})}
+                     onDeleteGame={(index) => this.onGameRemove(index)}
+                     onModifyPropGame={(index, prop, newValue) => this.gameModified(index, prop, newValue)}/>
+          <RaisedButton style={{margin: 5}}
+                        label={translate("session.create.addGame")}
+                        onTouchTap={() => this.setState({open: true})}
+                        onClick={() => this.setState({open: true})}/>
+          <RaisedButton primary={true}
+                        style={{margin: 5}}
+                        label={translate("session.create.endConfiguration")}
+                        onTouchTap={() => this.handleConfigurationEnd()}
+                        onClick={() => this.handleConfigurationEnd()}/>
+          <GamePicker open={this.state.open}
+                      onRequestClose={() => this.setState({open: false})}
                       onGamesAdded={(games) => this.onGamesAdded(games)}/>
         </div>
       </div>
     );
   }
-})
-
-
-function generateSummarySession(games = [], translate) {
-  console.log("GENERAR RESUMEN", games);
-  const taskInfo = {};
-
-  games.forEach((game) => {
-    console.log("GAME", game);
-    if (!game) return;
-    game.tasks.forEach((taskElement) => {
-      if (!taskInfo[taskElement.id]) {
-        taskInfo[taskElement.id] = 0
-      }
-      taskInfo[taskElement.id] += 1//game.tasks[taskElement._id]
-    })
-  });
-  return Object.keys(taskInfo).map((taskElement) => (
-    buildIconTooltiped(styles.avatar, taskElement, taskInfo[taskElement], translate("common.model.games." + parseids(taskElement)))
-  ))
 }
+
+GamesConfigurer.propTypes = {
+  translate: PropTypes.func,
+  onConfigurationEnd: PropTypes.func,
+  games: PropTypes.object
+};
+
+export default translate(GamesConfigurer);
 

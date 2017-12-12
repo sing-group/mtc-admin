@@ -1,19 +1,29 @@
-import React from 'react'
+import React, {Component} from 'react';
 
-import {translate} from 'admin-on-rest'
+import PropTypes from 'prop-types';
 
-import {parseids} from '../../../utils/parseKeys'
+import {translate} from 'admin-on-rest';
+
+import {parseids} from '../../../utils/parseKeys';
 
 import TextField from 'material-ui/TextField';
 
-import {SecondsParameter} from '../../../data/Games/Parameters'
+import {SecondsParameter} from '../../../data/Games/Parameters';
 
-const Input = translate(class TextFieldExampleControlled extends React.Component {
+class SecondsParameterComponent extends Component {
+  constructor(props) {
+    super(props);
 
-  check = (v) => {
+    this.state = {
+      errorText: ''
+    };
+  }
+
+  check(v) {
     const value = parseInt(v);
     const max = SecondsParameter.MAX;
     const min = SecondsParameter.MIN;
+
     if (!this.props.parameter.isValid(value)) {
       this.setState({
         errorText: value > max ? this.props.translate('aor.validation.maxValue', {max}) : this.props.translate('aor.validation.minValue', {min})
@@ -23,18 +33,11 @@ const Input = translate(class TextFieldExampleControlled extends React.Component
       this.setState({
         errorText: ''
       })
-  };
-  handleChange = (event) => {
+  }
+
+  handleChange(event) {
     this.check(event.target.value);
     this.props.onValueChange(parseInt(event.target.value));
-  };
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      errorText: '',
-    };
   }
 
   componentDidMount() {
@@ -43,7 +46,6 @@ const Input = translate(class TextFieldExampleControlled extends React.Component
 
   render() {
     const {parameter, translate, value} = this.props;
-    console.log("-----------------------------------------------", parameter, value);
     return (
       <div style={{
         display: 'flex',
@@ -59,7 +61,7 @@ const Input = translate(class TextFieldExampleControlled extends React.Component
           style={{marginBottom: this.state.errorText ? 15 : 0}}
           value={value}
           errorText={this.state.errorText}
-          onChange={this.handleChange}
+          onChange={event => this.handleChange(event)}
           type="number"
           floatingLabelText={translate("common.model.games." + parseids(parameter.nameId))}
           floatingLabelFixed={true}
@@ -68,8 +70,13 @@ const Input = translate(class TextFieldExampleControlled extends React.Component
       </div>
     );
   }
-});
+}
 
-export default ({value, parameter, onValueChange}) => (
-  <Input value={value} parameter={parameter} onValueChange={(v) => onValueChange(v)}/>
-)
+SecondsParameterComponent.propTypes = {
+  onValueChange: PropTypes.func,
+  parameter: PropTypes.object,
+  value: PropTypes.int,
+  translate: PropTypes.func
+};
+
+export default translate(SecondsParameterComponent);

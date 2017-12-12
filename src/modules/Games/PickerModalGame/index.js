@@ -130,7 +130,7 @@ class GamePicker extends React.Component {
   }
 }
 
-GamePicker.PropTypes = {
+GamePicker.propTypes = {
   onGamesAdded: PropTypes.func.isRequired,
   onRequestClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired

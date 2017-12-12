@@ -6,14 +6,7 @@ import Chip from 'material-ui/Chip';
 
 import * as colors from 'material-ui/styles/colors';
 
-import {messages} from '../../i18n/';
-
-const GameTaskType = require("@sing-group/mtc-games/src/game/metadata/GameTaskType").default;
-
-
-console.log("COLORS LOADED", colors);
-
-/// PARA USAR CON COLORES 
+/// PARA USAR CON COLORES
 const taskTypes =
   {
     "game.task.freeMemory":
@@ -34,23 +27,22 @@ const taskTypes =
       {"color": colors.deepPurple300, "subColor": colors.deepPurple900},
   };
 
-console.log("TASK TYPES", JSON.stringify(taskTypes));
-export {taskTypes}
+export {taskTypes};
 
 //// ------
 
 export function buildIconTooltiped(style, taskElement, number, tooltip) {
-  console.log("BUILDING ICON", taskElement);
   return (
     <IconButton key={taskElement + "Icon"} style={{paddingLeft: 10, paddingRight: 0}} tooltip={tooltip}>
       <Avatar key={taskElement} style={style} size={25} color={taskTypes[taskElement].subColor}
               backgroundColor={taskTypes[taskElement].color}> {number} </Avatar>
-    </IconButton>)
+    </IconButton>
+  );
 }
 
 export function buildIcon(style, taskElement, message = "") {
   return <Chip key={taskElement + "chip"} style={style} color={taskTypes[taskElement].subColor}
-               backgroundColor={taskTypes[taskElement].color}>{message}</Chip>
+               backgroundColor={taskTypes[taskElement].color}>{message}</Chip>;
 }
 
 

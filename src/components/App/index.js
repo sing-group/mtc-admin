@@ -38,7 +38,6 @@ import Patients from '../../modules/Patients/List';
 import PatientCreate from '../../modules/Patients/Create';
 import PatientEdit from '../../modules/Patients/Edit';
 import PatientDelete from '../../modules/Patients/Delete';
-import PatientSagas from '../../modules/Patients/Sagas';
 
 import AssignedSessionCreate from '../../modules/AssignedSessions/Create';
 import AssignedSessionDelete from '../../modules/AssignedSessions/Delete';
@@ -58,7 +57,6 @@ import context from '../../customReducers/context';
 const App = () => (
   <Admin title="MTC Admin"
          customRoutes={routes}
-         customSagas={[PatientSagas]}
          menu={menu}
          customReducers={{login, context, actionLogger}}
          authClient={auth}
@@ -121,7 +119,7 @@ const App = () => (
           name="assignedSession"
           icon={AssignedSessionIcon}
           create={permissions === ADMIN ? null : AssignedSessionCreate}
-          showList={false}
+          //showList={false}
           list={permissions === ADMIN ? null : AssignedSessionList}
           edit={permissions === ADMIN ? null : AssignedSessionEdit}
           remove={permissions === ADMIN ? null : AssignedSessionDelete}

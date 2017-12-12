@@ -1,9 +1,6 @@
-import {
-  fetchUtils,
-  GET_MANY
-} from 'admin-on-rest';
-import {LOCAL_STORAGE_USER_CREDENTIALS_KEY} from './AuthController';
+import {fetchUtils, GET_MANY} from 'admin-on-rest';
 
+import {LOCAL_STORAGE_USER_CREDENTIALS_KEY} from './AuthController';
 
 import {getHandlers} from '../data/Endpoints';
 import {API_URL} from '../config';
@@ -11,13 +8,14 @@ import {API_URL} from '../config';
 /**
  * Custom httpClient
  *
- * Allow configurate the requests
+ * Allow configurating the requests
  *
  */
 const httpClientDefault = (url, options = {}) => {
   if (!options.headers) {
     options.headers = new Headers({Accept: 'application/json'});
   }
+
   // adding headers
   options.headers.set('Authorization', 'Basic ' + localStorage.getItem(LOCAL_STORAGE_USER_CREDENTIALS_KEY));
   options.headers.set('Access-Control-Allow-Origin', '*');
@@ -39,11 +37,11 @@ const customApi = (apiUrl = API_URL, httpClient = httpClientDefault) => {
    * @returns {Object} { url, options } The HTTP request parameters
    */
   const convertRESTRequestToHTTP = (type, resource, params) => {
-    return (
-      Endpoints[resource] && Endpoints[resource][type](params)
-      ||
-      Endpoints["default"][type](params, resource)
-    );
+    if (Endpoints[resource]) {
+      return Endpoints[resource][type](params);
+    } else {
+      return Endpoints['default'][type](params, resource);
+    }
   };
 
   /**
@@ -54,16 +52,19 @@ const customApi = (apiUrl = API_URL, httpClient = httpClientDefault) => {
    * @returns {Object} REST response
    */
   const convertHTTPResponseToREST = (response, type, resource, params) => {
-    return (
-      Endpoints[resource] ?
-        Endpoints[resource]["RESPONSE_" + type] && Endpoints[resource]["RESPONSE_" + type](response, params)
-        ||
-        Endpoints[resource]["RESPONSE"](response, params)
-        :
-        Endpoints["default"]["RESPONSE_" + type] && Endpoints["default"]["RESPONSE_" + type](response, params, resource)
-        ||
-        Endpoints["default"]["RESPONSE"](response, params, resource)
-    );
+    if (Endpoints[resource]) {
+      if (Endpoints[resource]["RESPONSE_" + type]) {
+        return Endpoints[resource]["RESPONSE_" + type](response, params);
+      } else {
+        return Endpoints[resource]["RESPONSE"](response, params);
+      }
+    } else {
+      if (Endpoints["default"]["RESPONSE_" + type]) {
+        return Endpoints["default"]["RESPONSE_" + type](response, params, resource);
+      } else {
+        return Endpoints["default"]["RESPONSE"](response, params, resource);
+      }
+    }
   };
 
   /**
@@ -73,33 +74,28 @@ const customApi = (apiUrl = API_URL, httpClient = httpClientDefault) => {
    * @returns {Promise} the Promise for a REST response
    */
   return (type, resource, params) => {
-    // For support where in request call mny times a GET_ONE
+    // For support where in request call many times a GET_ONE
     if (type === GET_MANY) {
       return Promise.all(
         params.ids.map(id => {
-          const {url, options} = convertRESTRequestToHTTP(
-            'GET_ONE',
-            resource,
-            {id}
-          );
+          const {url, options} = convertRESTRequestToHTTP('GET_ONE', resource, {id});
+
           return httpClient(url, options);
         })
       ).then(responses => ({
         data: responses.map(response => {
           const restResponse = convertHTTPResponseToREST(response, 'GET_ONE', resource, {});
+
           return restResponse.data;
         }),
       }));
-    }
+    } else {
+      const {url, options} = convertRESTRequestToHTTP(type, resource, params);
 
-    const {url, options} = convertRESTRequestToHTTP(
-      type,
-      resource,
-      params
-    );
-    return httpClient(url, options).then(response =>
-      convertHTTPResponseToREST(response, type, resource, params)
-    );
+      return httpClient(url, options).then(response =>
+        convertHTTPResponseToREST(response, type, resource, params)
+      );
+    }
   };
 };
 

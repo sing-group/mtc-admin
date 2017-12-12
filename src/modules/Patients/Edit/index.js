@@ -1,33 +1,19 @@
 import React from 'react';
+
 import {
-  choices,
-  Create,
-  Datagrid,
-  DateField,
-  DateInput,
   DeleteButton,
-  DisabledInput,
   Edit,
-  EditButton,
-  email,
   ListButton,
-  LongTextInput,
-  maxLength,
-  maxValue,
-  minLength,
-  minValue,
-  number,
-  ReferenceManyField,
-  regex,
-  required,
-  ShowButton,
-  SimpleForm,
   TextField,
+  SimpleForm,
   TextInput,
-  translate
+  translate,
+  required,
+  minLength
 } from 'admin-on-rest';
+
 import {CardActions} from 'material-ui/Card';
-import {Link} from 'react-router-dom';
+
 
 const cardActionStyle = {
   zIndex: 2,
@@ -35,7 +21,7 @@ const cardActionStyle = {
   float: 'right',
 };
 
-const PatientEditActions = translate(({patient, translate, basePath, data, refresh}) => (
+const PatientEditActions = translate(({basePath, data}) => (
   <CardActions style={cardActionStyle}>
     <ListButton basePath={basePath}/>
     <DeleteButton basePath={basePath} record={data}/>
@@ -47,9 +33,8 @@ const PatientEditActions = translate(({patient, translate, basePath, data, refre
 export default translate((props) => (
   <Edit actions={<PatientEditActions patient={props.match.params.id}/>} {...props}>
     <SimpleForm>
-      <TextInput source="login" validate={[required]}/>
-      <TextInput source="password"/>
+      <TextField source="login"/>
+      <TextInput source="password" validate={[required, minLength(6)]}/>
     </SimpleForm>
-
   </Edit>
 ));

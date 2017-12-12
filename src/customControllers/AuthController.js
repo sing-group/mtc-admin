@@ -2,8 +2,6 @@
 
 import {AUTH_CHECK, AUTH_ERROR, AUTH_GET_PERMISSIONS, AUTH_LOGIN, AUTH_LOGOUT} from 'admin-on-rest';
 
-import {CENTER_DIRECTOR, GENERAL_ADMIN} from './PermissionsController'
-
 import {API_URL} from '../config';
 
 import {create} from 'apisauce';
@@ -28,7 +26,7 @@ export default async (type, params) => {
     // obtains the role of user login
     const response = await api.get(`/user/role?login=${username}&password=${password}`);
 
-    if (response.status != 200) // invalid user
+    if (response.status !== 200) // invalid user
       return Promise.reject("common.invalidCredentials");
 
     const token = btoa(username + ":" + password);
@@ -61,6 +59,7 @@ export default async (type, params) => {
     }
     return Promise.resolve();
   }
+
   // called when the user navigates to a new location
   if (type === AUTH_CHECK) {
     // TODO: ask API is valid user???.

@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {Component} from 'react';
+
+import PropTypes from 'prop-types';
 
 import {translate} from 'admin-on-rest';
 
@@ -6,8 +8,7 @@ import {parseids} from '../../../utils/parseKeys';
 
 import TextField from 'material-ui/TextField';
 
-
-const Input = translate(class TextFieldExampleControlled extends React.Component {
+class BooleanParameterComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -20,16 +21,18 @@ const Input = translate(class TextFieldExampleControlled extends React.Component
     const value = parseInt(event.target.value);
     const max = this.props.parameter.MAX;
     const min = this.props.parameter.MIN;
+
     if (!this.props.parameter.isValid(value)) {
       this.setState({
         errorText: value > max ? this.props.translate('aor.validation.maxValue', {max}) : this.props.translate('aor.validation.minValue', {min})
 
       });
-      return
-    } else
+      return;
+    } else {
       this.setState({
         errorText: ''
       });
+    }
     this.props.onValueChange(event.target.value);
   }
 
@@ -59,8 +62,13 @@ const Input = translate(class TextFieldExampleControlled extends React.Component
       </div>
     );
   }
-});
+}
 
-export default ({value, parameter, onValueChange}) => (
-  <Input value={value} parameter={parameter} onValueChange={(v) => onValueChange(v)}/>
-)
+BooleanParameterComponent.propTypes = {
+  onValueChange: PropTypes.func,
+  parameter: PropTypes.object,
+  value: PropTypes.boolean,
+  translate: PropTypes.func
+};
+
+export default translate(BooleanParameterComponent);

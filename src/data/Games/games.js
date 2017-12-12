@@ -18,17 +18,15 @@ const relation = {
   'verbalFluency': games.VERBAL_FLUENCY
 };
 
-console.log("GAMES", games);
-
-function gameBuilder(key, aditionalProps) {
-  console.log("BUILDING", key);
+function gameBuilder(key, additionalProps) {
   const parametersValues = {};
 
   games[key].metadata.parameters.forEach(param => {
     parametersValues[param.id] = param.defaultValue
   });
-  const game = {
-    ...aditionalProps,
+
+  return {
+    ...additionalProps,
     id: games[key].metadata.id,
     nameId: games[key].metadata.nameId,
     parameters: games[key].metadata.parameters,
@@ -36,34 +34,27 @@ function gameBuilder(key, aditionalProps) {
     tasks: games[key].metadata.taskTypes,
     valid: true,
   };
-
-  console.log("BUILT", game);
-  return game
 }
 
 function gameAdapter(game) {
   const key = game.gameId;
-  console.log("ADAPTING", game, key);
   const parametersValues = game.parameter.reduce((p, c) => {
     p[c.key] = c.value;
     return p
   }, {});
 
-  const adaptedGame = {
+  const adapter = {
     id: relation[key].metadata.id,
     nameId: relation[key].metadata.nameId,
     parameters: relation[key].metadata.parameters,
-    parametersValues,
+    parametersValues: parametersValues,
     tasks: relation[key].metadata.taskTypes,
     valid: true,
   };
 
-  console.log("BUILT", adaptedGame);
-  return adaptedGame
+  console.log("ADAPTER:", adapter);
+
+  return adapter;
 }
 
-export {games, gameBuilder, gameAdapter}
-
-
-
-
+export {games, gameBuilder, gameAdapter};

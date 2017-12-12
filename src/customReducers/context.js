@@ -1,4 +1,3 @@
-import {USER_LOGIN_SUCCESS, USER_LOGOUT} from 'admin-on-rest';
 import {parse} from 'query-string';
 
 const initialState = {
@@ -9,8 +8,9 @@ const initialState = {
 
 export default (previousState = initialState, {type, payload}) => {
   const newContext = previousState;
-  if (type == '@@router/LOCATION_CHANGE') {
-    if (payload.pathname == "/assignedSession" && parse(payload.search).patient != undefined) {
+
+  if (type === '@@router/LOCATION_CHANGE') {
+    if (payload.pathname === "/assignedSession" && parse(payload.search).patient !== undefined) {
       newContext.patient.editing = parse(payload.search).patient
     }
   }

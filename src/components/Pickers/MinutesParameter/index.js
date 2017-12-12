@@ -1,15 +1,16 @@
-import React from 'react'
+import React, {Component} from 'react';
 
-import {translate} from 'admin-on-rest'
+import PropTypes from 'prop-types';
 
-import {parseids} from '../../../utils/parseKeys'
+import {translate} from 'admin-on-rest';
+
+import {parseids} from '../../../utils/parseKeys';
 
 import TextField from 'material-ui/TextField';
 
-import {MinutesParameter} from '../../../data/Games/Parameters'
+import {MinutesParameter} from '../../../data/Games/Parameters';
 
-const Input = translate(class TextFieldExampleControlled extends React.Component {
-
+class MinutesParameterComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -22,6 +23,7 @@ const Input = translate(class TextFieldExampleControlled extends React.Component
     const value = parseInt(v);
     const max = MinutesParameter.MAX;
     const min = MinutesParameter.MIN;
+
     if (!this.props.parameter.isValid(value)) {
       this.setState({
         errorText: value > max ? this.props.translate('aor.validation.maxValue', {max}) : this.props.translate('aor.validation.minValue', {min})
@@ -60,7 +62,7 @@ const Input = translate(class TextFieldExampleControlled extends React.Component
           style={{marginBottom: this.state.errorText ? 15 : 0}}
           value={value}
           errorText={this.state.errorText}
-          onChange={this.handleChange}
+          onChange={event => this.handleChange(event)}
           type="number"
           floatingLabelText={translate("common.model.games." + parseids(parameter.nameId))}
           floatingLabelFixed={true}
@@ -69,8 +71,13 @@ const Input = translate(class TextFieldExampleControlled extends React.Component
       </div>
     );
   }
-});
+}
 
-export default ({value, parameter, onValueChange}) => (
-  <Input value={value} parameter={parameter} onValueChange={(v) => onValueChange(v)}/>
-);
+MinutesParameterComponent.propTypes = {
+  onValueChange: PropTypes.func,
+  parameter: PropTypes.object,
+  value: PropTypes.int,
+  translate: PropTypes.func
+};
+
+export default translate(MinutesParameterComponent);
