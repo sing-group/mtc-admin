@@ -6,7 +6,7 @@ import inflection from 'inflection';
 import {DashboardMenuItem, MenuItemLink, translate} from 'admin-on-rest';
 import Divider from 'material-ui/Divider';
 
-import {getPermissions} from '../../customControllers/PermissionsController';
+import {getPermissions} from '../../controllers/PermissionsController';
 import { getResources } from "admin-on-rest/lib/reducer"
 
 import LanguageSwitcher from '../LanguageSwitcher';

@@ -48,7 +48,7 @@ const me = {
   },
   resources: {
     session: {
-      name: 'Session |||| Sessions',
+      name: 'Session |||| sessions',
       fields: {
         id: 'Identifier',
         title: 'Title',
@@ -56,7 +56,7 @@ const me = {
       }
     },
     institution: {
-      name: 'Institution |||| Institutions',
+      name: 'Institution |||| institutions',
       fields: {
         id: 'Identifier',
         name: 'Name',
@@ -66,7 +66,7 @@ const me = {
       }
     },
     therapist: {
-      name: 'Therapist |||| Therapists',
+      name: 'Therapist |||| therapists',
       fields: {
         name: 'Name',
         surname: 'Surname',
@@ -77,11 +77,11 @@ const me = {
       }
     },
     patient: {
-      name: 'Patient |||| Patients',
+      name: 'Patient |||| patients',
       fields: {
         id: 'Login',
         password: 'Password',
-        assignedSession: 'Assigned Sessions'
+        assignedSession: 'Assigned sessions'
       },
       partialEdits: {
         personalData: 'Patient Data',
@@ -102,7 +102,7 @@ const me = {
       }
     },
     manager: {
-      name: 'Manager |||| Managers',
+      name: 'Manager |||| managers',
       fields: {
         name: 'Name',
         surname: 'Surname',

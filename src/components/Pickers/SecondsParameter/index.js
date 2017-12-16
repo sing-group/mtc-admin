@@ -8,7 +8,7 @@ import {parseids} from '../../../utils/parseKeys';
 
 import TextField from 'material-ui/TextField';
 
-import {SecondsParameter} from '../../../data/Games/Parameters';
+import {SecondsParameter} from '../../../data/games/parameters';
 
 class SecondsParameterComponent extends Component {
   constructor(props) {

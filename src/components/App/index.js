@@ -12,47 +12,47 @@ import AssignedSessionIcon from 'material-ui/svg-icons/notification/event-availa
 
 import Dashboard from '../Dashboard';
 
-import Sessions from '../../modules/Sessions/List';
-import SessionCreate from '../../modules/Sessions/Create';
-import SessionEdit from '../../modules/Sessions/Edit';
+import Sessions from '../operations/sessions/List';
+import SessionCreate from '../operations/sessions/Create';
+import SessionEdit from '../operations/sessions/Edit';
 
-import Institutions from '../../modules/Institutions/List';
-import InstitutionCreate from '../../modules/Institutions/Create';
-import InstitutionShow from '../../modules/Institutions/Show';
-import InstitutionEdit from '../../modules/Institutions/Edit';
-import InstitutionDelete from '../../modules/Institutions/Delete';
+import Institutions from '../operations/institutions/List';
+import InstitutionCreate from '../operations/institutions/Create';
+import InstitutionShow from '../operations/institutions/Show';
+import InstitutionEdit from '../operations/institutions/Edit';
+import InstitutionDelete from '../operations/institutions/Delete';
 
-import Managers from '../../modules/Managers/List';
-import ManagerCreate from '../../modules/Managers/Create';
-import ManagerShow from '../../modules/Managers/Show';
-import ManagerEdit from '../../modules/Managers/Edit';
-import ManagerDelete from '../../modules/Managers/Delete';
+import Managers from '../operations/managers/List';
+import ManagerCreate from '../operations/managers/Create';
+import ManagerShow from '../operations/managers/Show';
+import ManagerEdit from '../operations/managers/Edit';
+import ManagerDelete from '../operations/managers/Delete';
 
-import Therapists from '../../modules/Therapists/List';
-import TherapistCreate from '../../modules/Therapists/Create';
-import TherapistShow from '../../modules/Therapists/Show';
-import TherapistEdit from '../../modules/Therapists/Edit';
-import TherapistDelete from '../../modules/Therapists/Delete';
+import Therapists from '../operations/therapists/List';
+import TherapistCreate from '../operations/therapists/Create';
+import TherapistShow from '../operations/therapists/Show';
+import TherapistEdit from '../operations/therapists/Edit';
+import TherapistDelete from '../operations/therapists/Delete';
 
-import Patients from '../../modules/Patients/List';
-import PatientCreate from '../../modules/Patients/Create';
-import PatientEdit from '../../modules/Patients/Edit';
-import PatientDelete from '../../modules/Patients/Delete';
+import Patients from '../operations/patients/List';
+import PatientCreate from '../operations/patients/Create';
+import PatientEdit from '../operations/patients/Edit';
+import PatientDelete from '../operations/patients/Delete';
 
-import AssignedSessionCreate from '../../modules/AssignedSessions/Create';
-import AssignedSessionDelete from '../../modules/AssignedSessions/Delete';
-import AssignedSessionList from '../../modules/AssignedSessions/List';
-import AssignedSessionEdit from '../../modules/AssignedSessions/Edit';
+import AssignedSessionCreate from '../operations/assigned_sessions/Create';
+import AssignedSessionDelete from '../operations/assigned_sessions/Delete';
+import AssignedSessionList from '../operations/assigned_sessions/List';
+import AssignedSessionEdit from '../operations/assigned_sessions/Edit';
 
-import {ADMIN, MANAGER, THERAPIST} from '../../customControllers/PermissionsController';
+import {ADMIN, MANAGER, THERAPIST} from '../../controllers/PermissionsController';
 
-import auth from '../../customControllers/AuthController';
-import ApiClient from '../../customControllers/ApiController';
+import auth from '../../controllers/AuthController';
+import ApiClient from '../../controllers/ApiController';
 import routes from '../../routes';
 import menu from '../Menu';
-import login from '../../customReducers/login';
-import actionLogger from '../../customReducers/actionLogger';
-import context from '../../customReducers/context';
+import login from '../../reducers/login';
+import actionLogger from '../../reducers/actionLogger';
+import context from '../../reducers/context';
 
 const App = () => (
   <Admin title="MTC Admin"
