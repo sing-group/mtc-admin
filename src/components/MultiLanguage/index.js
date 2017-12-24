@@ -23,11 +23,12 @@ class MultiLanguageTextPicker extends Component {
   constructor(props) {
     super(props);
 
-    const propsNormal = {
-      ...props,
-      rows: 1,
-      rowsMax: 1
-    };
+    const propsNormal = Object.assign({}, props,
+      {
+        rows: 1,
+        rowsMax: 1
+      }
+    );
 
     this.state = {
       props: props,
@@ -43,47 +44,52 @@ class MultiLanguageTextPicker extends Component {
     let textArea = propsNormal;
 
     if (this.props.multiLine) {
-      textArea = {
-        ...props,
-        multiLine: props.multiLine,
-        rows: props.rows,
-        rowsMax: props.rowsMax
-      }
+      textArea = Object.assign({}, props,
+        {
+          multiLine: props.multiLine,
+          rows: props.rows,
+          rowsMax: props.rowsMax
+        }
+      );
     }
 
     this.changeToAreaMode = (l) => {
       if (l) {
         this.setState({
-          configurations: {
-            ...this.state.configurations,
-            [l]: textArea
-          }
-        })
+          configurations: Object.assign({}, this.state.configurations,
+            {
+              [l]: textArea
+            }
+          )
+        });
       } else {
         this.setState({
-          configurations: {
-            ...this.state.configurations,
-            mainTextProps: textArea
-          }
-        })
+          configurations: Object.assign({}, this.state.configurations,
+            {
+              mainTextProps: textArea
+            }
+          )
+        });
       }
     };
 
     this.changeToNormalMode = (l) => {
       if (l) {
         this.setState({
-          configurations: {
-            ...this.state.configurations,
-            [l]: propsNormal
-          }
+          configurations: Object.assign({}, this.state.configurations,
+            {
+              [l]: propsNormal
+            }
+          )
         })
       } else {
         this.setState({
-          configurations: {
-            ...this.state.configurations,
-            mainTextProps: propsNormal
-          }
-        })
+          configurations: Object.assign({}, this.state.configurations,
+            {
+              mainTextProps: propsNormal
+            }
+          )
+        });
       }
     }
   }
@@ -103,10 +109,11 @@ class MultiLanguageTextPicker extends Component {
     const messages = this.state.messages;
     this.props.onChangeValue(currentLocale, event.target.value);
     this.setState({
-      messages: {
-        ...messages,
-        [currentLocale]: event.target.value
-      }
+      messages: Object.assign({}, messages,
+        {
+          [currentLocale]: event.target.value
+        }
+      )
     });
   }
 
@@ -115,9 +122,8 @@ class MultiLanguageTextPicker extends Component {
   }
 
   render() {
-    const locales = SupportedLocales;
-    const {locale, translate, pickerStyle, translateRoute} = this.props;
-    const mainTextProps = this.state.configurations.mainTextProps;
+    const {translate, translateRoute} = this.props;
+    const mainTextProps = Object.assign({}, this.state.configurations.mainTextProps);
 
     delete mainTextProps.translateRoute;
     delete mainTextProps.translate;
@@ -192,7 +198,14 @@ class MultiLanguageTextPicker extends Component {
 
 MultiLanguageTextPicker.propTypes = {
   translate: PropTypes.func,
-  pickerStyle: PropTypes.object
+  pickerStyle: PropTypes.object,
+  locale: PropTypes.string,
+  onChangeValue: PropTypes.func,
+  messages: PropTypes.object,
+  multiLine: PropTypes.bool,
+  rows: PropTypes.number,
+  rowsMax: PropTypes.number,
+  translateRoute: PropTypes.string
 };
 
 export default translate(MultiLanguageTextPicker);

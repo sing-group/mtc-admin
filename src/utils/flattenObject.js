@@ -49,4 +49,4 @@ const flattenObject = (value, path = []) => {
   }
 };
 
-export default flattenObject
+export default flattenObject;

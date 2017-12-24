@@ -15,6 +15,7 @@ import Dashboard from '../Dashboard';
 import Sessions from '../operations/sessions/List';
 import SessionCreate from '../operations/sessions/Create';
 import SessionEdit from '../operations/sessions/Edit';
+import SessionDelete from '../operations/sessions/Delete';
 
 import Institutions from '../operations/institutions/List';
 import InstitutionCreate from '../operations/institutions/Create';
@@ -47,12 +48,107 @@ import AssignedSessionEdit from '../operations/assigned_sessions/Edit';
 import {ADMIN, MANAGER, THERAPIST} from '../../controllers/PermissionsController';
 
 import auth from '../../controllers/AuthController';
-import ApiClient from '../../controllers/ApiController';
 import routes from '../../routes';
 import menu from '../Menu';
 import login from '../../reducers/login';
 import actionLogger from '../../reducers/actionLogger';
 import context from '../../reducers/context';
+import Api from "../../controllers/Api";
+
+import {API_URL} from '../../config';
+import InstitutionEndpointFactory from "../../data/endpoints/factories/InstitutionEndpointFactory";
+import RequestAdapters from "../../controllers/request_adapters/RequestAdapters";
+import DEFAULT_RESPONSE_ADAPTERS from "../../controllers/response_adapters/DefaultResponseAdapters";
+import ManagerEndpointFactory from "../../data/endpoints/factories/ManagerEndpointFactory";
+import InstitutionGetManyReferenceRequestAdapter from "../../controllers/request_adapters/institution/InstitutionGetManyReferenceRequestAdapter";
+import InstitutionListByManagerResponseAdapter from "../../controllers/response_adapters/institution/InstitutionListByManagerResponseAdapter";
+import InstitutionParamsMapper from "../../controllers/request_adapters/mappers/InstitutionParamsMapper";
+import ManagerParamsMapper from "../../controllers/request_adapters/mappers/ManagerParamsMapper";
+import TherapistEndpointFactory from "../../data/endpoints/factories/TherapistEndpointFactory";
+import TherapistParamsMapper from "../../controllers/request_adapters/mappers/TherapistParamsMapper";
+import PatientEndpointFactory from "../../data/endpoints/factories/PatientEndpointFactory";
+import PatientParamsMapper from "../../controllers/request_adapters/mappers/PatientParamsMapper";
+import AssignedGamesSessionEndpointFactory from "../../data/endpoints/factories/AssignedGamesSessionEndpointFactory";
+import InstitutionGetListReferenceRequestAdapter from "../../controllers/request_adapters/institution/InstitutionGetListRequestAdapter";
+import InstitutionGetListManagerResponseAdapter from "../../controllers/response_adapters/institution/InstitutionGetListResponseAdapter";
+import GamesSessionEndpointFactory from "../../data/endpoints/factories/GamesSessionEndpointFactory";
+import GamesSessionParamsMapper from "../../controllers/request_adapters/mappers/GamesSessionParamsMapper";
+import GamesSessionGetListReferenceRequestAdapter from "../../controllers/request_adapters/games_session/GamesSessionGetListRequestAdapter";
+import GamesSessionCreateRequestAdapter from "../../controllers/request_adapters/games_session/GamesSessionCreateRequestAdapter";
+import AssignedGamesSessionParamsMapper from "../../controllers/request_adapters/mappers/AssignedGamesSessionParamsMapper";
+import AssignedSessionCreateRequestAdapter from "../../controllers/request_adapters/assigned_session/AssignedSessionCreateRequestAdapter";
+import AssignedSessionUpdateRequestAdapter from "../../controllers/request_adapters/assigned_session/AssignedSessionUpdateRequestAdapter";
+import AssignedSessionGetListRequestAdapter from "../../controllers/request_adapters/assigned_session/AssignedSessionGetListRequestAdapter";
+import AssignedSessionGetManyRequestAdapter from "../../controllers/request_adapters/assigned_session/AssignedSessionGetManyRequestAdapter";
+import AssignedSessionListByPatientResponseAdapter from "../../controllers/response_adapters/assigned_session/AssignedSessionListByPatientResponseAdapter";
+
+const institutionParamsMapper = new InstitutionParamsMapper();
+const gamesSessionParamsMapper = new GamesSessionParamsMapper();
+const assignedGamesSessionParamsMapper = new AssignedGamesSessionParamsMapper();
+
+const endpointFactories = {
+  institution: new InstitutionEndpointFactory(
+    API_URL,
+    RequestAdapters.buildFor(
+      institutionParamsMapper,
+      {
+        GET_MANY_REFERENCE: new InstitutionGetManyReferenceRequestAdapter(),
+        GET_LIST: new InstitutionGetListReferenceRequestAdapter(paramName => institutionParamsMapper.convertParamName(paramName))
+      }
+    ),
+    Object.assign({}, DEFAULT_RESPONSE_ADAPTERS,
+      {
+        GET_MANY_REFERENCE: new InstitutionListByManagerResponseAdapter(),
+        GET_LIST: new InstitutionGetListManagerResponseAdapter()
+      }
+    )
+  ),
+  manager: new ManagerEndpointFactory(API_URL,
+    RequestAdapters.buildFor(new ManagerParamsMapper()),
+    DEFAULT_RESPONSE_ADAPTERS
+  ),
+  therapist: new TherapistEndpointFactory(API_URL,
+    RequestAdapters.buildFor(new TherapistParamsMapper()),
+    DEFAULT_RESPONSE_ADAPTERS
+  ),
+  patient: new PatientEndpointFactory(API_URL,
+    RequestAdapters.buildFor(new PatientParamsMapper()),
+    DEFAULT_RESPONSE_ADAPTERS
+  ),
+  "assigned-session": new AssignedGamesSessionEndpointFactory(
+    API_URL,
+    RequestAdapters.buildFor(
+      assignedGamesSessionParamsMapper,
+      {
+        CREATE: new AssignedSessionCreateRequestAdapter(params => assignedGamesSessionParamsMapper.convertParamsToData(params)),
+        UPDATE: new AssignedSessionUpdateRequestAdapter(params => assignedGamesSessionParamsMapper.convertParamsToIdAndData(params)),
+        GET_LIST: new AssignedSessionGetListRequestAdapter(params => assignedGamesSessionParamsMapper.convertParamName(params)),
+        GET_MANY_REFERENCE: new AssignedSessionGetManyRequestAdapter(params => assignedGamesSessionParamsMapper.convertParamName(params))
+      }
+    ),
+    Object.assign({}, DEFAULT_RESPONSE_ADAPTERS,
+      {
+        GET_MANY_REFERENCE: new AssignedSessionListByPatientResponseAdapter()
+      }
+    )
+  ),
+  "games-session": new GamesSessionEndpointFactory(
+    API_URL,
+    RequestAdapters.buildFor(
+      gamesSessionParamsMapper,
+      {
+        CREATE: new GamesSessionCreateRequestAdapter(params => gamesSessionParamsMapper.convertParamsToData(params)),
+        GET_LIST: new GamesSessionGetListReferenceRequestAdapter(paramName => gamesSessionParamsMapper.convertParamName(paramName))
+      }
+    ),
+    DEFAULT_RESPONSE_ADAPTERS
+  )
+};
+
+const api = new Api(endpointFactories);
+
+const restClient = (type, resource, params) => api.manageRequest(type, resource, params);
+
 
 const App = () => (
   <Admin title="MTC Admin"
@@ -61,7 +157,7 @@ const App = () => (
          customReducers={{login, context, actionLogger}}
          authClient={auth}
          dashboard={Dashboard}
-         restClient={ApiClient(/*Url string param HERE overrides the API_URL in config.js*/)}
+         restClient={restClient}
          locale={DEFAULT_LOCALE}
          messages={messages}
   >
@@ -108,15 +204,16 @@ const App = () => (
         : undefined,
       permissions === THERAPIST ?
         <Resource
-          name="session"
+          name="games-session"
           icon={SessionIcon}
           list={Sessions}
           edit={SessionEdit}
-          create={permissions === ADMIN ? null : SessionCreate}/>
+          create={permissions === ADMIN ? null : SessionCreate}
+          remove={SessionDelete}/>
         : undefined,
       permissions === THERAPIST ?
         <Resource
-          name="assignedSession"
+          name="assigned-session"
           icon={AssignedSessionIcon}
           create={permissions === ADMIN ? null : AssignedSessionCreate}
           //showList={false}

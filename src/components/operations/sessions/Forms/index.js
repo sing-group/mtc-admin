@@ -1,27 +1,27 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import {Card, CardHeader, CardText, CardTitle} from 'material-ui/Card';
+import {Card, CardHeader, CardText, CardTitle} from "material-ui/Card";
 
-import {CREATE, Create, translate} from 'admin-on-rest';
-import MultiLanguageTextPicker from '../../../MultiLanguage';
+import {CREATE, Create, translate} from "admin-on-rest";
+import MultiLanguageTextPicker from "../../../MultiLanguage";
 
-import {grey50 as bgColor} from 'material-ui/styles/colors';
+import {grey50 as bgColor} from "material-ui/styles/colors";
 
-import GamesInput from '../../games/GamesConfigurer';
+import GamesInput from "../../games/GamesConfigurer";
 
 const styles = {
   avatar: {
     backgroundColor: "red"
   },
   wrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
     backgroundColor: bgColor
   },
   picker: {
-    display: 'flex'
+    display: "flex"
   }
 };
 
@@ -117,10 +117,10 @@ class SessionForm extends Component {
         <div style={{marginLeft: 20}}>
           <MultiLanguageTextPicker
             messages={names}
-            translateRoute="resources.session.fields.title"
+            translateRoute="resources.games-session.fields.title"
             onChangeValue={(k, v) => this.handleChange("name", k, v)}/>
           <MultiLanguageTextPicker
-            translateRoute="resources.session.fields.content"
+            translateRoute="resources.games-session.fields.content"
             messages={descriptions}
             multiLine={true}
             rows={4}

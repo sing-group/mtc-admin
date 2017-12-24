@@ -1,11 +1,11 @@
-import messages from '@sing-group/mtc-games/src/i18n/en_US';
-import {parseids} from '../../utils/parseKeys';
+import messages from "@sing-group/mtc-games/src/i18n/en_US";
+import {parseids} from "../../utils/parseKeys";
 
 const me = {
   common: {
     configuration: {
       title: "Configuration",
-      languageSelector: 'Language'
+      languageSelector: "Language"
     },
     model: {
       games: Object.keys(messages).reduce((accum, key) => {
@@ -18,9 +18,10 @@ const me = {
       en_US: "English",
       gl_ES: "Galician"
     },
-    multilanguagePickerTitle: 'Languages',
+    dateLocales: "en-US",
+    multilanguagePickerTitle: "Languages",
     multilanguagePicker: 'Insert value for "%{language}"',
-    invalidCredentials: 'Invalid credentials'
+    invalidCredentials: "Invalid credentials"
   },
   others: {
     accept: "Accept",
@@ -29,7 +30,7 @@ const me = {
     configurationItem: "Configuration"
   },
   session: {
-    noTranslation: 'No English value',
+    noTranslation: "No English value",
     create: {
       addGame: "Add Game",
       endConfiguration: "Finalize"
@@ -47,68 +48,68 @@ const me = {
     }
   },
   resources: {
-    session: {
-      name: 'Session |||| sessions',
+    "games-session": {
+      name: "Session |||| Sessions",
       fields: {
-        id: 'Identifier',
-        title: 'Title',
-        content: 'Content'
+        id: "Identifier",
+        title: "Title",
+        content: "Content"
       }
     },
     institution: {
-      name: 'Institution |||| institutions',
+      name: "Institution |||| Institutions",
       fields: {
-        id: 'Identifier',
-        name: 'Name',
-        address: 'Address',
-        description: 'Description',
-        manager: 'Institution manager'
+        id: "Identifier",
+        name: "Name",
+        address: "Address",
+        description: "Description",
+        manager: "Institution manager"
       }
     },
     therapist: {
-      name: 'Therapist |||| therapists',
+      name: "Therapist |||| Therapists",
       fields: {
-        name: 'Name',
-        surname: 'Surname',
-        password: 'Password',
-        login: 'Login',
-        email: 'Email',
-        institution: 'Center'
+        name: "Name",
+        surname: "Surname",
+        password: "Password",
+        login: "Login",
+        email: "Email",
+        institution: "Center"
       }
     },
     patient: {
-      name: 'Patient |||| patients',
+      name: "Patient |||| Patients",
       fields: {
-        id: 'Login',
-        password: 'Password',
-        assignedSession: 'Assigned sessions'
+        id: "Login",
+        password: "Password",
+        "assigned-session": "Assigned sessions"
       },
       partialEdits: {
-        personalData: 'Patient Data',
-        assignmentData: 'Session Assignment',
-        assignmentDataEdit: 'Edit Assignments'
+        personalData: "Patient Data",
+        assignmentData: "Session Assignment",
+        assignmentDataView: "View Assignments"
       }
     },
-    assignedSession: {
-      name: 'Assignment |||| Assignments',
+    "assigned-session": {
+      name: "Assignment |||| Assignments",
       fields: {
-        id: 'Identifier',
-        session: 'Session',
-        assignmentDate: 'Assignment Date',
-        startDate: 'Session Starts',
-        endDate: 'Session Ends',
-        gamesSessionId: 'Session',
-        patient: 'Patient'
+        id: "Identifier",
+        session: "Session",
+        assignmentDate: "Assignment Date",
+        startDate: "Session Starts",
+        endDate: "Session Ends",
+        assignedGamesSessions: "Session",
+        patient: "Patient"
       }
     },
     manager: {
-      name: 'Manager |||| managers',
+      name: "Manager |||| Managers",
       fields: {
-        name: 'Name',
-        surname: 'Surname',
-        password: 'Password',
-        login: 'Login',
-        email: 'Email'
+        name: "Name",
+        surname: "Surname",
+        password: "Password",
+        login: "Login",
+        email: "Email"
       },
       references: {
         institutionsList: "institutions"

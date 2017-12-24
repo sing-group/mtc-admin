@@ -32,7 +32,7 @@ const SessionsGrid = ({ids, data, basePath, translate, locale}) => (
           }), translate)}
         </CardText>
         <CardActions style={{textAlign: 'right', backgroundColor: "#eaeaea"}}>
-          <EditButton resource="session" basePath={basePath} record={data[id]}/>
+          <EditButton resource="games-session" basePath={basePath} record={data[id]}/>
         </CardActions>
       </Card>
     )}

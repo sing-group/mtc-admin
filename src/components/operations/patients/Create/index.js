@@ -21,8 +21,6 @@ class CreatePatient extends Component {
   }
 
   render() {
-    console.log("PATIENT_PROPS", this.props);
-
     return <Create {...this.props}>
       <SimpleForm redirect="list" defaultValue={{role: PATIENT, therapist: this.props.loginUser}}>
         <TextInput source="login" validate={[required]}/>

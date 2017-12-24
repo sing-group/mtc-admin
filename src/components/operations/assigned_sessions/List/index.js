@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 import {
   Datagrid,
@@ -9,22 +9,38 @@ import {
   EditButton,
   List,
   TextField,
+  ReferenceInput,
+  SelectInput,
   ReferenceField,
+  Filter,
   translate
-} from 'admin-on-rest';
+} from "admin-on-rest";
 
-import {parse} from 'query-string';
+import {parse} from "query-string";
+
+class AssignedSessionListFilter extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return <Filter {...this.props}>
+      <ReferenceInput source="patient" reference="patient" allowEmpty alwaysOn>
+        <SelectInput optionText="login" />
+      </ReferenceInput>
+    </Filter>;
+  }
+}
 
 class AssignedSessionList extends Component {
   constructor(props) {
     super(props);
-
-    console.log(props);
   }
 
   render() {
     const filter = {};
 
+    const dateLocales = this.props.translate("common.dateLocales");
     const parsedPath = parse(this.props.location.search);
     if (this.props.patient) {
       filter.patient = this.props.patient;
@@ -32,15 +48,21 @@ class AssignedSessionList extends Component {
       filter.patient = parsedPath.patient;
     }
 
-    return <List {...this.props}>
+    return <List {...this.props} filters={this.props.translate(<AssignedSessionListFilter/>)}>
       <Datagrid>
         <ReferenceField
-          source="gamesSessionId"
-          reference="session">
-          <TextField source={'name' + this.props.locale}/>
+          source="patient"
+          reference="patient">
+          <TextField source="login"/>
         </ReferenceField>
-        <DateField source="startDate"/>
-        <DateField source="endDate"/>
+        <ReferenceField
+          source="assignedGamesSessions"
+          reference="games-session"
+          sortable={false}>
+          <TextField source={"name" + this.props.locale}/>
+        </ReferenceField>
+        <DateField source="startDate" locales={dateLocales}/>
+        <DateField source="endDate" locales={dateLocales}/>
         <EditButton/>
         <DeleteButton/>
       </Datagrid>
@@ -51,7 +73,8 @@ class AssignedSessionList extends Component {
 AssignedSessionList.propTypes = {
   location: PropTypes.object,
   patient: PropTypes.object,
-  locale: PropTypes.string
+  locale: PropTypes.string,
+  translate: PropTypes.func
 };
 
 export default translate(AssignedSessionList);

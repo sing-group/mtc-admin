@@ -9,11 +9,9 @@ import {
   TextField
 } from 'admin-on-rest';
 
-import {MANAGER} from "../../../../controllers/PermissionsController";
-
 export default (props) => (
   <Edit {...props}>
-    <SimpleForm defaultValue={{role: MANAGER}}>
+    <SimpleForm>
       <TextField source="login"/>
       <TextInput source="password" validate={[minLength(6)]}/>
       <TextInput source="email" validate={[required, email]}/>

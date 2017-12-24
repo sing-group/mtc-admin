@@ -44,11 +44,12 @@ class CreateAssignedSessions extends Component {
   render() {
     let patientField = null;
     let defaultValues = {};
+    const dateLocale = this.props.translate("common.dateLocales");
 
     if (this.props.patient) {
       defaultValues = {patient: this.props.patient};
       patientField = <PureTextField
-        label="resources.assignedSession.fields.patient"
+        label="resources.assigned-session.fields.patient"
         source="patient"
         value={this.props.patient}
       />
@@ -67,13 +68,13 @@ class CreateAssignedSessions extends Component {
         {patientField}
         <ReferenceInput
           allowEmpty
-          source="gamesSessionId"
-          reference="session"
+          source="assignedGamesSessions"
+          reference="games-session"
           validate={[required]}>
           <SelectInput optionText={'name' + this.props.locale} validate={[required]}/>
         </ReferenceInput>
-        <DateInput source="startDate" validate={[required]}/>
-        <DateInput source="endDate" validate={[required]}/>
+        <DateInput source="startDate" validate={[required]} options={{locale: dateLocale, minDate: new Date()}}/>
+        <DateInput source="endDate" validate={[required]} options={{locale: dateLocale, minDate: new Date()}}/>
       </SimpleForm>
     </Create>;
   }
@@ -81,7 +82,8 @@ class CreateAssignedSessions extends Component {
 
 CreateAssignedSessions.propTypes = {
   patient: PropTypes.object,
-  locale: PropTypes.string
+  locale: PropTypes.string,
+  translate: PropTypes.func
 }
 
 export default translate(connect(mapStateToProps)(CreateAssignedSessions));

@@ -8,7 +8,7 @@ import FlatButton from 'material-ui/FlatButton';
 import EditButtonAssignmentIcon from 'material-ui/svg-icons/content/create';
 import {Link} from 'react-router-dom';
 
-import {stringify} from "query-string";
+import QueryOptions from "../../../../data/endpoints/QueryOptions";
 
 class BaseEditAssignmentButton extends Component {
   constructor(props) {
@@ -16,13 +16,15 @@ class BaseEditAssignmentButton extends Component {
   }
 
   render() {
+    const queryOptions = new QueryOptions(1, 10, "id", "ASC", {patient: this.props.record.id});
+
     return <FlatButton
       primary
-      label={this.props.translate('resources.patient.partialEdits.assignmentDataEdit')}
+      label={this.props.translate('resources.patient.partialEdits.assignmentDataView')}
       icon={<EditButtonAssignmentIcon/>}
       containerElement={<Link to={{
-        pathname: `/assignedSession`,
-        search: stringify({patient: this.props.record.id})
+        pathname: `/assigned-session`,
+        search: queryOptions.buildAORQuery()
       }}/>}
       style={{overflow: 'inherit'}}
     />;
@@ -50,8 +52,8 @@ class PatientList extends Component {
     return <List {...this.props}>
       <Datagrid>
         <TextField source="id"/>
-        <EditButton/>
         <EditAssignmentButton/>
+        <EditButton/>
       </Datagrid>
     </List>;
   }

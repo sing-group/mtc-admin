@@ -14,9 +14,17 @@ export const LOCAL_STORAGE_USER_CREDENTIALS_KEY = "token";
 export const LOCAL_STORAGE_USER_ROLE_KEY = "role";
 export const LOCAL_STORAGE_USER_NAME_KEY = "loginUser";
 
+export const getUserRole = () => localStorage.getItem(LOCAL_STORAGE_USER_ROLE_KEY);
+
+export const getUserName = () => localStorage.getItem(LOCAL_STORAGE_USER_NAME_KEY);
+
 export const checkLoggedUser = (ROLE) => {
-  return ROLE === localStorage.getItem(LOCAL_STORAGE_USER_ROLE_KEY) ? localStorage.getItem(LOCAL_STORAGE_USER_NAME_KEY) : undefined;
+  return ROLE === getUserRole()
+    ? getUserName()
+    : undefined;
 };
+
+export const isUserInRole = (role) => getUserRole() === role;
 
 export default async (type, params) => {
   // called when the user attempts to log in
