@@ -47,13 +47,11 @@ import AssignedSessionEdit from '../operations/assigned_sessions/Edit';
 
 import {ADMIN, MANAGER, THERAPIST} from '../../controllers/PermissionsController';
 
-import auth from '../../controllers/AuthController';
 import routes from '../../routes';
 import menu from '../Menu';
-import login from '../../reducers/login';
 import actionLogger from '../../reducers/actionLogger';
 import context from '../../reducers/context';
-import Api from "../../controllers/Api";
+import ApiController from "../../controllers/ApiController";
 
 import {API_URL} from '../../config';
 import InstitutionEndpointFactory from "../../data/endpoints/factories/InstitutionEndpointFactory";
@@ -70,7 +68,7 @@ import PatientEndpointFactory from "../../data/endpoints/factories/PatientEndpoi
 import PatientParamsMapper from "../../controllers/request_adapters/mappers/PatientParamsMapper";
 import AssignedGamesSessionEndpointFactory from "../../data/endpoints/factories/AssignedGamesSessionEndpointFactory";
 import InstitutionGetListReferenceRequestAdapter from "../../controllers/request_adapters/institution/InstitutionGetListRequestAdapter";
-import InstitutionGetListManagerResponseAdapter from "../../controllers/response_adapters/institution/InstitutionGetListResponseAdapter";
+import InstitutionGetListResponseAdapter from "../../controllers/response_adapters/institution/InstitutionGetListResponseAdapter";
 import GamesSessionEndpointFactory from "../../data/endpoints/factories/GamesSessionEndpointFactory";
 import GamesSessionParamsMapper from "../../controllers/request_adapters/mappers/GamesSessionParamsMapper";
 import GamesSessionGetListReferenceRequestAdapter from "../../controllers/request_adapters/games_session/GamesSessionGetListRequestAdapter";
@@ -81,10 +79,15 @@ import AssignedSessionUpdateRequestAdapter from "../../controllers/request_adapt
 import AssignedSessionGetListRequestAdapter from "../../controllers/request_adapters/assigned_session/AssignedSessionGetListRequestAdapter";
 import AssignedSessionGetManyRequestAdapter from "../../controllers/request_adapters/assigned_session/AssignedSessionGetManyRequestAdapter";
 import AssignedSessionListByPatientResponseAdapter from "../../controllers/response_adapters/assigned_session/AssignedSessionListByPatientResponseAdapter";
+import AuthController from "../../controllers/AuthController";
 
 const institutionParamsMapper = new InstitutionParamsMapper();
 const gamesSessionParamsMapper = new GamesSessionParamsMapper();
 const assignedGamesSessionParamsMapper = new AssignedGamesSessionParamsMapper();
+
+const authController = new AuthController(API_URL);
+const auth  = authController.manageAuthenticationAction.bind(authController);
+const login = authController.buildLoginReducer();
 
 const endpointFactories = {
   institution: new InstitutionEndpointFactory(
@@ -93,13 +96,15 @@ const endpointFactories = {
       institutionParamsMapper,
       {
         GET_MANY_REFERENCE: new InstitutionGetManyReferenceRequestAdapter(),
-        GET_LIST: new InstitutionGetListReferenceRequestAdapter(paramName => institutionParamsMapper.convertParamName(paramName))
+        GET_LIST: new InstitutionGetListReferenceRequestAdapter(
+          paramName => institutionParamsMapper.convertParamName(paramName), authController
+        )
       }
     ),
     Object.assign({}, DEFAULT_RESPONSE_ADAPTERS,
       {
         GET_MANY_REFERENCE: new InstitutionListByManagerResponseAdapter(),
-        GET_LIST: new InstitutionGetListManagerResponseAdapter()
+        GET_LIST: new InstitutionGetListResponseAdapter(authController)
       }
     )
   ),
@@ -120,10 +125,18 @@ const endpointFactories = {
     RequestAdapters.buildFor(
       assignedGamesSessionParamsMapper,
       {
-        CREATE: new AssignedSessionCreateRequestAdapter(params => assignedGamesSessionParamsMapper.convertParamsToData(params)),
-        UPDATE: new AssignedSessionUpdateRequestAdapter(params => assignedGamesSessionParamsMapper.convertParamsToIdAndData(params)),
-        GET_LIST: new AssignedSessionGetListRequestAdapter(params => assignedGamesSessionParamsMapper.convertParamName(params)),
-        GET_MANY_REFERENCE: new AssignedSessionGetManyRequestAdapter(params => assignedGamesSessionParamsMapper.convertParamName(params))
+        CREATE: new AssignedSessionCreateRequestAdapter(
+          params => assignedGamesSessionParamsMapper.convertParamsToData(params), authController
+        ),
+        UPDATE: new AssignedSessionUpdateRequestAdapter(
+          params => assignedGamesSessionParamsMapper.convertParamsToIdAndData(params), authController
+        ),
+        GET_LIST: new AssignedSessionGetListRequestAdapter(
+          params => assignedGamesSessionParamsMapper.convertParamName(params)
+        ),
+        GET_MANY_REFERENCE: new AssignedSessionGetManyRequestAdapter(
+          params => assignedGamesSessionParamsMapper.convertParamName(params)
+        )
       }
     ),
     Object.assign({}, DEFAULT_RESPONSE_ADAPTERS,
@@ -137,18 +150,20 @@ const endpointFactories = {
     RequestAdapters.buildFor(
       gamesSessionParamsMapper,
       {
-        CREATE: new GamesSessionCreateRequestAdapter(params => gamesSessionParamsMapper.convertParamsToData(params)),
-        GET_LIST: new GamesSessionGetListReferenceRequestAdapter(paramName => gamesSessionParamsMapper.convertParamName(paramName))
+        CREATE: new GamesSessionCreateRequestAdapter(
+          params => gamesSessionParamsMapper.convertParamsToData(params), authController
+        ),
+        GET_LIST: new GamesSessionGetListReferenceRequestAdapter(
+          paramName => gamesSessionParamsMapper.convertParamName(paramName), authController
+        )
       }
     ),
     DEFAULT_RESPONSE_ADAPTERS
   )
 };
 
-const api = new Api(endpointFactories);
-
-const restClient = (type, resource, params) => api.manageRequest(type, resource, params);
-
+const apiController = new ApiController(endpointFactories, authController);
+const restClient = apiController.manageRequest.bind(apiController);
 
 const App = () => (
   <Admin title="MTC Admin"

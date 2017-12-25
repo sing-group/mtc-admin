@@ -1,16 +1,18 @@
 import check from "check-types";
-import {isUserInRole} from "../../AuthController";
 import {THERAPIST} from "../../PermissionsController";
+import AuthController from "../../AuthController";
 
 export default class AssignedSessionUpdateRequestAdapter {
-  constructor(paramsToIdAndDataMapper) {
+  constructor(paramsToIdAndDataMapper, authController) {
     check.assert.function(paramsToIdAndDataMapper, "paramsToIdAndDataMapper should be a function");
+    check.assert.instance(authController, AuthController, "authController should be an instance of AuthController");
 
     this._paramsToIdAndDataMapper = paramsToIdAndDataMapper;
+    this._authController = authController;
   }
 
   adapt(builder, params) {
-    if (isUserInRole(THERAPIST)) {
+    if (this._authController.isUserInRole(THERAPIST)) {
       check.assert.function(builder.update, "builder should have a update method");
 
       const {id, data} = this._paramsToIdAndDataMapper(params);

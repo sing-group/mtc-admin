@@ -22,7 +22,8 @@ const me = {
     dateLocales: "es-ES",
     multilanguagePickerTitle: "Idiomas",
     multilanguagePicker: 'Introduce valor para "%{language}"',
-    invalidCredentials: "Usuario no válido"
+    invalidCredentials: "Usuario no válido",
+    noCredentialsInLocalStorage: "No se han encontrado credenciales válidas en el almacenamiento local"
   },
   others: {
     accept: "Aceptar",

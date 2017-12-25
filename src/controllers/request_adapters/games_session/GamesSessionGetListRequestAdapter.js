@@ -1,21 +1,23 @@
 import check from "check-types";
 import QueryOptions from "../../../data/endpoints/QueryOptions";
-import {getUserName, isUserInRole} from "../../AuthController";
 import {THERAPIST} from "../../PermissionsController";
+import AuthController from "../../AuthController";
 
 export default class GamesSessionGetListRequestAdapter {
-  constructor(paramNameMapper) {
+  constructor(paramNameMapper, authController) {
     check.assert.function(paramNameMapper, "paramNameMapper should be a function");
+    check.assert.instance(authController, AuthController, "authController should be an instance of AuthController");
 
     this._paramNameMapper = paramNameMapper;
+    this._authController = authController;
   }
 
   adapt(builder, params) {
-    if (isUserInRole(THERAPIST)) {
+    if (this._authController.isUserInRole(THERAPIST)) {
       check.assert.object(params, "params should be an object");
       check.assert.function(builder.listByTherapist, "builder should have a listByTherapist method");
 
-      const therapist = getUserName();
+      const therapist = this._authController.getUserName();
       const queryOptions = QueryOptions.fromAORParams(params, this._paramNameMapper);
 
       return builder.listByTherapist(therapist, queryOptions);

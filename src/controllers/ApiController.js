@@ -2,18 +2,17 @@ import check from "check-types";
 
 import {fetchUtils, GET_MANY} from "admin-on-rest";
 
-import {LOCAL_STORAGE_USER_CREDENTIALS_KEY} from "./AuthController";
-
 import RequestBuilder from "./RequestBuilder";
 import ResponseDataExtractor from "./ResponseDataExtractor";
+import AuthController from "./AuthController";
 
-const defaultHttpClient = function(url, options = {}) {
+const defaultHttpClient = function(url, credentials, options = {}) {
   check.assert.nonEmptyString(url, "url should be a non empty string");
   check.assert.object(options, "options should be an object");
 
   const headers = new Headers({
     "Accept": "application/json",
-    "Authorization": "Basic " + localStorage.getItem(LOCAL_STORAGE_USER_CREDENTIALS_KEY),
+    "Authorization": "Basic " + credentials,
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Request-Headers": "X-Total-Count"
   });
@@ -30,15 +29,21 @@ const defaultHttpClient = function(url, options = {}) {
   );
 };
 
-export default class Api {
-  constructor(endpointFactories, httpClient = defaultHttpClient) {
+export default class ApiController {
+  constructor(endpointFactories, authController, httpClient = defaultHttpClient) {
+    check.assert.instance(authController, AuthController, "authController should be an instance of AuthController");
     check.assert.object(endpointFactories, "endpointFactories should be an object");
     check.assert.function(httpClient, "httpClient should be a function");
 
+    this._authController = authController;
     this._requestBuilder = new RequestBuilder(endpointFactories);
     this._responseDataExtractor = new ResponseDataExtractor(endpointFactories);
 
     this._httpClient = httpClient;
+  }
+
+  _getUserCredentials() {
+    return this._authController.getUserCredentials();
   }
 
   manageRequest(type, resource, params) {
@@ -48,7 +53,7 @@ export default class Api {
           params.ids.map(id => {
             const {url, options} = this._requestBuilder.build("GET_ONE", resource, {id});
 
-            return this._httpClient(url, options);
+            return this._httpClient(url, this._getUserCredentials(), options);
           })
         ).then(responses => ({
           data: responses.map(response => {
@@ -60,7 +65,7 @@ export default class Api {
       } else {
         const {url, options} = this._requestBuilder.build(type, resource, params);
 
-        return this._httpClient(url, options)
+        return this._httpClient(url, this._getUserCredentials(), options)
           .then(response =>
             this._responseDataExtractor.extract(response, type, resource, params)
           );

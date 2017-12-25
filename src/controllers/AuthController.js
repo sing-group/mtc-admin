@@ -1,38 +1,80 @@
-//@flow
-
-import {AUTH_CHECK, AUTH_ERROR, AUTH_GET_PERMISSIONS, AUTH_LOGIN, AUTH_LOGOUT} from 'admin-on-rest';
-
-import {API_URL} from '../config';
+import {
+  AUTH_CHECK, AUTH_ERROR, AUTH_GET_PERMISSIONS, AUTH_LOGIN, AUTH_LOGOUT, USER_LOGIN_SUCCESS,
+  USER_LOGOUT
+} from "admin-on-rest";
 
 import {create} from 'apisauce';
+import {API_URL} from "../config";
 
-const api = create({
-  baseURL: API_URL,
-});
+export default class AuthController {
+  static get USER_CREDENTIALS_KEY() {
+    return "token";
+  }
 
-export const LOCAL_STORAGE_USER_CREDENTIALS_KEY = "token";
-export const LOCAL_STORAGE_USER_ROLE_KEY = "role";
-export const LOCAL_STORAGE_USER_NAME_KEY = "loginUser";
+  static get USER_ROLE_KEY() {
+    return "role";
+  }
 
-export const getUserRole = () => localStorage.getItem(LOCAL_STORAGE_USER_ROLE_KEY);
+  static get USER_NAME_KEY() {
+    return "loginUser";
+  }
 
-export const getUserName = () => localStorage.getItem(LOCAL_STORAGE_USER_NAME_KEY);
+  constructor(apiUrl) {
+    this._apiUrl = apiUrl;
+    this._api = create({
+      baseURL: API_URL
+    });
+  }
 
-export const checkLoggedUser = (ROLE) => {
-  return ROLE === getUserRole()
-    ? getUserName()
-    : undefined;
-};
+  getUserRole() {
+    return localStorage.getItem(AuthController.USER_ROLE_KEY);
+  }
 
-export const isUserInRole = (role) => getUserRole() === role;
+  _setUserRole(userRole) {
+    localStorage.setItem(AuthController.USER_ROLE_KEY, userRole);
+  }
 
-export default async (type, params) => {
-  // called when the user attempts to log in
-  if (type === AUTH_LOGIN) {
+  getUserName() {
+    return localStorage.getItem(AuthController.USER_NAME_KEY);
+  }
+
+  _setUserName(userName) {
+    localStorage.setItem(AuthController.USER_NAME_KEY, userName);
+  }
+
+  getUserCredentials() {
+    return localStorage.getItem(AuthController.USER_CREDENTIALS_KEY);
+  }
+
+  _setUserCredentials(userCredentials) {
+    localStorage.setItem(AuthController.USER_CREDENTIALS_KEY, userCredentials);
+  }
+
+  hasUserCredentials() {
+    return localStorage.getItem(AuthController.USER_CREDENTIALS_KEY) !== null;
+  }
+
+  _clearCredentials(clearUser = true) {
+    if (clearUser)
+      localStorage.removeItem(AuthController.USER_NAME_KEY);
+
+    localStorage.removeItem(AuthController.USER_CREDENTIALS_KEY);
+    localStorage.removeItem(AuthController.USER_ROLE_KEY);
+  }
+
+  isUserInRole(role) {
+    return this.getUserRole() === role;
+  }
+
+  checkLoggedUser(role) {
+    return role === this.getUserRole() ? this.getUserName() : undefined;
+  }
+
+  async _manageAuthLogin(params) {
     const {username, password} = params;
 
     // obtains the role of user login
-    const response = await api.get(`/user/role?login=${username}&password=${password}`);
+    const response = await this._api.get(`/user/role?login=${username}&password=${password}`);
 
     if (response.status !== 200) // invalid user
       return Promise.reject("common.invalidCredentials");
@@ -41,45 +83,77 @@ export default async (type, params) => {
     const permission = response.data;
 
     // saves the user credentials and role
-    localStorage.setItem(LOCAL_STORAGE_USER_NAME_KEY, username);
-    localStorage.setItem(LOCAL_STORAGE_USER_CREDENTIALS_KEY, token);
-    localStorage.setItem(LOCAL_STORAGE_USER_ROLE_KEY, permission);
+    this._setUserName(username);
+    this._setUserRole(permission);
+    this._setUserCredentials(token);
 
     return Promise.resolve({loginUser: username, permission: permission}); // returns a promise with the credentials of logged user. Will be saved in state
   }
 
-  // called when the user clicks on the logout button
-  if (type === AUTH_LOGOUT) {
-    localStorage.removeItem(LOCAL_STORAGE_USER_CREDENTIALS_KEY);
-    localStorage.removeItem(LOCAL_STORAGE_USER_ROLE_KEY);
+  _manageAuthLogout() {
+    this._clearCredentials(false);
+
     return Promise.resolve();
   }
 
-  // called when the API returns an error
-  if (type === AUTH_ERROR) {
+  _manageAuthError(params) {
     const {status} = params;
 
     if (status === 401 || status === 403) {
-      localStorage.removeItem(LOCAL_STORAGE_USER_CREDENTIALS_KEY);
-      localStorage.removeItem(LOCAL_STORAGE_USER_ROLE_KEY);
-      localStorage.removeItem(LOCAL_STORAGE_USER_NAME_KEY);
+      this._clearCredentials();
       return Promise.reject();
     }
+
     return Promise.resolve();
   }
 
-  // called when the user navigates to a new location
-  if (type === AUTH_CHECK) {
-    // TODO: ask API is valid user???.
-    // saves the user credentials anb role
-    const token = atob(localStorage.getItem(LOCAL_STORAGE_USER_CREDENTIALS_KEY));
-    return localStorage.getItem(LOCAL_STORAGE_USER_CREDENTIALS_KEY) ? Promise.resolve({loginUser: token.split(":")[0]}) : Promise.reject();
+  _manageAuthCheck() {
+    if (this.hasUserCredentials()) {
+      return Promise.resolve({loginUser: this.getUserName()})
+    } else {
+      return Promise.reject("common.noCredentialsInLocalStorage");
+    }
   }
 
-  if (type === AUTH_GET_PERMISSIONS) {
-    // returns de role saved
-    return Promise.resolve(localStorage.getItem(LOCAL_STORAGE_USER_ROLE_KEY));
+  _manageAuthGetPermissions() {
+    return this.getUserRole();
   }
 
-  return Promise.reject('Unknown method');
-};
+  async manageAuthenticationAction(type, params) {
+    switch (type) {
+      case AUTH_LOGIN:
+        return await this._manageAuthLogin(params);
+      case AUTH_LOGOUT:
+        return this._manageAuthLogout();
+      case AUTH_ERROR:
+        return this._manageAuthError();
+      case AUTH_CHECK:
+        return this._manageAuthCheck();
+      case AUTH_GET_PERMISSIONS:
+        return this._manageAuthGetPermissions();
+      default:
+        return Promise.reject("Unknown method");
+    }
+  }
+
+  buildLoginReducer() {
+    const initialState = {
+      loginUser: this.getUserName(),
+      permission: this.getUserRole()
+    };
+
+    return (previousState = initialState, {type, payload}) => {
+      switch (type) {
+        case USER_LOGIN_SUCCESS:
+          return {
+            loginUser: payload.loginUser,
+            permission: payload.permission
+          };
+        case USER_LOGOUT:
+          return {};
+        default:
+          return previousState;
+      }
+    }
+  }
+}

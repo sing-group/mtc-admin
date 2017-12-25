@@ -2,11 +2,11 @@ import check from "check-types";
 
 import RequestBuilderHelper from "./RequestBuilderHelper";
 import QueryOptions from "../QueryOptions";
-import {checkLoggedUser} from "../../../controllers/AuthController";
-import {MANAGER} from "../../../controllers/PermissionsController";
 
 export default class ManagerRequestBuilder {
   constructor(apiUrl) {
+    check.assert.nonEmptyString(apiUrl, "apiUrl should be a non empty string");
+
     this._requestHelper = new RequestBuilderHelper(apiUrl);
   }
 

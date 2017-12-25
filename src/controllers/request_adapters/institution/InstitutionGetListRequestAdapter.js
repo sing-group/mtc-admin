@@ -1,21 +1,22 @@
 import check from "check-types";
 import QueryOptions from "../../../data/endpoints/QueryOptions";
-import DefaultGetListRequestAdapter from "../DefaultGetListRequestAdapter";
-import {checkLoggedUser} from "../../AuthController";
 import {MANAGER} from "../../PermissionsController";
+import AuthController from "../../AuthController";
 
 export default class InstitutionGetListRequestAdapter {
-  constructor(paramNameMapper) {
+  constructor(paramNameMapper, authController) {
     check.assert.function(paramNameMapper, "paramNameMapper should be a function");
+    check.assert.instance(authController, AuthController, "authController should be an instance of AuthController");
 
     this._paramNameMapper = paramNameMapper;
+    this._authController = authController;
   }
 
   adapt(builder, params) {
     check.assert.object(params, "params should be an object");
 
     const queryOptions = QueryOptions.fromAORParams(params, this._paramNameMapper);
-    const manager = checkLoggedUser(MANAGER);
+    const manager = this._authController.checkLoggedUser(MANAGER);
 
     if (check.assigned(manager)) {
       check.assert.function(builder.listByManager, "builder should have a listByManager method");

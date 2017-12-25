@@ -21,7 +21,8 @@ const me = {
     dateLocales: "en-US",
     multilanguagePickerTitle: "Languages",
     multilanguagePicker: 'Insert value for "%{language}"',
-    invalidCredentials: "Invalid credentials"
+    invalidCredentials: "Invalid credentials",
+    noCredentialsInLocalStorage: "No valid user credentials found in local storage"
   },
   others: {
     accept: "Accept",

@@ -2,8 +2,6 @@ import check from "check-types";
 
 import RequestBuilderHelper from "./RequestBuilderHelper";
 import QueryOptions from "../QueryOptions";
-import {checkLoggedUser} from "../../../controllers/AuthController";
-import {patient} from "../../../controllers/PermissionsController";
 
 export default class PatientRequestBuilder {
   constructor(apiUrl) {
