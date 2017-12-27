@@ -1,6 +1,6 @@
 import check from "check-types";
 import QueryOptions from "../../../data/endpoints/QueryOptions";
-import {THERAPIST} from "../../PermissionsController";
+import {THERAPIST} from "../../AuthController";
 import AuthController from "../../AuthController";
 
 export default class GamesSessionGetListRequestAdapter {

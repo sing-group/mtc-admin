@@ -6,6 +6,18 @@ import {
 import {create} from 'apisauce';
 import {API_URL} from "../config";
 
+const ADMIN = "ADMIN";
+const MANAGER = "MANAGER";
+const THERAPIST = "THERAPIST";
+const PATIENT = "PATIENT";
+
+export {
+  ADMIN,
+  MANAGER,
+  THERAPIST,
+  PATIENT
+};
+
 export default class AuthController {
   static get USER_CREDENTIALS_KEY() {
     return "token";

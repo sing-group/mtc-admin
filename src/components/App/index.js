@@ -45,7 +45,7 @@ import AssignedSessionDelete from '../operations/assigned_sessions/Delete';
 import AssignedSessionList from '../operations/assigned_sessions/List';
 import AssignedSessionEdit from '../operations/assigned_sessions/Edit';
 
-import {ADMIN, MANAGER, THERAPIST} from '../../controllers/PermissionsController';
+import {ADMIN, MANAGER, THERAPIST} from '../../controllers/AuthController';
 
 import routes from '../../routes';
 import menu from '../Menu';

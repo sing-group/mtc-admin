@@ -10,7 +10,7 @@ import {
 import {connect} from 'react-redux';
 
 
-import {ADMIN, MANAGER} from '../../../../controllers/PermissionsController'
+import {ADMIN, MANAGER} from '../../../../controllers/AuthController'
 
 const mapStateToProps = state => ({loginUser: state.login.loginUser});
 

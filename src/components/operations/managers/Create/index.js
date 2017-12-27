@@ -8,7 +8,7 @@ import {
   TextInput
 } from 'admin-on-rest';
 
-import {MANAGER} from '../../../../controllers/PermissionsController';
+import {MANAGER} from '../../../../controllers/AuthController';
 
 export default (props) => (
   <Create {...props}>

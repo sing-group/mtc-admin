@@ -9,7 +9,7 @@ import {
   TextInput
 } from 'admin-on-rest';
 
-import {PATIENT} from '../../../../controllers/PermissionsController';
+import {PATIENT} from '../../../../controllers/AuthController';
 
 import {connect} from 'react-redux';
 

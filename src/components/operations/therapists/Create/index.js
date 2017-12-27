@@ -12,7 +12,7 @@ import {
 import {connect} from 'react-redux';
 
 
-import {THERAPIST} from '../../../../controllers/PermissionsController'
+import {THERAPIST} from '../../../../controllers/AuthController'
 
 const mapStateToProps = state => ({/*userLogin: state.login.userLogin */});
 

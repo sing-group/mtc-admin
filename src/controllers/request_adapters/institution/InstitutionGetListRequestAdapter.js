@@ -1,6 +1,6 @@
 import check from "check-types";
 import QueryOptions from "../../../data/endpoints/QueryOptions";
-import {MANAGER} from "../../PermissionsController";
+import {MANAGER} from "../../AuthController";
 import AuthController from "../../AuthController";
 
 export default class InstitutionGetListRequestAdapter {

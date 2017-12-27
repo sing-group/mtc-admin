@@ -1,5 +1,5 @@
 import check from "check-types";
-import {THERAPIST} from "../../PermissionsController";
+import {THERAPIST} from "../../AuthController";
 import AuthController from "../../AuthController";
 
 export default class GamesSessionCreateRequestAdapter {
