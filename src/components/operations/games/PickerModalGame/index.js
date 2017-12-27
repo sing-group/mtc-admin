@@ -1,16 +1,15 @@
-import React from 'react';
+import React, {Component} from "react";
 
-import {parseids} from '../../../../utils/parseKeys'
+import {parseids} from "../../../../utils/parseKeys"
 
-import {translate} from 'admin-on-rest'
-import PropTypes from 'prop-types';
+import {translate} from "admin-on-rest"
+import PropTypes from "prop-types";
 
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import Dialog from "material-ui/Dialog";
+import FlatButton from "material-ui/FlatButton";
+import {Card, CardHeader, CardText} from "material-ui/Card";
 
-import {games as GamesMetadata} from '../../../../data/games/games'
+import {games as GamesMetadata} from "../../../../data/games/games"
 
 const styles = {
   radioButton: {
@@ -28,16 +27,7 @@ const styles = {
 /**
  * Dialog content can be scrollable.
  */
-class GamePicker extends React.Component {
-
-  handleOpen = () => {
-    this.setState({open: true});
-  };
-  handleClose = () => {
-    this.setState({open: false, gamesSelected: [], actual: undefined});
-    this.props.onRequestClose();
-  };
-
+class GamePicker extends Component {
   constructor(props) {
     super(props);
 
@@ -46,7 +36,15 @@ class GamePicker extends React.Component {
       open: props.open,
       actual: undefined
     }
+  }
 
+  handleOpen() {
+    this.setState({open: true});
+  }
+
+  handleClose() {
+    this.setState({open: false, gamesSelected: [], actual: undefined});
+    this.props.onRequestClose();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -85,26 +83,28 @@ class GamePicker extends React.Component {
 
     const actions = [
       <FlatButton
-        label={translate('aor.action.cancel')}
+        key="actionCancel"
+        label={translate("aor.action.cancel")}
         primary={true}
-        onTouchTap={this.handleClose}
-        onClick={this.handleClose}
+        onTouchTap={() => this.handleClose()}
+        onClick={() => this.handleClose()}
       />,
       <FlatButton
-        label={translate('game.picker.addGames')}
+        key="actionAddAgmes"
+        label={translate("game.picker.addGames")}
         primary={true}
-        disabled={this.state.gamesSelected.length == 0}
+        disabled={this.state.gamesSelected.length === 0}
         onTouchTap={() => this.onConfirmGames()}
         onClick={() => this.onConfirmGames()}
       />
     ];
     return (
       <Dialog
-        title={translate('game.picker.title')}
+        title={translate("game.picker.title")}
         actions={actions}
         modal={false}
         open={this.state.open}
-        onRequestClose={this.handleClose}
+        onRequestClose={() => this.handleClose()}
         autoScrollBodyContent={true}
       >
         {Object.keys(GamesMetadata).map((key) => {
@@ -114,7 +114,7 @@ class GamePicker extends React.Component {
                   onMouseEnter={() => this.handleCursorInGame(key)}
                   onClick={() => this.handleClickOnGame(key)}
                   onTouchTap={() => this.handleClickOnGame(key)}
-                  zDepth={(this.state.actual == key) ? 3 : 1}>
+                  zDepth={(this.state.actual === key) ? 3 : 1}>
               <CardHeader
                 title={translate("common.model.games." + parseids(metadata._nameId))}
               />
@@ -133,7 +133,8 @@ class GamePicker extends React.Component {
 GamePicker.propTypes = {
   onGamesAdded: PropTypes.func.isRequired,
   onRequestClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired
+  open: PropTypes.bool.isRequired,
+  translate: PropTypes.func
 };
 
 export default translate(GamePicker)

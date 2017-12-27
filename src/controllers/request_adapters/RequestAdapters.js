@@ -1,4 +1,4 @@
-import check from 'check-types';
+import check from "check-types";
 
 import DefaultGetAdapter from "./DefaultGetRequestAdapter";
 import DefaultListAdapter from "./DefaultGetListRequestAdapter";

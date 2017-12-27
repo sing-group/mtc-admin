@@ -1,17 +1,17 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 import {
   Create, minLength,
   required,
   SimpleForm,
   TextInput
-} from 'admin-on-rest';
+} from "admin-on-rest";
 
-import {PATIENT} from '../../../../controllers/AuthController';
+import {PATIENT} from "../../../../controllers/AuthController";
 
-import {connect} from 'react-redux';
+import {connect} from "react-redux";
 
 const mapStateToProps = state => ({loginUser: state.login.loginUser});
 

@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import pure from 'recompose/pure';
+import pure from "recompose/pure";
 
 import {
   Create,
@@ -12,8 +12,8 @@ import {
   SelectInput,
   SimpleForm,
   translate
-} from 'admin-on-rest';
-import {connect} from 'react-redux';
+} from "admin-on-rest";
+import {connect} from "react-redux";
 
 const CustomTextField = ({ value, elStyle }) => {
   return <span style={elStyle}>{value}</span>;
@@ -71,7 +71,7 @@ class CreateAssignedSessions extends Component {
           source="assignedGamesSessions"
           reference="games-session"
           validate={[required]}>
-          <SelectInput optionText={'name' + this.props.locale} validate={[required]}/>
+          <SelectInput optionText={"name" + this.props.locale} validate={[required]}/>
         </ReferenceInput>
         <DateInput source="startDate" validate={[required]} options={{locale: dateLocale, minDate: new Date()}}/>
         <DateInput source="endDate" validate={[required]} options={{locale: dateLocale, minDate: new Date()}}/>
@@ -84,7 +84,7 @@ CreateAssignedSessions.propTypes = {
   patient: PropTypes.object,
   locale: PropTypes.string,
   translate: PropTypes.func
-}
+};
 
 export default translate(connect(mapStateToProps)(CreateAssignedSessions));
 

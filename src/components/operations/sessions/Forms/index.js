@@ -2,28 +2,10 @@ import React, {Component} from "react";
 
 import PropTypes from "prop-types";
 
-import {Card, CardHeader, CardText, CardTitle} from "material-ui/Card";
-
-import {CREATE, Create, translate} from "admin-on-rest";
+import {translate} from "admin-on-rest";
 import MultiLanguageTextPicker from "../../../MultiLanguage";
 
-import {grey50 as bgColor} from "material-ui/styles/colors";
-
 import GamesInput from "../../games/GamesConfigurer";
-
-const styles = {
-  avatar: {
-    backgroundColor: "red"
-  },
-  wrapper: {
-    display: "flex",
-    flexWrap: "wrap",
-    backgroundColor: bgColor
-  },
-  picker: {
-    display: "flex"
-  }
-};
 
 class SessionForm extends Component {
   constructor(props) {
@@ -40,31 +22,30 @@ class SessionForm extends Component {
   }
 
   handleConfigurationEnd(games) {
-    const record = {
-      ...this.state.record,
-      game: games.map((g, gameOrder) => {
-        return {
-          gameId: g.id,
-          gameOrder: gameOrder + 1,
-          parameter: g.parameters.map((p) => {
-            return {
-              key: p._id,
-              value: g.parametersValues[p._id]
-            }
-          })
-        }
-      })
-    };
+    const record = Object.assign({}, this.state.record,
+      {
+        game: games.map((g, gameOrder) => {
+          return {
+            gameId: g.id,
+            gameOrder: gameOrder + 1,
+            parameter: g.parameters.map((p) => {
+              return {
+                key: p._id,
+                value: g.parametersValues[p._id]
+              }
+            })
+          }
+        })
+      }
+    );
 
     this.props.save(record, this.props.redirect);
   }
 
   handleChange(prop, keyLocale, value) {
     const newRecord = {
-      record: {
-        ...this.state.record,
-        [prop]: {
-          ...this.state.record[prop],
+      record: Object.assign({}, this.state.record, {
+        [prop]: Object.assign({}, this.state.record[prop], {
           values: [
             ...(
               this.state.record[prop]
@@ -88,15 +69,14 @@ class SessionForm extends Component {
                 ]
             )
           ]
-        }
-      }
+        })
+      })
     };
 
     this.setState(Object.assign({}, this.state, newRecord));
   }
 
   render() {
-    const {translate} = this.props;
     const names = {};
 
     const descriptions = {};
@@ -135,7 +115,9 @@ class SessionForm extends Component {
 
 SessionForm.propTypes = {
   translate: PropTypes.func,
-  record: PropTypes.object
+  record: PropTypes.object,
+  save: PropTypes.func,
+  redirect: PropTypes.string
 };
 
 

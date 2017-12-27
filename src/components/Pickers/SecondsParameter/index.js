@@ -1,21 +1,21 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import {translate} from 'admin-on-rest';
+import {translate} from "admin-on-rest";
 
-import {parseids} from '../../../utils/parseKeys';
+import {parseids} from "../../../utils/parseKeys";
 
-import TextField from 'material-ui/TextField';
+import TextField from "material-ui/TextField";
 
-import {SecondsParameter} from '../../../data/games/parameters';
+import {SecondsParameter} from "../../../data/games/parameters";
 
 class SecondsParameterComponent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      errorText: ''
+      errorText: ""
     };
   }
 
@@ -26,12 +26,12 @@ class SecondsParameterComponent extends Component {
 
     if (!this.props.parameter.isValid(value)) {
       this.setState({
-        errorText: value > max ? this.props.translate('aor.validation.maxValue', {max}) : this.props.translate('aor.validation.minValue', {min})
+        errorText: value > max ? this.props.translate("aor.validation.maxValue", {max}) : this.props.translate("aor.validation.minValue", {min})
 
       })
     } else
       this.setState({
-        errorText: ''
+        errorText: ""
       })
   }
 
@@ -48,10 +48,10 @@ class SecondsParameterComponent extends Component {
     const {parameter, translate, value} = this.props;
     return (
       <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        flexAlign: 'flex-start',
-        backgroundColor: '#f9fafc',
+        display: "flex",
+        flexDirection: "column",
+        flexAlign: "flex-start",
+        backgroundColor: "#f9fafc",
         margin: 5,
         padding: 5,
         boxShadow: this.state.errorText ? "0px 0px 2px 2px red" : "0px 0px 2px 2px #B3E5FC"

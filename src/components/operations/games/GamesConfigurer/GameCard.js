@@ -1,21 +1,21 @@
-import React, {Component} from 'react';
-import {translate} from 'admin-on-rest'
-import PropTypes from 'prop-types';
-import {Card, CardHeader, CardText} from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
+import React, {Component} from "react";
+import {translate} from "admin-on-rest"
+import PropTypes from "prop-types";
+import {Card, CardHeader, CardText} from "material-ui/Card";
+import RaisedButton from "material-ui/RaisedButton";
 
-import {InputBuilder} from '../../../../data/games/parameters';
+import {InputBuilder} from "../../../../data/games/parameters";
 
-import {buildIcon} from '../../../../data/games/taskTypes';
-import {parseids} from '../../../../utils/parseKeys';
+import {buildIcon} from "../../../../data/games/taskTypes";
+import {parseids} from "../../../../utils/parseKeys";
 
 const styles = {
   avatar: {
     margin: 2,
   },
   wrapper: {
-    display: 'flex',
-    flexWrap: 'wrap'
+    display: "flex",
+    flexWrap: "wrap"
   },
 };
 
@@ -47,12 +47,12 @@ class GameCard extends Component {
       >
         <CardHeader
           title={<span
-            style={{color: game.valid ? 'black' : 'red'}}>{translate("common.model.games." + parseids(game.nameId))}</span>}
+            style={{color: game.valid ? "black" : "red"}}>{translate("common.model.games." + parseids(game.nameId))}</span>}
           actAsExpander={true}
           showExpandableButton={true}
         />
         <CardText expandable={true}>
-          <div style={{display: 'flex', flexDirection: "column"}}>
+          <div style={{display: "flex", flexDirection: "column"}}>
             {
               game.parameters.map(param => {
                 return InputBuilder(game.parametersValues[param.id], param, onModifyPropGame)
@@ -61,8 +61,8 @@ class GameCard extends Component {
           </div>
         </CardText>
         <CardText expandable={true}>
-          <div style={{display: 'flex'}}>
-            <div style={{display: 'flex'}}>
+          <div style={{display: "flex"}}>
+            <div style={{display: "flex"}}>
               <RaisedButton
                 label="Eliminar"
                 secondary={true}
@@ -70,7 +70,7 @@ class GameCard extends Component {
               />
             </div>
 
-            <div style={{display: "flex", flexBasis: '100%', justifyContent: 'flex-end'}}>
+            <div style={{display: "flex", flexBasis: "100%", justifyContent: "flex-end"}}>
               {game.tasks.map((key) => (
                 buildIcon(styles.avatar, key._id, translate("common.model.games." + parseids(key.id)))
               ))}

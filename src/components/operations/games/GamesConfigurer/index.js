@@ -1,35 +1,35 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import {arrayMove, SortableContainer, SortableElement} from 'react-sortable-hoc';
-import {CardHeader} from 'material-ui/Card';
+import {arrayMove, SortableContainer, SortableElement} from "react-sortable-hoc";
+import {CardHeader} from "material-ui/Card";
 
-import {translate} from 'admin-on-rest';
-import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
-import FontIcon from 'material-ui/FontIcon';
-import RaisedButton from 'material-ui/RaisedButton';
-import GameCard from './GameCard';
-import {parseids} from '../../../../utils/parseKeys';
+import {translate} from "admin-on-rest";
+import {Toolbar, ToolbarGroup} from "material-ui/Toolbar";
+import FontIcon from "material-ui/FontIcon";
+import RaisedButton from "material-ui/RaisedButton";
+import GameCard from "./GameCard";
+import {parseids} from "../../../../utils/parseKeys";
 
-import {buildIconTooltiped} from '../../../../data/games/taskTypes';
-import {gameAdapter, gameBuilder} from '../../../../data/games/games';
+import {buildIconTooltiped} from "../../../../data/games/taskTypes";
+import {gameAdapter, gameBuilder} from "../../../../data/games/games";
 
-import {grey50 as bgColor} from 'material-ui/styles/colors';
+import {grey50 as bgColor} from "material-ui/styles/colors";
 
-import GamePicker from '..//PickerModalGame';
+import GamePicker from "..//PickerModalGame";
 
 const styles = {
   avatar: {
     backgroundColor: "red"
   },
   wrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
     backgroundColor: bgColor
   },
   picker: {
-    display: 'flex',
+    display: "flex",
   }
 };
 
@@ -134,8 +134,8 @@ class GamesConfigurer extends Component {
     const {translate} = this.props;
 
     return (
-      <div style={{display: 'flex', flexDirection: 'column'}}>
-        <div style={{backgroundColor: "#bfbfbf", display: 'flex', flexDirection: 'column'}}>
+      <div style={{display: "flex", flexDirection: "column"}}>
+        <div style={{backgroundColor: "#bfbfbf", display: "flex", flexDirection: "column"}}>
           <Toolbar>
             <ToolbarGroup firstChild={true}>
               <CardHeader title={translate("game.configurer.toolbar.options")}/>

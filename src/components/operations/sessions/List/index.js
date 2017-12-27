@@ -1,18 +1,18 @@
-import React from 'react';
-import {EditButton, List, translate} from 'admin-on-rest';
-import {connect} from 'react-redux';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
-import {grey50 as bgColor} from 'material-ui/styles/colors';
-import {buildIconTooltiped} from '../../../../data/games/taskTypes';
-import {parseids} from '../../../../utils/parseKeys';
-import {games as GamesMetadata} from '../../../../data/games/games';
-import PropTypes from 'prop-types';
+import React from "react";
+import {EditButton, List, translate} from "admin-on-rest";
+import {connect} from "react-redux";
+import {Card, CardActions, CardHeader, CardText} from "material-ui/Card";
+import {grey50 as bgColor} from "material-ui/styles/colors";
+import {buildIconTooltiped} from "../../../../data/games/taskTypes";
+import {parseids} from "../../../../utils/parseKeys";
+import {games as GamesMetadata} from "../../../../data/games/games";
+import PropTypes from "prop-types";
 
 const mapStateToProps = state => ({loginUser: state.login.loginUser});
 
 const SessionsGrid = ({ids, data, basePath, translate, locale}) => (
   <div style={{
-    margin: '1em',
+    margin: "1em",
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
@@ -22,8 +22,8 @@ const SessionsGrid = ({ids, data, basePath, translate, locale}) => (
     {ids.map(id =>
       <Card key={id} style={{margin: 10, minWidth: 200, maxWidth: 200, height: "100%"}}>
         <CardHeader
-          title={data[id].name.values.find(t => t.key === locale) ? data[id].name.values.find(t => t.key === locale).value : translate('session.noTranslation')}
-          subtitle={data[id].description.values.find(t => t.key === locale) ? data[id].description.values.find(t => t.key === locale).value : translate('session.noTranslation')}>
+          title={data[id].name.values.find(t => t.key === locale) ? data[id].name.values.find(t => t.key === locale).value : translate("session.noTranslation")}
+          subtitle={data[id].description.values.find(t => t.key === locale) ? data[id].description.values.find(t => t.key === locale).value : translate("session.noTranslation")}>
         </CardHeader>
         <CardText style={{flexBasis: "100%"}}>
           {generateSummarySession(data[id].gameConfiguration.map(g => {
@@ -31,7 +31,7 @@ const SessionsGrid = ({ids, data, basePath, translate, locale}) => (
             return GamesMetadata[game]
           }), translate)}
         </CardText>
-        <CardActions style={{textAlign: 'right', backgroundColor: "#eaeaea"}}>
+        <CardActions style={{textAlign: "right", backgroundColor: "#eaeaea"}}>
           <EditButton resource="games-session" basePath={basePath} record={data[id]}/>
         </CardActions>
       </Card>
@@ -67,12 +67,12 @@ const styles = {
     backgroundColor: "red"
   },
   wrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
     backgroundColor: bgColor
   },
   picker: {
-    display: 'flex',
+    display: "flex",
   }
 };
 

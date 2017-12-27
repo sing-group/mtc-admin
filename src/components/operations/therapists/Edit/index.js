@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Edit,
   email,
@@ -9,8 +9,8 @@ import {
   SimpleForm,
   TextField,
   TextInput
-} from 'admin-on-rest';
-import {connect} from 'react-redux';
+} from "admin-on-rest";
+import {connect} from "react-redux";
 
 
 const mapStateToProps = state => ({idUser: state.login.id});

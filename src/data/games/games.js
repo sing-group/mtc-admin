@@ -14,8 +14,8 @@ const games = {
 };
 
 const relation = {
-  'recognition': games.RECOGNITION,
-  'verbalFluency': games.VERBAL_FLUENCY
+  recognition: games.RECOGNITION,
+  verbalFluency: games.VERBAL_FLUENCY
 };
 
 function gameBuilder(key, additionalProps) {
@@ -25,15 +25,16 @@ function gameBuilder(key, additionalProps) {
     parametersValues[param.id] = param.defaultValue
   });
 
-  return {
-    ...additionalProps,
-    id: games[key].metadata.id,
-    nameId: games[key].metadata.nameId,
-    parameters: games[key].metadata.parameters,
-    parametersValues,
-    tasks: games[key].metadata.taskTypes,
-    valid: true,
-  };
+  return Object.assign({}, additionalProps,
+    {
+      id: games[key].metadata.id,
+      nameId: games[key].metadata.nameId,
+      parameters: games[key].metadata.parameters,
+      parametersValues,
+      tasks: games[key].metadata.taskTypes,
+      valid: true,
+    }
+  );
 }
 
 function gameAdapter(game) {
@@ -43,18 +44,14 @@ function gameAdapter(game) {
     return p
   }, {});
 
-  const adapter = {
+  return {
     id: relation[key].metadata.id,
     nameId: relation[key].metadata.nameId,
     parameters: relation[key].metadata.parameters,
     parametersValues: parametersValues,
     tasks: relation[key].metadata.taskTypes,
-    valid: true,
+    valid: true
   };
-
-  console.log("ADAPTER:", adapter);
-
-  return adapter;
 }
 
 export {games, gameBuilder, gameAdapter};

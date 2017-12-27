@@ -9,7 +9,7 @@ const isValidObject = value => {
   const isArray = Array.isArray(value);
   const isBuffer = Buffer.isBuffer(value);
   const isObject =
-    Object.prototype.toString.call(value) === '[object Object]';
+    Object.prototype.toString.call(value) === "[object Object]";
   const hasKeys = !!Object.keys(value).length;
 
   return !isArray && !isBuffer && isObject && hasKeys;
@@ -20,7 +20,7 @@ const isValidObject = value => {
  *
  * filterObject =
  * {
- *  id_institution : "algo",
+ *  id_institution : "something",
  *  personalData : {
  *      sex : "male"
  *  }
@@ -28,13 +28,13 @@ const isValidObject = value => {
  *
  * BECOMES IN:
  *  {
- *      id_institution: "algo"
+ *      id_institution: "something"
  *      sex : "male"
  *  }
  *
- *  This enables for 'stringify' method parse any structure of filters in to a plain query to API
+ *  This enables for "stringify" method parse any structure of filters in to a plain query to API
  *
- *  ?......&id_institution=algo&sex=male&.....
+ *  ?......&id_institution=something&sex=male&.....
  */
 const flattenObject = (value, path = []) => {
   if (isValidObject(value)) {
@@ -45,7 +45,7 @@ const flattenObject = (value, path = []) => {
       )
     );
   } else {
-    return path.length ? {[path.join('.')]: value} : value;
+    return path.length ? {[path.join(".")]: value} : value;
   }
 };
 

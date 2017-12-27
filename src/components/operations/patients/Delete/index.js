@@ -1,4 +1,14 @@
-import React from 'react';
-import {Delete} from 'admin-on-rest';
+import React,{Component} from "react";
+import {Delete} from "admin-on-rest";
 
-export default (props) => <Delete {...props} />;
+class DeletePatient extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return <Delete {...this.props}/>;
+  }
+}
+
+export default DeletePatient;

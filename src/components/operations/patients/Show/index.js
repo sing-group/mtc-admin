@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 import {
   Show,
   ReferenceManyField,
@@ -9,7 +9,7 @@ import {
   EditButton,
   Datagrid,
   translate
-} from 'admin-on-rest';
+} from "admin-on-rest";
 import PropTypes from "prop-types";
 
 class ShowPatient extends Component {
@@ -51,7 +51,8 @@ class ShowPatient extends Component {
 }
 
 ShowPatient.propTypes = {
-  translate: PropTypes.func
+  translate: PropTypes.func,
+  locale: PropTypes.string
 };
 
 export default translate(ShowPatient);

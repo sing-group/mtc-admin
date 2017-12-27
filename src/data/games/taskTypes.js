@@ -1,12 +1,11 @@
-import React from 'react';
-import IconButton from 'material-ui/IconButton';
+import React from "react";
+import IconButton from "material-ui/IconButton";
 
-import Avatar from 'material-ui/Avatar';
-import Chip from 'material-ui/Chip';
+import Avatar from "material-ui/Avatar";
+import Chip from "material-ui/Chip";
 
-import * as colors from 'material-ui/styles/colors';
+import * as colors from "material-ui/styles/colors";
 
-/// PARA USAR CON COLORES
 const taskTypes =
   {
     "game.task.freeMemory":

@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import {Edit, translate} from 'admin-on-rest';
+import {Edit, translate} from "admin-on-rest";
 
-import SessionForm from '../Forms';
+import SessionForm from "../Forms";
 
 export default translate((props) => (
   <Edit {...props}>

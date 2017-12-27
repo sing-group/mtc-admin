@@ -1,62 +1,62 @@
-import React from 'react';
-import {Admin, Resource} from 'admin-on-rest';
-import messages from '../../i18n';
-import {DEFAULT_LOCALE} from '../../i18n/localesManager';
+import React from "react";
+import {Admin, Resource} from "admin-on-rest";
+import messages from "../../i18n";
+import {DEFAULT_LOCALE} from "../../i18n/localesManager";
 
-import CustomLayout from '../Layout';
+import CustomLayout from "../Layout";
 
-import ManagerIcon from 'material-ui/svg-icons/action/supervisor-account';
-import InstitutionIcon from 'material-ui/svg-icons/social/location-city';
-import TherapistIcon from 'material-ui/svg-icons/social/person';
-import PatientIcon from 'material-ui/svg-icons/social/person-outline';
-import SessionIcon from 'material-ui/svg-icons/notification/event-note';
-import AssignedSessionIcon from 'material-ui/svg-icons/notification/event-available';
+import ManagerIcon from "material-ui/svg-icons/action/supervisor-account";
+import InstitutionIcon from "material-ui/svg-icons/social/location-city";
+import TherapistIcon from "material-ui/svg-icons/social/person";
+import PatientIcon from "material-ui/svg-icons/social/person-outline";
+import SessionIcon from "material-ui/svg-icons/notification/event-note";
+import AssignedSessionIcon from "material-ui/svg-icons/notification/event-available";
 
-import Dashboard from '../Dashboard';
+import Dashboard from "../Dashboard";
 
-import Sessions from '../operations/sessions/List';
-import SessionCreate from '../operations/sessions/Create';
-import SessionEdit from '../operations/sessions/Edit';
-import SessionDelete from '../operations/sessions/Delete';
+import Sessions from "../operations/sessions/List";
+import SessionCreate from "../operations/sessions/Create";
+import SessionEdit from "../operations/sessions/Edit";
+import SessionDelete from "../operations/sessions/Delete";
 
-import Institutions from '../operations/institutions/List';
-import InstitutionCreate from '../operations/institutions/Create';
-import InstitutionShow from '../operations/institutions/Show';
-import InstitutionEdit from '../operations/institutions/Edit';
-import InstitutionDelete from '../operations/institutions/Delete';
+import Institutions from "../operations/institutions/List";
+import InstitutionCreate from "../operations/institutions/Create";
+import InstitutionShow from "../operations/institutions/Show";
+import InstitutionEdit from "../operations/institutions/Edit";
+import InstitutionDelete from "../operations/institutions/Delete";
 
-import Managers from '../operations/managers/List';
-import ManagerCreate from '../operations/managers/Create';
-import ManagerShow from '../operations/managers/Show';
-import ManagerEdit from '../operations/managers/Edit';
-import ManagerDelete from '../operations/managers/Delete';
+import Managers from "../operations/managers/List";
+import ManagerCreate from "../operations/managers/Create";
+import ManagerShow from "../operations/managers/Show";
+import ManagerEdit from "../operations/managers/Edit";
+import ManagerDelete from "../operations/managers/Delete";
 
-import Therapists from '../operations/therapists/List';
-import TherapistCreate from '../operations/therapists/Create';
-import TherapistShow from '../operations/therapists/Show';
-import TherapistEdit from '../operations/therapists/Edit';
-import TherapistDelete from '../operations/therapists/Delete';
+import Therapists from "../operations/therapists/List";
+import TherapistCreate from "../operations/therapists/Create";
+import TherapistShow from "../operations/therapists/Show";
+import TherapistEdit from "../operations/therapists/Edit";
+import TherapistDelete from "../operations/therapists/Delete";
 
-import Patients from '../operations/patients/List';
-import PatientCreate from '../operations/patients/Create';
-import PatientEdit from '../operations/patients/Edit';
-import PatientDelete from '../operations/patients/Delete';
+import Patients from "../operations/patients/List";
+import PatientCreate from "../operations/patients/Create";
+import PatientEdit from "../operations/patients/Edit";
+import PatientDelete from "../operations/patients/Delete";
 
-import AssignedSessionCreate from '../operations/assigned_sessions/Create';
-import AssignedSessionDelete from '../operations/assigned_sessions/Delete';
-import AssignedSessionList from '../operations/assigned_sessions/List';
-import AssignedSessionEdit from '../operations/assigned_sessions/Edit';
+import AssignedSessionCreate from "../operations/assigned_sessions/Create";
+import AssignedSessionDelete from "../operations/assigned_sessions/Delete";
+import AssignedSessionList from "../operations/assigned_sessions/List";
+import AssignedSessionEdit from "../operations/assigned_sessions/Edit";
 
-import {ADMIN, MANAGER, THERAPIST} from '../../controllers/AuthController';
+import {ADMIN, MANAGER, THERAPIST} from "../../controllers/AuthController";
 
-import routes from '../../routes';
-import menu from '../Menu';
-import actionLoggerReducer from '../../reducers/actionLogger';
-import contextReducer from '../../reducers/context';
-import themeReducer from '../../reducers/themeReducer';
+import routes from "../../routes";
+import menu from "../Menu";
+import actionLoggerReducer from "../../reducers/actionLogger";
+import contextReducer from "../../reducers/context";
+import themeReducer from "../../reducers/themeReducer";
 import ApiController from "../../controllers/ApiController";
 
-import {API_URL} from '../../config';
+import {API_URL} from "../../config";
 import InstitutionEndpointFactory from "../../data/endpoints/factories/InstitutionEndpointFactory";
 import RequestAdapters from "../../controllers/request_adapters/RequestAdapters";
 import DEFAULT_RESPONSE_ADAPTERS from "../../controllers/response_adapters/DefaultResponseAdapters";
@@ -250,4 +250,4 @@ const App = () => (
   </Admin>
 );
 
-export default App; //to autorenderer when locale changes
+export default App; //to auto-renderer when locale changes

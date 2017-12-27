@@ -1,7 +1,7 @@
 import messages from "@sing-group/mtc-games/src/i18n/gl_ES";
 import {parseids} from "../../utils/parseKeys";
 
-const me = {
+const gl_ES = {
   common: {
     configuration: {
       title: "Opcións",
@@ -199,4 +199,4 @@ const me = {
   }
 };
 
-export default me;
+export default gl_ES;

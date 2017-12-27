@@ -1,23 +1,16 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React, {Component} from "react";
+import PropTypes from "prop-types";
 
-import {translate} from 'admin-on-rest';
-import {SupportedLocales} from '../../i18n/localesManager';
-import TextField from 'material-ui/TextField';
+import {translate} from "admin-on-rest";
+import {SupportedLocales} from "../../i18n/localesManager";
+import TextField from "material-ui/TextField";
 
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import Dialog from "material-ui/Dialog";
+import FlatButton from "material-ui/FlatButton";
 
-import {Logos} from '../../i18n/logos';
+import {Logos} from "../../i18n/logos";
 
-const styles = {
-  floatingLabelStyle: {},
-  floatingLabelFocusStyle: {
-    fontWeight: 'bold'
-  }
-};
-
-let closeImg = {cursor: 'pointer', float: 'right', marginRight: "10px", width: '20px'};
+let closeImg = {cursor: "pointer", float: "right", marginRight: "10px", width: "20px"};
 
 class MultiLanguageTextPicker extends Component {
   constructor(props) {
@@ -131,9 +124,9 @@ class MultiLanguageTextPicker extends Component {
 
     return (
       <div style={{display: "flex"}}>
-        <TextField ref="main" {...mainTextProps}
+        <TextField {...mainTextProps}
                    hintText={translate("common.multilanguagePicker", {language: translate("common.languages." + this.state.currentLocale)})}
-                   style={{width: '100%'}}
+                   style={{width: "100%"}}
                    value={(this.state.messages[this.state.currentLocale]) ? this.state.messages[this.state.currentLocale] : ""}
                    onChange={(e) => this.handleChange(e, this.state.currentLocale)}
                    floatingLabelText={translate(translateRoute)}
@@ -143,7 +136,7 @@ class MultiLanguageTextPicker extends Component {
                      this.changeToAreaMode();
                      e.target.focus();
                    }}
-                   onBlur={(e) => this.changeToNormalMode()}
+                   onBlur={() => this.changeToNormalMode()}
                    floatingLabelFocusStyle={{fontSize: 23}}
         />
         <div style={{marginTop: 25, alignSelf: "flex-start"}}>
@@ -171,7 +164,7 @@ class MultiLanguageTextPicker extends Component {
                 <TextField
                   ref={l} {...(this.state.configurations[l]) ? this.state.configurations[l] : this.state.configurations.closed}
                   hintText={translate("common.multilanguagePicker", {language: translate("common.languages." + l)})}
-                  style={{width: '100%'}} value={(this.state.messages[l]) ? this.state.messages[l] : ""}
+                  style={{width: "100%"}} value={(this.state.messages[l]) ? this.state.messages[l] : ""}
                   onChange={(e) => this.handleChange(e, l)}
                   floatingLabelStyle={{fontSize: 18}}
                   floatingLabelFocusStyle={{fontSize: 23}}

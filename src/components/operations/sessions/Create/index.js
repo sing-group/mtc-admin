@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 
-import {Create, translate} from 'admin-on-rest';
+import {Create, translate} from "admin-on-rest";
 
-import SessionForm from '../Forms';
+import SessionForm from "../Forms";
 
 class GamesSessionCreate extends Component {
   constructor(props) {

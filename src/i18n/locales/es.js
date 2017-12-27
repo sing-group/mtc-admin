@@ -2,7 +2,7 @@ import messages from "@sing-group/mtc-games/src/i18n/es_ES"
 import {parseids} from "../../utils/parseKeys"
 
 
-const me = {
+const es_ES = {
   common: {
     configuration: {
       title: "Configuración",
@@ -200,4 +200,4 @@ const me = {
   }
 };
 
-export default me;
+export default es_ES;

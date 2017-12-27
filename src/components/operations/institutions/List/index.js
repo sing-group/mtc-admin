@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Datagrid,
   EditButton,
@@ -6,11 +6,11 @@ import {
   ReferenceField,
   ShowButton,
   TextField
-} from 'admin-on-rest';
-import {connect} from 'react-redux';
+} from "admin-on-rest";
+import {connect} from "react-redux";
 
 
-import {ADMIN, MANAGER} from '../../../../controllers/AuthController'
+import {ADMIN, MANAGER} from "../../../../controllers/AuthController"
 
 const mapStateToProps = state => ({loginUser: state.login.loginUser});
 

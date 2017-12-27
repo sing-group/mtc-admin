@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 import {
   DeleteButton,
@@ -10,15 +10,15 @@ import {
   translate,
   required,
   minLength
-} from 'admin-on-rest';
+} from "admin-on-rest";
 
-import {CardActions} from 'material-ui/Card';
+import {CardActions} from "material-ui/Card";
 
 
 const cardActionStyle = {
   zIndex: 2,
-  display: 'inline-block',
-  float: 'right',
+  display: "inline-block",
+  float: "right",
 };
 
 const PatientEditActions = translate(({basePath, data}) => (

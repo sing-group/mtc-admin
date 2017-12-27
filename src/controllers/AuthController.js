@@ -3,7 +3,7 @@ import {
   USER_LOGOUT
 } from "admin-on-rest";
 
-import {create} from 'apisauce';
+import {create} from "apisauce";
 import {API_URL} from "../config";
 
 const ADMIN = "ADMIN";

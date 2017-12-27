@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from "react";
 import {
   Create,
   email,
@@ -6,18 +6,24 @@ import {
   required,
   SimpleForm,
   TextInput
-} from 'admin-on-rest';
+} from "admin-on-rest";
 
-import {MANAGER} from '../../../../controllers/AuthController';
+class ManagerCreate extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-export default (props) => (
-  <Create {...props}>
-    <SimpleForm redirect="list" defaultValue={{role: MANAGER}}>
-      <TextInput source="login" validate={[required]}/>
-      <TextInput source="password" validate={[required, minLength(6)]}/>
-      <TextInput source="email" validate={[required, email]}/>
-      <TextInput source="name" validate={[required]}/>
-      <TextInput source="surname" validate={[required]}/>
-    </SimpleForm>
-  </Create>
-);
+  render() {
+    return <Create {...this.props}>
+      <SimpleForm redirect="list">
+        <TextInput source="login" validate={[required]}/>
+        <TextInput source="password" validate={[required, minLength(6)]}/>
+        <TextInput source="email" validate={[required, email]}/>
+        <TextInput source="name" validate={[required]}/>
+        <TextInput source="surname" validate={[required]}/>
+      </SimpleForm>
+    </Create>;
+  }
+}
+
+export default ManagerCreate;

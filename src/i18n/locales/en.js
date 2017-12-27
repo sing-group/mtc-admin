@@ -1,7 +1,7 @@
 import messages from "@sing-group/mtc-games/src/i18n/en_US";
 import {parseids} from "../../utils/parseKeys";
 
-const me = {
+const en_US = {
   common: {
     configuration: {
       title: "Configuration",
@@ -128,4 +128,4 @@ const me = {
   }
 };
 
-export default me
+export default en_US;

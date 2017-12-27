@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import check from "check-types";
 
 export default class ParamsMapper {

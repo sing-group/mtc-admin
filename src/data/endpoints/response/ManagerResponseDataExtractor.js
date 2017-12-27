@@ -5,7 +5,7 @@ import ResponseDataExtractorHelper from "./ResponseDataExtractorHelper";
 export default class ManagerResponseDataExtractor {
   constructor() {
     this._helper = new ResponseDataExtractorHelper(data => {
-      const institutions = {}
+      const institutions = {};
       if (check.assigned(data.institutions)) {
         institutions.institutions = data.institutions.map(i => i.id);
       }

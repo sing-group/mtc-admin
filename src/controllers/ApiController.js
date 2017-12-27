@@ -71,7 +71,8 @@ export default class ApiController {
           );
       }
     } catch (e) {
-      console.log(e.stack);
+      /*eslint no-console: ["error", { allow: ["error"] }] */
+      console.error(e.stack);
       throw e;
     }
   }

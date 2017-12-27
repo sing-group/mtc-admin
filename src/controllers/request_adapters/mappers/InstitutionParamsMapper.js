@@ -26,7 +26,7 @@ export default class InstitutionParamsMapper extends ParamsMapper {
 
   convertParamsToIdAndData(params) {
     const id = this.convertParamsToId(params);
-    const data = this.convertParamsToData(params)
+    const data = this.convertParamsToData(params);
 
     return {
       id: id,

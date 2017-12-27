@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import {Datagrid, EditButton, List, TextField, translate} from 'admin-on-rest';
+import {Datagrid, EditButton, List, TextField, translate} from "admin-on-rest";
 
-import FlatButton from 'material-ui/FlatButton';
-import EditButtonAssignmentIcon from 'material-ui/svg-icons/content/create';
-import {Link} from 'react-router-dom';
+import FlatButton from "material-ui/FlatButton";
+import EditButtonAssignmentIcon from "material-ui/svg-icons/content/create";
+import {Link} from "react-router-dom";
 
 import QueryOptions from "../../../../data/endpoints/QueryOptions";
 
@@ -20,13 +20,13 @@ class BaseEditAssignmentButton extends Component {
 
     return <FlatButton
       primary
-      label={this.props.translate('resources.patient.partialEdits.assignmentDataView')}
+      label={this.props.translate("resources.patient.partialEdits.assignmentDataView")}
       icon={<EditButtonAssignmentIcon/>}
       containerElement={<Link to={{
         pathname: `/assigned-session`,
         search: queryOptions.buildAORQuery()
       }}/>}
-      style={{overflow: 'inherit'}}
+      style={{overflow: "inherit"}}
     />;
   }
 }

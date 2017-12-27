@@ -1,5 +1,4 @@
 import check from "check-types";
-import QueryOptions from "../../data/endpoints/QueryOptions";
 
 export default class DefaultCreateRequestAdapter {
   constructor(paramsToDataMapper) {

@@ -1,5 +1,5 @@
-import React from 'react';
-import pickers from '../../../components/Pickers';
+import React from "react";
+import pickers from "../../../components/Pickers";
 
 const BooleanParameter = require("@sing-group/mtc-games/src/game/metadata/parameter/basic/BooleanParameter").default;
 const IntegerParameter = require("@sing-group/mtc-games/src/game/metadata/parameter/basic/IntegerParameter").default;

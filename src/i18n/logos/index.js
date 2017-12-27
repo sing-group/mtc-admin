@@ -1,4 +1,4 @@
-import {SupportedLocales} from '../localesManager'
+import {SupportedLocales} from "../localesManager";
 
 
 const Logos = {};

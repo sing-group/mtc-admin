@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 import {
   DateInput,
   Edit,
@@ -7,7 +7,7 @@ import {
   required,
   SimpleForm,
   translate
-} from 'admin-on-rest';
+} from "admin-on-rest";
 import PropTypes from "prop-types";
 
 class AssignedSessionEdit extends Component {
@@ -36,6 +36,6 @@ class AssignedSessionEdit extends Component {
 AssignedSessionEdit.propTypes = {
   translate: PropTypes.func,
   locale: PropTypes.string
-}
+};
 
 export default translate(AssignedSessionEdit);

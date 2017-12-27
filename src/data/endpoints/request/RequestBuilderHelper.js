@@ -35,7 +35,7 @@ export default class RequestBuilderHelper {
     const referenceId = RequestBuilderHelper.REFERENCE_ID_TOKEN;
 
     check.assert.assigned(id, "id should be assigned");
-    check.assert.contains(resource, referenceId, "resource should contain the reference id token: " + referenceId)
+    check.assert.contains(resource, referenceId, "resource should contain the reference id token: " + referenceId);
     check.assert.instance(queryOptions, QueryOptions, "queryOptions should be an instance of QueryOptions");
 
     const resourceWithId = resource.replace(referenceId, id);

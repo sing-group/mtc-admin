@@ -1,18 +1,18 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 
-import {arrayMove, SortableContainer, SortableElement} from 'react-sortable-hoc';
+import {arrayMove, SortableContainer, SortableElement} from "react-sortable-hoc";
 
-import {translate} from 'admin-on-rest'
+import {translate} from "admin-on-rest";
 
-import {card, Paper} from 'material-ui'
-import GameCard from './GameCard'
-import Toolbar from './Toolbar'
-import TitleCard from './TitleCard'
+import {Paper} from "material-ui";
+import GameCard from "./GameCard";
+import Toolbar from "./Toolbar";
+import TitleCard from "./TitleCard";
 
-import {buildIconTooltiped} from '../../data/mindInfo'
+import {buildIconTooltiped} from "../../data/mindInfo";
 
 
-import {grey50 as bgColor} from 'material-ui/styles/colors';
+import {grey50 as bgColor} from "material-ui/styles/colors";
 
 
 const styles = {
@@ -20,8 +20,8 @@ const styles = {
     backgroundColor: "red"
   },
   wrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
     backgroundColor: bgColor
   }
 };
@@ -29,7 +29,6 @@ const styles = {
 const SortableItem = SortableElement(({value}) =>
   <GameCard game={value}/>
 );
-
 
 const SortableList = translate(SortableContainer(({games, translate}) => {
   return (
@@ -49,7 +48,7 @@ const SortableList = translate(SortableContainer(({games, translate}) => {
   );
 }));
 
-export default class extends Component {
+class SortableGames extends Component {
   constructor(props) {
     super(props);
 
@@ -97,7 +96,6 @@ export default class extends Component {
   }
 }
 
-
 function generateSummarySession(games, translate) {
   const mindInfo = {};
 
@@ -115,3 +113,5 @@ function generateSummarySession(games, translate) {
     )
   );
 }
+
+export default SortableGames;
