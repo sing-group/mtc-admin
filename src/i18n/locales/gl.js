@@ -27,8 +27,17 @@ const me = {
   others: {
     accept: "Aceptar",
   },
+  configuration: {
+    title: "Configuración",
+    language: "Linguaxe",
+    theme: {
+      name: "Tema",
+      light: "Claro",
+      dark: "Escuro"
+    }
+  },
   menu: {
-    configurationItem: "Opcións"
+    configurationItem: "Configuración"
   },
   session: {
     noTranslation: "Sen valor en galego",

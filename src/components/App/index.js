@@ -3,6 +3,8 @@ import {Admin, Resource} from 'admin-on-rest';
 import messages from '../../i18n';
 import {DEFAULT_LOCALE} from '../../i18n/localesManager';
 
+import CustomLayout from '../Layout';
+
 import ManagerIcon from 'material-ui/svg-icons/action/supervisor-account';
 import InstitutionIcon from 'material-ui/svg-icons/social/location-city';
 import TherapistIcon from 'material-ui/svg-icons/social/person';
@@ -49,8 +51,9 @@ import {ADMIN, MANAGER, THERAPIST} from '../../controllers/AuthController';
 
 import routes from '../../routes';
 import menu from '../Menu';
-import actionLogger from '../../reducers/actionLogger';
-import context from '../../reducers/context';
+import actionLoggerReducer from '../../reducers/actionLogger';
+import contextReducer from '../../reducers/context';
+import themeReducer from '../../reducers/themeReducer';
 import ApiController from "../../controllers/ApiController";
 
 import {API_URL} from '../../config';
@@ -87,7 +90,7 @@ const assignedGamesSessionParamsMapper = new AssignedGamesSessionParamsMapper();
 
 const authController = new AuthController(API_URL);
 const auth  = authController.manageAuthenticationAction.bind(authController);
-const login = authController.buildLoginReducer();
+const loginReducer = authController.buildLoginReducer();
 
 const endpointFactories = {
   institution: new InstitutionEndpointFactory(
@@ -169,12 +172,18 @@ const App = () => (
   <Admin title="MTC Admin"
          customRoutes={routes}
          menu={menu}
-         customReducers={{login, context, actionLogger}}
+         customReducers={{
+           login: loginReducer,
+           context: contextReducer,
+           actionLogger: actionLoggerReducer,
+           theme: themeReducer
+         }}
          authClient={auth}
          dashboard={Dashboard}
          restClient={restClient}
          locale={DEFAULT_LOCALE}
          messages={messages}
+         appLayout={CustomLayout}
   >
     {permissions => [
       permissions === ADMIN ?

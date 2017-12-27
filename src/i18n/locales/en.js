@@ -27,6 +27,15 @@ const me = {
   others: {
     accept: "Accept",
   },
+  configuration: {
+    title: "Configuration",
+    language: "Language",
+    theme: {
+      name: "Theme",
+      light: "Light",
+      dark: "Dark"
+    }
+  },
   menu: {
     configurationItem: "Configuration"
   },

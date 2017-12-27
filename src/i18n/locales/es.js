@@ -28,6 +28,15 @@ const me = {
   others: {
     accept: "Aceptar",
   },
+  configuration: {
+    title: "Configuración",
+    language: "Lenguaje",
+    theme: {
+      name: "Tema",
+      light: "Claro",
+      dark: "Oscuro"
+    }
+  },
   menu: {
     configurationItem: "Configuración"
   },

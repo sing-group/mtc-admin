@@ -1,23 +1,20 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux'
-import PropTypes from 'prop-types';
-import inflection from 'inflection';
+import React, {Component} from "react";
+import {connect} from "react-redux"
+import PropTypes from "prop-types";
+import inflection from "inflection";
 
-import {DashboardMenuItem, MenuItemLink, translate} from 'admin-on-rest';
-import Divider from 'material-ui/Divider';
+import {DashboardMenuItem, MenuItemLink, translate} from "admin-on-rest";
+import Divider from "material-ui/Divider";
 
-import {getPermissions} from '../../controllers/AuthController';
+import SettingsIcon from "material-ui/svg-icons/action/settings";
 import { getResources } from "admin-on-rest/lib/reducer"
-
-import LanguageSwitcher from '../LanguageSwitcher';
-
 
 const styles = {
   main: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    height: '100%',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    height: "100%",
   }
 };
 
@@ -52,7 +49,12 @@ class Menu extends Component {
           ))
         }
         <Divider/>
-        <LanguageSwitcher onMenuTap={onMenuTap}/>
+        <MenuItemLink
+          to="/configuration"
+          primaryText={translate("menu.configurationItem")}
+          leftIcon={<SettingsIcon />}
+          onClick={onMenuTap}
+        />
         <Divider/>
         {logout}
       </div>
