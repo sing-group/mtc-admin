@@ -11,7 +11,7 @@ const es_ES = {
     model: {
       games: Object.keys(messages).reduce((accum, key) => {
         accum[parseids(key)] = messages[key];
-        return accum
+        return accum;
       }, {})
     },
     languages: {
@@ -139,7 +139,7 @@ const es_ES = {
       refresh: "Actualizar",
       add_filter: "Añadir filtro",
       remove_filter: "Eliminar filtro",
-      back: "Atras"
+      back: "Atrás"
     },
     boolean: {
       true: "Sí",

@@ -10,7 +10,7 @@ const gl_ES = {
     model: {
       games: Object.keys(messages).reduce((accum, key) => {
         accum[parseids(key)] = messages[key];
-        return accum
+        return accum;
       }, {})
     },
     languages: {
@@ -189,7 +189,7 @@ const gl_ES = {
       item_doesnt_exist: "O elemento non existe",
     },
     validation: {
-      required: "Requerido",
+      required: "Requirido",
       email: "O formato do email non e válido",
       minLength: "Debe ter %{min} caracteres como mínimo",
       maxLength: "Debe ter %{max} caracteres como máximo",
