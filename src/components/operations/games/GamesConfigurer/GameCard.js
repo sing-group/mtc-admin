@@ -42,14 +42,15 @@ const styles = {
 class GameCard extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       expanded: false
-    }
+    };
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.expanded) {
-      this.setState({expanded: nextProps.expanded})
+      this.setState({expanded: nextProps.expanded});
     }
   }
 
@@ -105,7 +106,7 @@ class GameCard extends Component {
 GameCard.propTypes = {
   game: PropTypes.object.isRequired,
   onDeleteGame: PropTypes.func,
-  expanded: PropTypes.boolean,
+  expanded: PropTypes.bool,
   translate: PropTypes.func,
   onModifyPropGame: PropTypes.func
 };

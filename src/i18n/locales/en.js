@@ -30,8 +30,11 @@ const en_US = {
     model: {
       games: Object.keys(messages).reduce((accum, key) => {
         accum[parseids(key)] = messages[key];
-        return accum
-      }, {})
+        return accum;
+      }, {}),
+      validation: {
+        invalidValue: "Invalid value"
+      }
     },
     languages: {
       es_ES: "Spanish",

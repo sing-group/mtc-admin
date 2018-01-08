@@ -141,6 +141,8 @@ class MultiLanguageTextPicker extends Component {
     delete mainTextProps.translateRoute;
     delete mainTextProps.translate;
     delete mainTextProps.locale;
+    delete mainTextProps.messages;
+    delete mainTextProps.onChangeValue;
 
     return (
       <div style={{display: "flex"}}>
@@ -184,7 +186,8 @@ class MultiLanguageTextPicker extends Component {
                 <TextField
                   ref={l} {...(this.state.configurations[l]) ? this.state.configurations[l] : this.state.configurations.closed}
                   hintText={translate("common.multilanguagePicker", {language: translate("common.languages." + l)})}
-                  style={{width: "100%"}} value={(this.state.messages[l]) ? this.state.messages[l] : ""}
+                  style={{width: "100%"}}
+                  value={(this.state.messages[l]) ? this.state.messages[l] : ""}
                   onChange={(e) => this.handleChange(e, l)}
                   floatingLabelStyle={{fontSize: 18}}
                   floatingLabelFocusStyle={{fontSize: 23}}

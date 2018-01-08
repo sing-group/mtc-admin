@@ -39,29 +39,36 @@ class MinutesParameterComponent extends Component {
     };
   }
 
-  check(v) {
-    const value = parseInt(v);
+  check(value) {
     const max = MinutesParameter.MAX;
     const min = MinutesParameter.MIN;
 
-    if (!this.props.parameter.isValid(value)) {
-      this.setState({
-        errorText: value > max ? this.props.translate("aor.validation.maxValue", {max}) : this.props.translate("aor.validation.minValue", {min})
-
-      })
-    } else
+    if (this.props.parameter.isValid(value)) {
       this.setState({
         errorText: ""
-      })
+      });
+
+      return true;
+    } else {
+      this.setState({
+        errorText: value > max
+          ? this.props.translate("aor.validation.maxValue", {max})
+          : this.props.translate("aor.validation.minValue", {min})
+
+      });
+
+      return false;
+    }
   }
 
-  handleChange(event){
-    this.check(event.target.value);
-    this.props.onValueChange(parseInt(event.target.value));
+  handleChange(event) {
+    if (this.check(event.target.value)) {
+      this.props.onValueChange(parseInt(event.target.value));
+    }
   }
 
   componentDidMount() {
-    this.check(this.props.value);
+    this.check(parseInt(this.props.value));
   }
 
   render() {
@@ -95,9 +102,9 @@ class MinutesParameterComponent extends Component {
 
 MinutesParameterComponent.propTypes = {
   onValueChange: PropTypes.func,
-  parameter: PropTypes.object,
-  value: PropTypes.int,
-  translate: PropTypes.func
+  parameter: PropTypes.object.isRequired,
+  value: PropTypes.number.isRequired,
+  translate: PropTypes.func.isRequired
 };
 
 export default translate(MinutesParameterComponent);

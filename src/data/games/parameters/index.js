@@ -27,6 +27,8 @@ const IntegerParameter = require("@sing-group/mtc-games/src/game/metadata/parame
 const MinutesParameter = require("@sing-group/mtc-games/src/game/metadata/parameter/time/MinutesParameter").default;
 const SecondsParameter = require("@sing-group/mtc-games/src/game/metadata/parameter/time/SecondsParameter").default;
 
+const EnumStringParameter = require("@sing-group/mtc-games/src/game/metadata/parameter/enum/EnumStringParameter").default;
+
 
 const InputBuilder = (actualValue, parameter, valueModificationFunction, initialValue) => {
   const Component = pickers[parameter.constructor.name];
@@ -44,5 +46,6 @@ export {
   IntegerParameter,
   MinutesParameter,
   SecondsParameter,
+  EnumStringParameter,
   InputBuilder
 }

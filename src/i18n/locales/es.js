@@ -32,7 +32,10 @@ const es_ES = {
       games: Object.keys(messages).reduce((accum, key) => {
         accum[parseids(key)] = messages[key];
         return accum;
-      }, {})
+      }, {}),
+      validation: {
+        invalidValue: "Valor no válido"
+      }
     },
     languages: {
       es_ES: "Español",

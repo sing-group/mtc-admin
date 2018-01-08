@@ -20,9 +20,9 @@
  */
 import React, {Component} from "react";
 
-import {parseids} from "../../../../utils/parseKeys"
+import {parseids} from "../../../../utils/parseKeys";
 
-import {translate} from "admin-on-rest"
+import {translate} from "admin-on-rest";
 import PropTypes from "prop-types";
 
 import Dialog from "material-ui/Dialog";
@@ -64,29 +64,31 @@ class GamePicker extends Component {
 
   handleClose() {
     this.setState({open: false, gamesSelected: [], actual: undefined});
+
     this.props.onRequestClose();
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       open: nextProps.open
-    })
+    });
   }
 
   handleCursorInGame(key) {
-    this.setState({actual: key})
+    this.setState({actual: key});
   }
 
   handleClickOnGame(key) {
     const index = this.state.gamesSelected.lastIndexOf(key);
-    let aux = this.state.gamesSelected;
+
+    const aux = this.state.gamesSelected;
     if (index < 0) {
-      aux.push(key)
+      aux.push(key);
     } else {
-      aux.splice(index, 1)
+      aux.splice(index, 1);
     }
 
-    this.setState({gamesSelected: aux})
+    this.setState({gamesSelected: aux});
   }
 
   onConfirmGames() {
@@ -95,7 +97,7 @@ class GamePicker extends Component {
   }
 
   getStyle(key) {
-    return this.state.gamesSelected.lastIndexOf(key) < 0 ? styles.cardUnSelected : styles.cardSelected
+    return this.state.gamesSelected.lastIndexOf(key) < 0 ? styles.cardUnSelected : styles.cardSelected;
   }
 
   render() {
@@ -157,4 +159,4 @@ GamePicker.propTypes = {
   translate: PropTypes.func
 };
 
-export default translate(GamePicker)
+export default translate(GamePicker);

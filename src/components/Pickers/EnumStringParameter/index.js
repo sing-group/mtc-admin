@@ -26,9 +26,9 @@ import {translate} from "admin-on-rest";
 
 import {parseids} from "../../../utils/parseKeys";
 
-import TextField from "material-ui/TextField";
+import {MenuItem, SelectField} from "material-ui";
 
-class IntegerParameterComponent extends Component {
+class EnumStringParameterComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -38,36 +38,38 @@ class IntegerParameterComponent extends Component {
   }
 
   check(value) {
-    const max = this.props.parameter._max;
-    const min = this.props.parameter._min;
-
     if (this.props.parameter.isValid(value)) {
       this.setState({
         errorText: ""
       });
 
-      return true;
+      return false;
     } else {
       this.setState({
-        errorText: value > max ? this.props.translate("aor.validation.maxValue", {max}) : this.props.translate("aor.validation.minValue", {min})
+        errorText: this.props.translate("common.model.validation.invalidValue")
       });
 
-      return false;
+      return true;
     }
+
   }
 
-  handleChange(event) {
-    if (this.check(event.target.value)) {
-      this.props.onValueChange(parseInt(event.target.value));
+  handleChange(event, key, payload) {
+    if (this.check(payload)) {
+      this.props.onValueChange(payload);
     }
   }
 
   componentDidMount() {
-    this.check(parseInt(this.props.value));
+    this.check(this.props.value);
   }
 
   render() {
     const {parameter, translate, value} = this.props;
+
+    const items = parameter.values.map(value =>
+      (<MenuItem key={value} value={value} primaryText={value}/>)
+    );
 
     return (
       <div style={{
@@ -80,26 +82,28 @@ class IntegerParameterComponent extends Component {
         boxShadow: this.state.errorText ? "0px 0px 2px 2px red" : "0px 0px 2px 2px #B3E5FC"
       }}>
         <span>{translate("common.model.games." + parseids(parameter.descriptionId))}</span>
-        <TextField
+
+        <SelectField
           style={{marginBottom: this.state.errorText ? 15 : 0}}
           value={value}
-          errorText={this.state.errorText}
-          onChange={this.handleChange.bind(this)}
-          type="number"
           floatingLabelText={translate("common.model.games." + parseids(parameter.nameId))}
           floatingLabelFixed={true}
-        />
+          errorText={this.state.errorText}
+          onChange={this.handleChange.bind(this)}
+        >
+          {items}
+        </SelectField>
 
       </div>
     );
   }
 }
 
-IntegerParameterComponent.propTypes = {
+EnumStringParameterComponent.propTypes = {
   onValueChange: PropTypes.func,
   parameter: PropTypes.object.isRequired,
   value: PropTypes.string.isRequired,
   translate: PropTypes.func.isRequired
 };
 
-export default translate(IntegerParameterComponent);
+export default translate(EnumStringParameterComponent);

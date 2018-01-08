@@ -18,15 +18,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-import BooleanParameter from "./BooleanParameter"
-import IntegerParameter from "./IntegerParameter"
-import MinutesParameter from "./MinutesParameter"
-import SecondsParameter from "./SecondsParameter"
+import BooleanParameter from "./BooleanParameter";
+import IntegerParameter from "./IntegerParameter";
+import MinutesParameter from "./MinutesParameter";
+import SecondsParameter from "./SecondsParameter";
+import EnumStringParameter from "./EnumStringParameter";
 
 export default {
   BooleanParameter,
   IntegerParameter,
   MinutesParameter,
-  SecondsParameter
+  SecondsParameter,
+  EnumStringParameter
 }
 

@@ -31,7 +31,10 @@ const gl_ES = {
       games: Object.keys(messages).reduce((accum, key) => {
         accum[parseids(key)] = messages[key];
         return accum;
-      }, {})
+      }, {}),
+      validation: {
+        invalidValue: "Valor non válido"
+      }
     },
     languages: {
       es_ES: "Español",

@@ -39,33 +39,40 @@ class SecondsParameterComponent extends Component {
     };
   }
 
-  check(v) {
-    const value = parseInt(v);
+  check(value) {
     const max = SecondsParameter.MAX;
     const min = SecondsParameter.MIN;
 
-    if (!this.props.parameter.isValid(value)) {
-      this.setState({
-        errorText: value > max ? this.props.translate("aor.validation.maxValue", {max}) : this.props.translate("aor.validation.minValue", {min})
-
-      })
-    } else
+    if (this.props.parameter.isValid(value)) {
       this.setState({
         errorText: ""
-      })
+      });
+
+      return true;
+    } else {
+      this.setState({
+        errorText: value > max
+          ? this.props.translate("aor.validation.maxValue", {max})
+          : this.props.translate("aor.validation.minValue", {min})
+      });
+
+      return false;
+    }
   }
 
   handleChange(event) {
-    this.check(event.target.value);
-    this.props.onValueChange(parseInt(event.target.value));
+    if (this.check(parseInt(event.target.value))) {
+      this.props.onValueChange(parseInt(event.target.value));
+    }
   }
 
   componentDidMount() {
-    this.check(this.props.value)
+    this.check(parseInt(this.props.value));
   }
 
   render() {
     const {parameter, translate, value} = this.props;
+
     return (
       <div style={{
         display: "flex",
@@ -86,7 +93,6 @@ class SecondsParameterComponent extends Component {
           floatingLabelText={translate("common.model.games." + parseids(parameter.nameId))}
           floatingLabelFixed={true}
         />
-
       </div>
     );
   }
@@ -94,9 +100,9 @@ class SecondsParameterComponent extends Component {
 
 SecondsParameterComponent.propTypes = {
   onValueChange: PropTypes.func,
-  parameter: PropTypes.object,
-  value: PropTypes.int,
-  translate: PropTypes.func
+  parameter: PropTypes.object.isRequired,
+  value: PropTypes.number.isRequired,
+  translate: PropTypes.func.isRequired
 };
 
 export default translate(SecondsParameterComponent);

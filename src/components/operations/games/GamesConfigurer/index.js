@@ -91,7 +91,7 @@ function generateSummarySession(games = [], translate) {
   ))
 }
 
-class GamesConfigurer extends Component {
+class GamesConfigurator extends Component {
   constructor(props) {
     super(props);
 
@@ -187,11 +187,11 @@ class GamesConfigurer extends Component {
   }
 }
 
-GamesConfigurer.propTypes = {
+GamesConfigurator.propTypes = {
   translate: PropTypes.func,
   onConfigurationEnd: PropTypes.func,
-  games: PropTypes.object
+  games: PropTypes.array
 };
 
-export default translate(GamesConfigurer);
+export default translate(GamesConfigurator);
 
