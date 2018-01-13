@@ -37,21 +37,25 @@ class EnumStringParameterComponent extends Component {
     };
   }
 
+  componentDidMount() {
+    this.check(this.props.value);
+  }
+
   check(value) {
     if (this.props.parameter.isValid(value)) {
       this.setState({
         errorText: ""
       });
 
-      return false;
+      return true;
     } else {
+      // This should never happen
       this.setState({
         errorText: this.props.translate("common.model.validation.invalidValue")
       });
 
-      return true;
+      return false;
     }
-
   }
 
   handleChange(event, key, payload) {
@@ -60,12 +64,8 @@ class EnumStringParameterComponent extends Component {
     }
   }
 
-  componentDidMount() {
-    this.check(this.props.value);
-  }
-
   render() {
-    const {parameter, translate, value} = this.props;
+    const {value, parameter, translate} = this.props;
 
     const items = parameter.values.map(value =>
       (<MenuItem key={value} value={value} primaryText={value}/>)
