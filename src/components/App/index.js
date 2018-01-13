@@ -32,8 +32,6 @@ import PatientIcon from "material-ui/svg-icons/social/person-outline";
 import SessionIcon from "material-ui/svg-icons/notification/event-note";
 import AssignedSessionIcon from "material-ui/svg-icons/notification/event-available";
 
-import Dashboard from "../Dashboard";
-
 import Sessions from "../operations/sessions/List";
 import SessionCreate from "../operations/sessions/Create";
 import SessionEdit from "../operations/sessions/Edit";
@@ -199,7 +197,6 @@ const App = () => (
            theme: themeReducer
          }}
          authClient={auth}
-         dashboard={Dashboard}
          restClient={restClient}
          locale={DEFAULT_LOCALE}
          messages={messages}
