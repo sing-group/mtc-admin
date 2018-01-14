@@ -58,7 +58,9 @@ class Menu extends Component {
       <div style={styles.main}>
         {hasDashboard && <DashboardMenuItem onClick={onMenuTap}/>}
         {
-          resources.map(resource => (
+          resources
+            .filter(resource => resource.name !== "game-result")
+            .map(resource => (
             <MenuItemLink
               leftIcon={<resource.icon />}
               key={resource.name}

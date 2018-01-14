@@ -45,7 +45,9 @@ const gl_ES = {
     multilanguagePickerTitle: "Linguaxes",
     multilanguagePicker: 'Introduce o valor para "%{language}"',
     invalidCredentials: "Usuario non válido",
-    noCredentialsInLocalStorage: "Non se atoparon credenciais válidas no almacenamento local"
+    noCredentialsInLocalStorage: "Non se atoparon credenciais válidas no almacenamento local",
+    "true": "Si",
+    "false": "Non"
   },
   others: {
     accept: "Aceptar",
@@ -133,6 +135,23 @@ const gl_ES = {
         endDate: "Finalización de sesión",
         assignedGamesSessions: "Sesión",
         patient: "Paciente"
+      }
+    },
+    "game-result": {
+      fields: {
+        game: "Xogo",
+        gameIndex: "Orde",
+        attempt: "Intento",
+        startDate: "Inicio",
+        endDate: "Fin",
+        guessed: "Acertos",
+        failed: "Fallos",
+        gameCompleted: "Completo",
+        totalTries: "Intentos",
+        totalAttempts: "Palabras probadas",
+        repeatedGuesses: "Palabras repetidas",
+        totalGuessedWords: "Total palabras válidas",
+        guessedWords: "Palabras válidas"
       }
     },
     manager: {

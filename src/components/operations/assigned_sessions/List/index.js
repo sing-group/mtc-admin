@@ -27,6 +27,7 @@ import {
   DateField,
   DeleteButton,
   EditButton,
+  ShowButton,
   List,
   TextField,
   ReferenceInput,
@@ -83,6 +84,7 @@ class AssignedSessionList extends Component {
         </ReferenceField>
         <DateField source="startDate" locales={dateLocales}/>
         <DateField source="endDate" locales={dateLocales}/>
+        <ShowButton/>
         <EditButton/>
         <DeleteButton/>
       </Datagrid>

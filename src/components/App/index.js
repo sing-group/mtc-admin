@@ -64,6 +64,7 @@ import AssignedSessionCreate from "../operations/assigned_sessions/Create";
 import AssignedSessionDelete from "../operations/assigned_sessions/Delete";
 import AssignedSessionList from "../operations/assigned_sessions/List";
 import AssignedSessionEdit from "../operations/assigned_sessions/Edit";
+import AssignedSessionShow from "../operations/assigned_sessions/Show";
 
 import {ADMIN, MANAGER, THERAPIST} from "../../controllers/AuthController";
 
@@ -100,7 +101,12 @@ import AssignedSessionUpdateRequestAdapter from "../../controllers/request_adapt
 import AssignedSessionGetListRequestAdapter from "../../controllers/request_adapters/assigned_session/AssignedSessionGetListRequestAdapter";
 import AssignedSessionGetManyRequestAdapter from "../../controllers/request_adapters/assigned_session/AssignedSessionGetManyRequestAdapter";
 import AssignedSessionListByPatientResponseAdapter from "../../controllers/response_adapters/assigned_session/AssignedSessionListByPatientResponseAdapter";
+import GameResultEndpointFactory from "../../data/endpoints/factories/GameResultEndpointFactory";
+import GameResultParamsMapper from "../../controllers/request_adapters/mappers/GameResultParamsMapper";
 import AuthController from "../../controllers/AuthController";
+import DefaultGetRequestAdapter from '../../controllers/request_adapters/DefaultGetRequestAdapter';
+import GameResultGetManyRequestAdapter from '../../controllers/request_adapters/game_result/GameResultGetManyRequestAdapter';
+import GameResultListByAssignedGamesSessionResponseAdapter from '../../controllers/response_adapters/game_result/GameResultListByAssignedGamesSessionResponseAdapter';
 
 const institutionParamsMapper = new InstitutionParamsMapper();
 const gamesSessionParamsMapper = new GamesSessionParamsMapper();
@@ -180,6 +186,18 @@ const endpointFactories = {
       }
     ),
     DEFAULT_RESPONSE_ADAPTERS
+  ),
+  "game-result": new GameResultEndpointFactory(
+    API_URL,
+    new RequestAdapters({
+      GET_ONE: new DefaultGetRequestAdapter(params => new GameResultParamsMapper().convertParamsToId(params)),
+      GET_MANY_REFERENCE: new GameResultGetManyRequestAdapter(params => new GameResultParamsMapper().convertParamName(params))
+    }),
+    Object.assign({}, DEFAULT_RESPONSE_ADAPTERS,
+      {
+        GET_MANY_REFERENCE: new GameResultListByAssignedGamesSessionResponseAdapter()
+      }
+    )
   )
 };
 
@@ -260,8 +278,11 @@ const App = () => (
           //showList={false}
           list={permissions === ADMIN ? null : AssignedSessionList}
           edit={permissions === ADMIN ? null : AssignedSessionEdit}
+          show={permissions === ADMIN ? null : AssignedSessionShow}
           remove={permissions === ADMIN ? null : AssignedSessionDelete}
-        />
+        /> : undefined,
+      permissions === THERAPIST ?
+        <Resource name="game-result"/>
         : undefined
     ]}
   </Admin>

@@ -45,7 +45,9 @@ const en_US = {
     multilanguagePickerTitle: "Languages",
     multilanguagePicker: 'Insert value for "%{language}"',
     invalidCredentials: "Invalid credentials",
-    noCredentialsInLocalStorage: "No valid user credentials found in local storage"
+    noCredentialsInLocalStorage: "No valid user credentials found in local storage",
+    "true": "Yes",
+    "false": "No"
   },
   others: {
     accept: "Accept",
@@ -133,6 +135,23 @@ const en_US = {
         endDate: "Session Ends",
         assignedGamesSessions: "Session",
         patient: "Patient"
+      }
+    },
+    "game-result": {
+      fields: {
+        game: "Game",
+        gameIndex: "Order",
+        attempt: "Attempt",
+        startDate: "Start",
+        endDate: "End",
+        guessed: "Guessed",
+        failed: "Failed",
+        gameCompleted: "Completed",
+        totalTries: "Tries",
+        totalAttempts: "Total words",
+        repeatedGuesses: "Repeated words",
+        totalGuessedWords: "Total valid words",
+        guessedWords: "Valid words"
       }
     },
     manager: {

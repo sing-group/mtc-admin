@@ -18,24 +18,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-import check from "check-types";
-
 import ResponseDataExtractorHelper from "./ResponseDataExtractorHelper";
 
-export default class AssignedGamesSessionResponseDataExtractor {
+export default class GameResultResponseDataExtractor {
   constructor() {
     this._helper = new ResponseDataExtractorHelper(data => {
-      const assignedGamesSessions = {};
+      const resultFields = new Set();
+      data.results.values.map(result => result.key)
+        .forEach(field => resultFields.add(field));
 
-      if (check.assigned(data.gamesSession) && check.assigned(data.gamesSession.id)) {
-        assignedGamesSessions.assignedGamesSessions = data.gamesSession.id;
-      }
-
-      return Object.assign({}, data, assignedGamesSessions, {
-        session: data.assignedGamesSessions,
-        patient: data.patient.login,
-        "game-result": data.result
-      });
+      return Object.assign({}, data,
+        {
+          resultFields: Array.from(resultFields)
+        },
+        data.results.values.map(result => ({
+          [result.key]: result.value
+        }))
+        .reduce((v1, v2) => Object.assign(v1, v2), {})
+      );
     });
   }
 
@@ -43,23 +43,7 @@ export default class AssignedGamesSessionResponseDataExtractor {
     return this._helper.extractFromGet(response.headers, response.data);
   }
 
-  convertList(response) {
-    return this._helper.extractFromList(response.headers, response.data);
-  }
-
-  convertListByPatient(response, patientLogin) {
-    return this._helper.extractFromListBy(response.headers, response.data, "patient", patientLogin);
-  }
-
-  convertCreate(response, params) {
-    return this._helper.extractFromCreate(response.headers, response.data, params);
-  }
-
-  convertUpdate(response, params) {
-    return this._helper.extractFromUpdate(response.headers, response.data, params);
-  }
-
-  convertDelete(response, params) {
-    return this._helper.extractFromDelete(response.headers, response.data, params);
+  convertListByAssignedGamesSession(response, sessionId) {
+    return this._helper.extractFromListBy(response.headers, response.data, "assignedGamesSession", sessionId);
   }
 }

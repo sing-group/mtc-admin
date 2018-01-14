@@ -46,7 +46,9 @@ const es_ES = {
     multilanguagePickerTitle: "Idiomas",
     multilanguagePicker: 'Introduce valor para "%{language}"',
     invalidCredentials: "Usuario no válido",
-    noCredentialsInLocalStorage: "No se han encontrado credenciales válidas en el almacenamiento local"
+    noCredentialsInLocalStorage: "No se han encontrado credenciales válidas en el almacenamiento local",
+    "true": "Sí",
+    "false": "No"
   },
   others: {
     accept: "Aceptar",
@@ -134,6 +136,23 @@ const es_ES = {
         endDate: "Finalización de sesión",
         assignedGamesSessions: "Sesión",
         patient: "Paciente"
+      }
+    },
+    "game-result": {
+      fields: {
+        game: "Juego",
+        gameIndex: "Orden",
+        attempt: "Intento",
+        startDate: "Inicio",
+        endDate: "Fin",
+        guessed: "Aciertos",
+        failed: "Fallos",
+        gameCompleted: "Completo",
+        totalTries: "Intentos",
+        totalAttempts: "Palabras probadas",
+        repeatedGuesses: "Palabras repetidas",
+        totalGuessedWords: "Total palabras válidas",
+        guessedWords: "Palabras válidas"
       }
     },
     manager: {
