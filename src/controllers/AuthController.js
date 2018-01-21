@@ -39,16 +39,16 @@ export {
 };
 
 export default class AuthController {
-  static get USER_CREDENTIALS_KEY() {
-    return "token";
+  static get KEY_CREDENTIALS() {
+    return "mtc-admin.token";
   }
 
-  static get USER_ROLE_KEY() {
-    return "role";
+  static get KEY_ROLE() {
+    return "mtc-admin.role";
   }
 
-  static get USER_NAME_KEY() {
-    return "loginUser";
+  static get KEY_USERNAME() {
+    return "mtc-admin.username";
   }
 
   constructor(apiUrl) {
@@ -59,39 +59,39 @@ export default class AuthController {
   }
 
   getUserRole() {
-    return localStorage.getItem(AuthController.USER_ROLE_KEY);
+    return localStorage.getItem(AuthController.KEY_ROLE);
   }
 
   _setUserRole(userRole) {
-    localStorage.setItem(AuthController.USER_ROLE_KEY, userRole);
+    localStorage.setItem(AuthController.KEY_ROLE, userRole);
   }
 
   getUserName() {
-    return localStorage.getItem(AuthController.USER_NAME_KEY);
+    return localStorage.getItem(AuthController.KEY_USERNAME);
   }
 
   _setUserName(userName) {
-    localStorage.setItem(AuthController.USER_NAME_KEY, userName);
+    localStorage.setItem(AuthController.KEY_USERNAME, userName);
   }
 
   getUserCredentials() {
-    return localStorage.getItem(AuthController.USER_CREDENTIALS_KEY);
+    return localStorage.getItem(AuthController.KEY_CREDENTIALS);
   }
 
   _setUserCredentials(userCredentials) {
-    localStorage.setItem(AuthController.USER_CREDENTIALS_KEY, userCredentials);
+    localStorage.setItem(AuthController.KEY_CREDENTIALS, userCredentials);
   }
 
   hasUserCredentials() {
-    return localStorage.getItem(AuthController.USER_CREDENTIALS_KEY) !== null;
+    return localStorage.getItem(AuthController.KEY_CREDENTIALS) !== null;
   }
 
   _clearCredentials(clearUser = true) {
     if (clearUser)
-      localStorage.removeItem(AuthController.USER_NAME_KEY);
+      localStorage.removeItem(AuthController.KEY_USERNAME);
 
-    localStorage.removeItem(AuthController.USER_CREDENTIALS_KEY);
-    localStorage.removeItem(AuthController.USER_ROLE_KEY);
+    localStorage.removeItem(AuthController.KEY_CREDENTIALS);
+    localStorage.removeItem(AuthController.KEY_ROLE);
   }
 
   isUserInRole(role) {
@@ -110,7 +110,7 @@ export default class AuthController {
 
     if (response.status !== 200) // invalid user
       return Promise.reject("common.invalidCredentials");
-    if (response.data === "PATIENT")
+    if (response.data !== ADMIN && response.data !== MANAGER && response.data !== THERAPIST)
       return Promise.reject("common.invalidRole");
 
     const token = btoa(username + ":" + password);
