@@ -100,7 +100,7 @@ const en_US = {
     }
   },
   game: {
-    configurer: {
+    configurator: {
       toolbar: {
         options: "Options"
       }

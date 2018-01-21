@@ -28,7 +28,7 @@ import {parseids} from "../../../utils/parseKeys";
 
 import {MenuItem, SelectField} from "material-ui";
 
-class EnumStringParameterComponent extends Component {
+class EnumStringParameterEditor extends Component {
   constructor(props) {
     super(props);
 
@@ -99,11 +99,11 @@ class EnumStringParameterComponent extends Component {
   }
 }
 
-EnumStringParameterComponent.propTypes = {
+EnumStringParameterEditor.propTypes = {
   onValueChange: PropTypes.func,
   parameter: PropTypes.object.isRequired,
   value: PropTypes.string.isRequired,
   translate: PropTypes.func.isRequired
 };
 
-export default translate(EnumStringParameterComponent);
+export default translate(EnumStringParameterEditor);

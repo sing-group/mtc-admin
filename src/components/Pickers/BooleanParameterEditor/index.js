@@ -26,48 +26,21 @@ import {translate} from "admin-on-rest";
 
 import {parseids} from "../../../utils/parseKeys";
 
-import TextField from "material-ui/TextField";
+import {Checkbox} from "material-ui";
 
-class IntegerParameterComponent extends Component {
+class BooleanParameterEditor extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      errorText: ""
-    };
   }
 
-  check(value) {
-    const max = this.props.parameter._max;
-    const min = this.props.parameter._min;
-
-    if (this.props.parameter.isValid(value)) {
-      this.setState({
-        errorText: ""
-      });
-
-      return true;
-    } else {
-      this.setState({
-        errorText: value > max ? this.props.translate("aor.validation.maxValue", {max}) : this.props.translate("aor.validation.minValue", {min})
-      });
-
-      return false;
-    }
-  }
-
-  handleChange(event) {
-    if (this.check(event.target.value)) {
-      this.props.onValueChange(parseInt(event.target.value));
-    }
-  }
-
-  componentDidMount() {
-    this.check(parseInt(this.props.value));
+  handleChange(event, isInputChecked) {
+    this.props.onValueChange(isInputChecked);
   }
 
   render() {
-    const {parameter, translate, value} = this.props;
+    const {value, parameter, translate} = this.props;
+
+    const valueAsBoolean = parameter.parseValue(value);
 
     return (
       <div style={{
@@ -77,29 +50,24 @@ class IntegerParameterComponent extends Component {
         backgroundColor: "#f9fafc",
         margin: 5,
         padding: 5,
-        boxShadow: this.state.errorText ? "0px 0px 2px 2px red" : "0px 0px 2px 2px #B3E5FC"
+        boxShadow: "0px 0px 2px 2px #B3E5FC"
       }}>
         <span>{translate("common.model.games." + parseids(parameter.descriptionId))}</span>
-        <TextField
-          style={{marginBottom: this.state.errorText ? 15 : 0}}
-          value={value}
-          errorText={this.state.errorText}
-          onChange={this.handleChange.bind(this)}
-          type="number"
-          floatingLabelText={translate("common.model.games." + parseids(parameter.nameId))}
-          floatingLabelFixed={true}
+        <Checkbox
+          label={translate("common.model.games." + parseids(parameter.nameId))}
+          checked={valueAsBoolean}
+          onCheck={this.handleChange.bind(this)}
         />
-
       </div>
     );
   }
 }
 
-IntegerParameterComponent.propTypes = {
+BooleanParameterEditor.propTypes = {
   onValueChange: PropTypes.func,
-  parameter: PropTypes.object.isRequired,
-  value: PropTypes.string.isRequired,
-  translate: PropTypes.func.isRequired
+  parameter: PropTypes.object,
+  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
+  translate: PropTypes.func
 };
 
-export default translate(IntegerParameterComponent);
+export default translate(BooleanParameterEditor);

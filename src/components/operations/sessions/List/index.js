@@ -22,55 +22,66 @@ import React from "react";
 import {EditButton, List, translate} from "admin-on-rest";
 import {connect} from "react-redux";
 import {Card, CardActions, CardHeader, CardText} from "material-ui/Card";
-import {grey50 as bgColor} from "material-ui/styles/colors";
-import {buildIconTooltiped} from "../../../../data/games/taskTypes";
-import {parseids} from "../../../../utils/parseKeys";
-import {games as GamesMetadata} from "../../../../data/games/games";
+import GameTaskTypeRibbon from "../../games/GameTaskTypeRibbon";
+import GameMetadataBuilder from "@sing-group/mtc-games/src/game/builder/GameMetadataBuilder";
 import PropTypes from "prop-types";
 
 const mapStateToProps = state => ({loginUser: state.login.loginUser});
 
-const SessionsGrid = ({ids, data, basePath, translate, locale}) => (
-  <div style={{
-    margin: "1em",
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "min-content"
-  }}>
-    {ids.map(id =>
-      <Card key={id} style={{margin: 10, minWidth: 200, maxWidth: 200, height: "100%"}}>
-        <CardHeader
-          title={data[id].name.values.find(t => t.key === locale) ? data[id].name.values.find(t => t.key === locale).value : translate("session.noTranslation")}
-          subtitle={data[id].description.values.find(t => t.key === locale) ? data[id].description.values.find(t => t.key === locale).value : translate("session.noTranslation")}>
-        </CardHeader>
-        <CardText style={{flexBasis: "100%"}}>
-          {generateSummarySession(data[id].gameConfiguration.map(g => {
-            const game = Object.keys(GamesMetadata).find(key => GamesMetadata[key].metadata._id === g.gameId);
-            return GamesMetadata[game]
-          }), translate)}
-        </CardText>
-        <CardActions style={{textAlign: "right", backgroundColor: "#eaeaea"}}>
-          <EditButton resource="games-session" basePath={basePath} record={data[id]}/>
-        </CardActions>
-      </Card>
-    )}
-  </div>
-);
+class SessionsGrid extends React.Component {
+  static get defaultProps() {
+    return {
+      data: {},
+      ids: [],
+    };
+  }
 
-SessionsGrid.propTypes = {
-  ids: PropTypes.array,
-  data: PropTypes.object,
-  basePath: PropTypes.string,
-  translate: PropTypes.func,
-  locale: PropTypes.string
-};
+  static get propTypes() {
+    return {
+      ids: PropTypes.array,
+      data: PropTypes.object,
+      basePath: PropTypes.string,
+      translate: PropTypes.func,
+      locale: PropTypes.string
+    };
+  }
 
-SessionsGrid.defaultProps = {
-  data: {},
-  ids: [],
-};
+  render() {
+    const {ids, data, basePath, translate, locale} = this.props;
+
+    const metadataBuilder = new GameMetadataBuilder();
+
+    const buildMetadata = gameConfig => gameConfig.map(g =>
+      metadataBuilder.buildGameMetadata(g.gameId)
+    );
+
+    let key = 0;
+
+    return <div style={{
+      margin: "1em",
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "min-content"
+    }}>
+      {ids.map(id =>
+        <Card key={key++} style={{margin: 10, minWidth: 200, maxWidth: 200, height: "100%"}}>
+          <CardHeader
+            title={data[id].name.values.find(t => t.key === locale) ? data[id].name.values.find(t => t.key === locale).value : translate("session.noTranslation")}
+            subtitle={data[id].description.values.find(t => t.key === locale) ? data[id].description.values.find(t => t.key === locale).value : translate("session.noTranslation")}>
+          </CardHeader>
+          <CardText style={{flexBasis: "100%"}}>
+            <GameTaskTypeRibbon metadata={buildMetadata(data[id].gameConfiguration)} translate={translate}/>
+          </CardText>
+          <CardActions style={{textAlign: "right", backgroundColor: "#eaeaea"}}>
+            <EditButton resource="games-session" basePath={basePath} record={data[id]}/>
+          </CardActions>
+        </Card>
+      )}
+    </div>;
+  }
+}
 
 export default connect(mapStateToProps)(
   translate((props) => (
@@ -81,34 +92,3 @@ export default connect(mapStateToProps)(
     </div>
   ))
 )
-
-const styles = {
-  avatar: {
-    backgroundColor: "red"
-  },
-  wrapper: {
-    display: "flex",
-    flexWrap: "wrap",
-    backgroundColor: bgColor
-  },
-  picker: {
-    display: "flex",
-  }
-};
-
-function generateSummarySession(games = [], translate) {
-  const taskInfo = {};
-
-  games.forEach((game) => {
-    if (!game) return;
-    game.metadata.taskTypes.forEach((taskElement) => {
-      if (!taskInfo[taskElement.id]) {
-        taskInfo[taskElement.id] = 0
-      }
-      taskInfo[taskElement.id] += 1//game.tasks[taskElement._id]
-    })
-  });
-  return Object.keys(taskInfo).map((taskElement) => (
-    buildIconTooltiped(styles.avatar, taskElement, taskInfo[taskElement], translate("common.model.games." + parseids(taskElement)))
-  ))
-}

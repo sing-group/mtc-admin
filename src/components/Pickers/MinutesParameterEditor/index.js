@@ -28,9 +28,13 @@ import {parseids} from "../../../utils/parseKeys";
 
 import TextField from "material-ui/TextField";
 
-import {MinutesParameter} from "../../../data/games/parameters";
+import MinutesParameter from "@sing-group/mtc-games/src/game/metadata/parameter/time/MinutesParameter";
 
-class MinutesParameterComponent extends Component {
+class MinutesParameterEditor extends Component {
+  static canHandleParameter(parameter) {
+    return parameter instanceof MinutesParameter;
+  }
+
   constructor(props) {
     super(props);
 
@@ -40,8 +44,8 @@ class MinutesParameterComponent extends Component {
   }
 
   check(value) {
-    const max = MinutesParameter.MAX;
-    const min = MinutesParameter.MIN;
+    const max = this.props.parameter.max;
+    const min = this.props.parameter.min;
 
     if (this.props.parameter.isValid(value)) {
       this.setState({
@@ -74,6 +78,8 @@ class MinutesParameterComponent extends Component {
   render() {
     const {parameter, translate, value} = this.props;
 
+    const valueAsInt = parameter.parseValue(value);
+
     return (
       <div style={{
         display: "flex",
@@ -87,7 +93,7 @@ class MinutesParameterComponent extends Component {
         <span>{translate("common.model.games." + parseids(parameter.descriptionId))}</span>
         <TextField
           style={{marginBottom: this.state.errorText ? 15 : 0}}
-          value={value}
+          value={valueAsInt}
           errorText={this.state.errorText}
           onChange={event => this.handleChange(event)}
           type="number"
@@ -100,11 +106,11 @@ class MinutesParameterComponent extends Component {
   }
 }
 
-MinutesParameterComponent.propTypes = {
+MinutesParameterEditor.propTypes = {
   onValueChange: PropTypes.func,
   parameter: PropTypes.object.isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   translate: PropTypes.func.isRequired
 };
 
-export default translate(MinutesParameterComponent);
+export default translate(MinutesParameterEditor);

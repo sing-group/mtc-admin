@@ -29,7 +29,7 @@ import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import {Card, CardHeader, CardText} from "material-ui/Card";
 
-import {games as GamesMetadata} from "../../../../data/games/games"
+import GameMetadataBuilder from "@sing-group/mtc-games/src/game/builder/GameMetadataBuilder";
 
 const styles = {
   radioButton: {
@@ -53,100 +53,95 @@ class GamePicker extends Component {
 
     this.state = {
       gamesSelected: [],
-      open: props.open,
       actual: undefined
-    }
+    };
   }
 
-  handleOpen() {
-    this.setState({open: true});
-  }
-
-  handleClose() {
-    this.setState({open: false, gamesSelected: [], actual: undefined});
-
-    this.props.onRequestClose();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      open: nextProps.open
-    });
-  }
-
-  handleCursorInGame(key) {
-    this.setState({actual: key});
-  }
-
-  handleClickOnGame(key) {
-    const index = this.state.gamesSelected.lastIndexOf(key);
-
-    const aux = this.state.gamesSelected;
-    if (index < 0) {
-      aux.push(key);
-    } else {
-      aux.splice(index, 1);
-    }
-
-    this.setState({gamesSelected: aux});
-  }
-
-  onConfirmGames() {
-    this.props.onGamesAdded(this.state.gamesSelected);
-    this.handleClose();
+  hasSelectedGames() {
+    return this.state.gamesSelected.length > 0;
   }
 
   getStyle(key) {
-    return this.state.gamesSelected.lastIndexOf(key) < 0 ? styles.cardUnSelected : styles.cardSelected;
+    return this.state.gamesSelected.includes(key) ? styles.cardSelected : styles.cardUnSelected;
+  }
+
+  handleClose() {
+    this.props.onRequestClose();
+  }
+
+  handleCursorInGame(key) {
+    this.setState(Object.assign({}, this.state, {actual: key}));
+  }
+
+  handleClickOnGame(key) {
+    const newState = [...this.state.gamesSelected];
+
+    if (newState.includes(key)) {
+      newState.splice(newState.indexOf(key), 1);
+    } else {
+      newState.push(key);
+    }
+
+    this.setState(Object.assign({}, this.state, {gamesSelected: newState}));
+  }
+
+  handleAddGames() {
+    this.props.onGamesAdded(this.state.gamesSelected);
+
+    this.setState({
+      gamesSelected: [],
+      actual: undefined
+    });
   }
 
   render() {
-    const {translate} = this.props;
+    const {translate, open} = this.props;
 
     const actions = [
       <FlatButton
         key="actionCancel"
         label={translate("aor.action.cancel")}
         primary={true}
-        onTouchTap={() => this.handleClose()}
         onClick={() => this.handleClose()}
       />,
       <FlatButton
         key="actionAddAgmes"
         label={translate("game.picker.addGames")}
         primary={true}
-        disabled={this.state.gamesSelected.length === 0}
-        onTouchTap={() => this.onConfirmGames()}
-        onClick={() => this.onConfirmGames()}
+        disabled={!this.hasSelectedGames()}
+        onClick={() => this.handleAddGames()}
       />
     ];
+
     return (
       <Dialog
         title={translate("game.picker.title")}
         actions={actions}
         modal={false}
-        open={this.state.open}
+        open={open}
         onRequestClose={() => this.handleClose()}
         autoScrollBodyContent={true}
       >
-        {Object.keys(GamesMetadata).map((key) => {
-          const metadata = GamesMetadata[key].metadata;
+        {GameMetadataBuilder.gameIds().map((gameId) => {
+          const metadataBuilder = new GameMetadataBuilder();
+
+          const metadata = metadataBuilder.buildGameMetadata(gameId);
+
           return (
-            <Card style={this.getStyle(key)} key={key}
-                  onMouseEnter={() => this.handleCursorInGame(key)}
-                  onClick={() => this.handleClickOnGame(key)}
-                  onTouchTap={() => this.handleClickOnGame(key)}
-                  zDepth={(this.state.actual === key) ? 3 : 1}>
+            <Card key={gameId}
+                  style={this.getStyle(gameId)}
+                  onMouseEnter={() => this.handleCursorInGame(gameId)}
+                  onClick={() => this.handleClickOnGame(gameId)}
+                  zDepth={(this.state.actual === gameId) ? 3 : 1}>
               <CardHeader
-                title={translate("common.model.games." + parseids(metadata._nameId))}
+                title={translate("common.model.games." + parseids(metadata.nameId))}
               />
               <CardText>
-                {translate("common.model.games." + parseids(metadata._descriptionId))}
+                {translate("common.model.games." + parseids(metadata.descriptionId))}
               </CardText>
             </Card>
           )
-        })
-        }
+        })}
       </Dialog>
     );
   }

@@ -28,9 +28,7 @@ import {parseids} from "../../../utils/parseKeys";
 
 import TextField from "material-ui/TextField";
 
-import {SecondsParameter} from "../../../data/games/parameters";
-
-class SecondsParameterComponent extends Component {
+class IntegerParameterEditor extends Component {
   constructor(props) {
     super(props);
 
@@ -40,8 +38,8 @@ class SecondsParameterComponent extends Component {
   }
 
   check(value) {
-    const max = SecondsParameter.MAX;
-    const min = SecondsParameter.MIN;
+    const max = this.props.parameter.max;
+    const min = this.props.parameter.min;
 
     if (this.props.parameter.isValid(value)) {
       this.setState({
@@ -51,9 +49,7 @@ class SecondsParameterComponent extends Component {
       return true;
     } else {
       this.setState({
-        errorText: value > max
-          ? this.props.translate("aor.validation.maxValue", {max})
-          : this.props.translate("aor.validation.minValue", {min})
+        errorText: value > max ? this.props.translate("aor.validation.maxValue", {max}) : this.props.translate("aor.validation.minValue", {min})
       });
 
       return false;
@@ -61,7 +57,7 @@ class SecondsParameterComponent extends Component {
   }
 
   handleChange(event) {
-    if (this.check(parseInt(event.target.value))) {
+    if (this.check(event.target.value)) {
       this.props.onValueChange(parseInt(event.target.value));
     }
   }
@@ -72,6 +68,8 @@ class SecondsParameterComponent extends Component {
 
   render() {
     const {parameter, translate, value} = this.props;
+
+    const valueAsInt = parameter.parseValue(value);
 
     return (
       <div style={{
@@ -86,23 +84,24 @@ class SecondsParameterComponent extends Component {
         <span>{translate("common.model.games." + parseids(parameter.descriptionId))}</span>
         <TextField
           style={{marginBottom: this.state.errorText ? 15 : 0}}
-          value={value}
+          value={valueAsInt}
           errorText={this.state.errorText}
-          onChange={event => this.handleChange(event)}
+          onChange={this.handleChange.bind(this)}
           type="number"
           floatingLabelText={translate("common.model.games." + parseids(parameter.nameId))}
           floatingLabelFixed={true}
         />
+
       </div>
     );
   }
 }
 
-SecondsParameterComponent.propTypes = {
+IntegerParameterEditor.propTypes = {
   onValueChange: PropTypes.func,
   parameter: PropTypes.object.isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   translate: PropTypes.func.isRequired
 };
 
-export default translate(SecondsParameterComponent);
+export default translate(IntegerParameterEditor);

@@ -19,11 +19,43 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./components/App";
-import registerServiceWorker from "./registerServiceWorker";
 
-ReactDOM.render(<App/>, document.getElementById("root"));
+import Chip from "material-ui/Chip";
 
-registerServiceWorker();
+import PropTypes from "prop-types";
+
+import check from "check-types";
+
+import taskTypeColors from "../taskTypeColors";
+
+export default class GameTaskTypeIcon extends React.Component {
+  static get propTypes() {
+    return {
+      message: PropTypes.string.isRequired,
+      style: PropTypes.object,
+      taskType: PropTypes.string.isRequired,
+      tooltip: PropTypes.string
+    };
+  }
+
+  static get defaultProps() {
+    return {
+      style: {}
+    };
+  }
+
+  constructor(props) {
+    super(props);
+
+    check.assert.assigned(taskTypeColors[this.props.taskType], "taskType should exists: " + this.props.taskType);
+  }
+
+  render() {
+    const {message, style, taskType} = this.props;
+
+    const colors = taskTypeColors[taskType];
+
+    return <Chip style={style} color={colors.foregroundColor}
+                 backgroundColor={colors.backgroundColor}>{message}</Chip>;
+  }
+}

@@ -101,7 +101,7 @@ const es_ES = {
     }
   },
   game: {
-    configurer: {
+    configurator: {
       toolbar: {
         options: "Opciones"
       }

@@ -18,17 +18,47 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-import BooleanParameter from "./BooleanParameter";
-import IntegerParameter from "./IntegerParameter";
-import MinutesParameter from "./MinutesParameter";
-import SecondsParameter from "./SecondsParameter";
-import EnumStringParameter from "./EnumStringParameter";
+import React from "react";
 
-export default {
-  BooleanParameter,
-  IntegerParameter,
-  MinutesParameter,
-  SecondsParameter,
-  EnumStringParameter
+import BooleanParameter from "@sing-group/mtc-games/src/game/metadata/parameter/basic/BooleanParameter";
+import IntegerParameter from "@sing-group/mtc-games/src/game/metadata/parameter/basic/IntegerParameter";
+import SecondsParameter from "@sing-group/mtc-games/src/game/metadata/parameter/time/SecondsParameter";
+import MinutesParameter from "@sing-group/mtc-games/src/game/metadata/parameter/time/MinutesParameter";
+import EnumStringParameter from "@sing-group/mtc-games/src/game/metadata/parameter/enum/EnumStringParameter";
+
+import BooleanParameterEditor from "./BooleanParameterEditor";
+import IntegerParameterEditor from "./IntegerParameterEditor";
+import SecondsParameterEditor from "./SecondsParameterEditor";
+import MinutesParameterEditor from "./MinutesParameterEditor";
+import EnumStringParameterEditor from "./EnumStringParameterEditor";
+
+export default class GameParameterEditorBuilder {
+  static getEditorForParameter(parameter) {
+    if (parameter instanceof BooleanParameter) {
+      return BooleanParameterEditor;
+    } else if (parameter instanceof IntegerParameter) {
+      return IntegerParameterEditor;
+    } else if (parameter instanceof SecondsParameter) {
+      return SecondsParameterEditor;
+    } else if (parameter instanceof MinutesParameter) {
+      return MinutesParameterEditor;
+    } else if (parameter instanceof EnumStringParameter) {
+      return EnumStringParameterEditor;
+    } else {
+      throw new TypeError("Unknown parameter type: " + parameter);
+    }
+  }
+
+  buildEditorForParameter(parameter, actualValue, onValueChange, key = null) {
+    const Editor = GameParameterEditorBuilder.getEditorForParameter(parameter);
+
+    return <Editor
+      key={key === null ? parameter.id : key}
+      initialValue={parameter.defaultValue}
+      value={actualValue}
+      onValueChange={(newValue) => onValueChange(parameter.id, newValue)}
+      parameter={parameter}
+    />;
+  }
 }
 

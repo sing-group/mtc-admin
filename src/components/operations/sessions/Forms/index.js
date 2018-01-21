@@ -25,7 +25,7 @@ import PropTypes from "prop-types";
 import {translate} from "admin-on-rest";
 import MultiLanguageTextPicker from "../../../MultiLanguage";
 
-import GamesInput from "../../games/GamesConfigurer";
+import GamesConfigurator from "../../games/GamesConfigurator";
 
 class SessionForm extends Component {
   constructor(props) {
@@ -98,8 +98,8 @@ class SessionForm extends Component {
 
   render() {
     const names = {};
-
     const descriptions = {};
+
     if (this.props.record.name) {
       this.props.record.name.values.forEach(t =>
         names[t.key] = t.value
@@ -126,8 +126,8 @@ class SessionForm extends Component {
             rows={4}
             onChangeValue={(k, v) => this.handleChange("description", k, v)}/>
         </div>
-        <GamesInput games={this.props.record.gameConfiguration ? this.props.record.gameConfiguration : []}
-                    onConfigurationEnd={(games) => this.handleConfigurationEnd(games)}/>
+        <GamesConfigurator games={this.props.record.gameConfiguration ? this.props.record.gameConfiguration : []}
+                           onConfigurationEnd={(games) => this.handleConfigurationEnd(games)}/>
       </div>
     )
   }

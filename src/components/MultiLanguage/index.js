@@ -167,7 +167,6 @@ class MultiLanguageTextPicker extends Component {
               <img src={Logos[this.state.currentLocale]}/>
             }
             onClick={() => this.handleOpen()}
-            onTouchTap={() => this.handleOpen()}
           />
         </div>
         <Dialog
@@ -175,16 +174,26 @@ class MultiLanguageTextPicker extends Component {
             <div>
               {translate(translateRoute)}
               <span style={closeImg}
-                    onClick={() => this.handleClose()} onTouchTap={() => this.handleClose()}>X</span>
+                    onClick={() => this.handleClose()}>X</span>
             </div>
           }
           modal={true}
           open={this.state.open}
         >
           {
-            SupportedLocales.map(l => <div style={{display: "flex"}} key={l}>
+            SupportedLocales.map(l => {
+              const configurations = this.state.configurations[l]
+                ? this.state.configurations[l]
+                : this.state.configurations.closed;
+
+              const propsConfigurations = Object.assign({}, configurations);
+              delete propsConfigurations.translate;
+              delete propsConfigurations.translateRoute;
+              delete propsConfigurations.onChangeValue;
+
+              return <div style={{display: "flex"}} key={l}>
                 <TextField
-                  ref={l} {...(this.state.configurations[l]) ? this.state.configurations[l] : this.state.configurations.closed}
+                  ref={l} {...propsConfigurations}
                   hintText={translate("common.multilanguagePicker", {language: translate("common.languages." + l)})}
                   style={{width: "100%"}}
                   value={(this.state.messages[l]) ? this.state.messages[l] : ""}
@@ -203,8 +212,8 @@ class MultiLanguageTextPicker extends Component {
                     disabled={true}
                   />
                 </div>
-              </div>
-            )
+              </div>;
+            })
           }
         </Dialog>
       </div>

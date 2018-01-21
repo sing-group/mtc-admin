@@ -100,7 +100,7 @@ const gl_ES = {
     }
   },
   game: {
-    configurer: {
+    configurator: {
       toolbar: {
         options: "Opcións"
       }
