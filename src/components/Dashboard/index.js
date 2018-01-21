@@ -19,21 +19,34 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import React, {Component} from "react";
-import {Card, CardHeader, CardText} from "material-ui/Card";
+import {Card, CardTitle, CardText} from "material-ui/Card";
+import {translate, WithPermission} from "admin-on-rest";
+import { Markdown } from 'react-showdown';
 import PropTypes from "prop-types";
 
-export default class DashBoard extends Component {
+class DashBoard extends Component {
   render() {
-    //const { translate } = this.context;
+    const {translate} = this.props;
+
     return (
-      <Card style={{margin: "2em"}}>
-        <CardHeader title="Welcome to the administration"/>
-        <CardText>Lorem ipsum sic dolor amet...</CardText>
+      <Card>
+        <CardTitle title={translate("dashboard.title")}/>
+        <WithPermission value="ADMIN">
+          <CardText><Markdown markup={translate("dashboard.description.admin")}/></CardText>
+        </WithPermission>
+        <WithPermission value="MANAGER">
+          <CardText><Markdown markup={translate("dashboard.description.manager")}/></CardText>
+        </WithPermission>
+        <WithPermission value="THERAPIST">
+          <CardText><Markdown markup={translate("dashboard.description.therapist")}/></CardText>
+        </WithPermission>
       </Card>
     );
   }
 }
 
-DashBoard.contextTypes = {
-  translate: PropTypes.func
+DashBoard.propTypes = {
+  translate: PropTypes.func.isRequired
 };
+
+export default translate(DashBoard);

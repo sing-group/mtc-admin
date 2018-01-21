@@ -8,6 +8,7 @@
 
 # production
 /build
+send_to_server.sh
 
 # WebStrom
 .idea

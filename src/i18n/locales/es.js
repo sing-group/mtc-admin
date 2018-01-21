@@ -46,6 +46,7 @@ const es_ES = {
     multilanguagePickerTitle: "Idiomas",
     multilanguagePicker: 'Introduce valor para "%{language}"',
     invalidCredentials: "Usuario no válido",
+    invalidRole: "Usuario no válido",
     noCredentialsInLocalStorage: "No se han encontrado credenciales válidas en el almacenamiento local",
     "true": "Sí",
     "false": "No"
@@ -64,6 +65,33 @@ const es_ES = {
   },
   menu: {
     configurationItem: "Configuración"
+  },
+  dashboard: {
+    title: "Bienvenido a MTC Admin",
+    description: {
+      admin: "Esta es la página de administración de MTC. En el menú lateral encontrará las siguientes opciones:\n" +
+             "\n" +
+             "* **Panel de control**: volver a esta página.\n" +
+             "* **Directores**: listado con los directores de tus centros. Podrás gestionar los directores, creando nuevos directores o editando los ya existentes.\n" +
+             "* **Centros**: listado con tus centros. Podrás gestionar tus centros, creando nuevos centros o editando los ya existentes. Esto incluye la asignación de directores a centros.\n" +
+             "* **Configuración**: aquí podrás cambiar el idioma de la aplicación o su estilo.\n" +
+             "* **Cerrar sesión**: cierra la sesión actual. Es recomendable hacerlo cuando finalices el trabajo con la aplicación.",
+      manager: "Esta es la página de administración de MTC. En el menú lateral encontrará las siguientes opciones:\n" +
+               "\n" +
+               "* **Panel de control**: volver a esta página.\n" +
+               "* **Centros**: listado con tus centros. Podrás ver los datos de los centros que diriges.\n" +
+               "* **Terapeutas**: listado con los terapeutas de tus centros. Podrás gestionar los terapeutas, creando nuevos terapeutas o editando los ya existentes.\n" +
+               "* **Configuración**: aquí podrás cambiar el idioma de la aplicación o su estilo.\n" +
+               "* **Cerrar sesión**: cierra la sesión actual. Es recomendable hacerlo cuando finalices el trabajo con la aplicación.",
+      therapist: "Esta es la página de administración de MTC. En el menú lateral encontrará las siguientes opciones:\n" +
+                 "\n" +
+                 "* **Panel de control**: volver a esta página.\n" +
+                 "* **Pacientes**: listado con tus pacientes. Podrás editar los datos de los pacientes o acceder a las sesiones de juegos que tienen asignadas.\n" +
+                 "* **Sesiones**: listado con tus sesiones de juegos. Podrás gestionar estas sesiones, creando nuevas o modificando las ya existentes.\n" +
+                 "* **Asignaciones**: listado con todas las sesiones de juegos asignadas a pacientes. Podrás filtrarlas por paciente.\n" +
+                 "* **Configuración**: aquí podrás cambiar el idioma de la aplicación o su estilo.\n" +
+                 "* **Cerrar sesión**: cierra la sesión actual. Es recomendable hacerlo cuando finalices el trabajo con la aplicación."
+    }
   },
   session: {
     noTranslation: "Sin valor en español",

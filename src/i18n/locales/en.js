@@ -45,6 +45,7 @@ const en_US = {
     multilanguagePickerTitle: "Languages",
     multilanguagePicker: 'Insert value for "%{language}"',
     invalidCredentials: "Invalid credentials",
+    invalidRole: "Invalid credentials",
     noCredentialsInLocalStorage: "No valid user credentials found in local storage",
     "true": "Yes",
     "false": "No"
@@ -63,6 +64,33 @@ const en_US = {
   },
   menu: {
     configurationItem: "Configuration"
+  },
+  dashboard: {
+    title: "Welcome to MTC Admin",
+    description: {
+      admin: "This is MTC's administration page. On the side menu you will find the following options:\n" +
+             "\n" +
+             "* **Dashboard**: returns to this page.\n" +
+             "* **Manager**: manager list. Here you will be able to manage the managers of your institutions, creating new ones or editing the existing ones.\n" +
+             "* **Institutions**: institution list. Here you will be able to manage your institutions, creating new ones or editing the existing ones. Edition includes manager assignment.\n" +
+             "* **Configuration**: here you will be able to change the application language or style.\n" +
+             "* **Close session**: closes the current session. It is recommendable to close your session each time you finish working with the application.",
+      manager: "This is MTC's administration page. On the side menu you will find the following options:\n" +
+             "\n" +
+             "* **Dashboard**: returns to this page.\n" +
+             "* **Institutions**: institution list. Here you will be able to view the institutions that you currently manage.\n" +
+             "* **Therapists**: therapist list. Here you will be able to manage the therapists of your institutions, creating new ones or editing the existing ones.\n" +
+             "* **Configuration**: here you will be able to change the application language or style.\n" +
+             "* **Close session**: closes the current session. It is recommendable to close your session each time you finish working with the application.",
+      therapist: "This is MTC's administration page. On the side menu you will find the following options:\n" +
+                 "\n" +
+                 "* **Dashboard**: returns to this page.\n" +
+                 "* **Patients**: patient list. Here you will be able to edit your patient's data or to access the games sessions assigned to your patients.\n" +
+                 "* **Sessions**: games session list. Here you will be able to manage your games sessions, creating new ones or editing the existing ones.\n" +
+                 "* **Assignments**: games sessions assignemnts list. Here you will find the games sessions currently assigned to your patients.\n" +
+                 "* **Configuration**: here you will be able to change the application language or style.\n" +
+                 "* **Close session**: closes the current session. It is recommendable to close your session each time you finish working with the application."
+    }
   },
   session: {
     noTranslation: "No English value",

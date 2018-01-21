@@ -110,6 +110,8 @@ export default class AuthController {
 
     if (response.status !== 200) // invalid user
       return Promise.reject("common.invalidCredentials");
+    if (response.data === "PATIENT")
+      return Promise.reject("common.invalidRole");
 
     const token = btoa(username + ":" + password);
     const permission = response.data;
@@ -148,7 +150,11 @@ export default class AuthController {
   }
 
   _manageAuthGetPermissions() {
-    return this.getUserRole();
+    if (this.hasUserCredentials()) {
+      return this.getUserRole();
+    } else {
+      return Promise.reject();
+    }
   }
 
   async manageAuthenticationAction(type, params) {

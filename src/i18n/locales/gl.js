@@ -45,6 +45,7 @@ const gl_ES = {
     multilanguagePickerTitle: "Linguaxes",
     multilanguagePicker: 'Introduce o valor para "%{language}"',
     invalidCredentials: "Usuario non válido",
+    invalidRole: "Usuario non válido",
     noCredentialsInLocalStorage: "Non se atoparon credenciais válidas no almacenamento local",
     "true": "Si",
     "false": "Non"
@@ -63,6 +64,33 @@ const gl_ES = {
   },
   menu: {
     configurationItem: "Configuración"
+  },
+  dashboard: {
+    title: "Benvido a MTC Admin",
+    description: {
+      admin: "Esta é a páxina de administración de MTC. No menú lateral atoparás as seguintes opcións:\n" +
+      "\n" +
+      "* **Panel de control**: volver a esta páxina.\n" +
+      "* **Directores**: listaxe cos directores dos teus centros. Poderás xestionar os directores, creando novos directores ou editando os xa existentes.\n" +
+      "* **Centros**: listaxe cos teus centros. Poderás xestionar os teus centros, creando novos centros ou editando os xa existentes. Isto inclúe a asignación de directores a centros.\n" +
+      "* **Configuración**: aquí poderás cambiar o idioma da aplicación ou o seu estilo.\n" +
+      "* **Pechar sesión**: pecha a sesión actual. É recomendable facelo cando finalices o traballo coa aplicación.",
+      manager: "Esta é a páxina de administración de MTC. No menú lateral atoparás as seguintes opcións:\n" +
+      "\n" +
+      "* **Panel de control**: volver a esta páxina.\n" +
+      "* **Centros**: listaxe cos teus centros. Poderás ver os datos dos centros que dirixes.\n" +
+      "* **Terapeutas**: listaxe cos terapeutas dos teus centros. Poderás xestionar os terapeutas, creando novos terapeutas ou editando os xa existentes.\n" +
+      "* **Configuración**: aquí poderás cambiar o idioma da aplicación ou o seu estilo.\n" +
+      "* **Pechar sesión**: pecha a sesión actual. É recomendable facelo cando finalices o traballo coa aplicación.",
+      therapist: "Esta é a páxina de administración de MTC. No menú lateral atoparás as seguintes opcións:\n" +
+      "\n" +
+      "* **Panel de control**: volver a esta páxina.\n" +
+      "* **Pacientes**: listaxe cos teus pacientes. Poderás editar os datos dos pacientes ou acceder ás sesións de xogos que teñen asignadas.\n" +
+      "* **Sesións**: listaxe coas túas sesións de xogos. Poderás xestionar estas sesións, creando novas ou modificando as xa existentes.\n" +
+      "* **Asignacións**: listaxe con todas as sesións de xogos asignadas a pacientes. Poderás filtralas por paciente.\n" +
+      "* **Configuración**: aquí poderás cambiar o idioma da aplicación ou o seu estilo.\n" +
+      "* **Pechar sesión**: pecha a sesión actual. É recomendable facelo cando finalices o traballo coa aplicación."
+    }
   },
   session: {
     noTranslation: "Sen valor en galego",

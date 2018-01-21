@@ -18,12 +18,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-import React from "react";
+import React, {Component} from "react";
 import {Admin, Resource} from "admin-on-rest";
 import messages from "../../i18n";
 import {DEFAULT_LOCALE} from "../../i18n/localesManager";
 
 import CustomLayout from "../Layout";
+import Dashboard from "../Dashboard";
 
 import ManagerIcon from "material-ui/svg-icons/action/supervisor-account";
 import InstitutionIcon from "material-ui/svg-icons/social/location-city";
@@ -204,88 +205,88 @@ const endpointFactories = {
 const apiController = new ApiController(endpointFactories, authController);
 const restClient = apiController.manageRequest.bind(apiController);
 
-const App = () => (
-  <Admin title="MTC Admin"
-         customRoutes={routes}
-         menu={menu}
-         customReducers={{
-           login: loginReducer,
-           context: contextReducer,
-           actionLogger: actionLoggerReducer,
-           theme: themeReducer
-         }}
-         authClient={auth}
-         restClient={restClient}
-         locale={DEFAULT_LOCALE}
-         messages={messages}
-         appLayout={CustomLayout}
-  >
-    {permissions => [
-      permissions === ADMIN ?
-        <Resource
-          name="manager"
-          icon={ManagerIcon}
-          list={permissions === ADMIN || permissions === MANAGER ? Managers : null}
-          create={ManagerCreate}
-          show={permissions === ADMIN || permissions === MANAGER ? ManagerShow : null}
-          edit={permissions === ADMIN || permissions === MANAGER ? ManagerEdit : null}
-          remove={ManagerDelete}/>
-        : undefined,
-      permissions === ADMIN || permissions === MANAGER ?
-        <Resource
-          name="institution"
-          icon={InstitutionIcon}
-          list={permissions === ADMIN || permissions === MANAGER ? Institutions : null}
-          create={permissions === ADMIN ? InstitutionCreate : null}
-          show={InstitutionShow}
-          edit={permissions === ADMIN ? InstitutionEdit : null}
-          remove={InstitutionDelete}/>
-        : undefined,
-      permissions === MANAGER ?
-        <Resource
-          name="therapist"
-          icon={TherapistIcon}
-          list={Therapists}
-          create={permissions === ADMIN ? null : TherapistCreate}
-          show={TherapistShow}
-          edit={permissions === ADMIN ? null : TherapistEdit}
-          remove={permissions === ADMIN ? null : TherapistDelete}/>
-        : undefined,
-      permissions === THERAPIST ?
-        <Resource
-          name="patient"
-          icon={PatientIcon}
-          list={Patients}
-          create={permissions === ADMIN ? null : PatientCreate}
-          //show={PatientShow}
-          edit={permissions === ADMIN ? null : PatientEdit}
-          remove={permissions === ADMIN ? null : PatientDelete}/>
-        : undefined,
-      permissions === THERAPIST ?
-        <Resource
-          name="games-session"
-          icon={SessionIcon}
-          list={Sessions}
-          edit={SessionEdit}
-          create={permissions === ADMIN ? null : SessionCreate}
-          remove={SessionDelete}/>
-        : undefined,
-      permissions === THERAPIST ?
-        <Resource
-          name="assigned-session"
-          icon={AssignedSessionIcon}
-          create={permissions === ADMIN ? null : AssignedSessionCreate}
-          //showList={false}
-          list={permissions === ADMIN ? null : AssignedSessionList}
-          edit={permissions === ADMIN ? null : AssignedSessionEdit}
-          show={permissions === ADMIN ? null : AssignedSessionShow}
-          remove={permissions === ADMIN ? null : AssignedSessionDelete}
-        /> : undefined,
-      permissions === THERAPIST ?
-        <Resource name="game-result"/>
-        : undefined
-    ]}
-  </Admin>
-);
-
-export default App; //to auto-renderer when locale changes
+export default class App extends Component {
+  render() {
+    return <Admin title="MTC Admin"
+                  customRoutes={routes}
+                  menu={menu}
+                  customReducers={{
+                    login: loginReducer,
+                    context: contextReducer,
+                    actionLogger: actionLoggerReducer,
+                    theme: themeReducer
+                  }}
+                  dashboard={Dashboard}
+                  authClient={auth}
+                  restClient={restClient}
+                  locale={DEFAULT_LOCALE}
+                  messages={messages}
+                  appLayout={CustomLayout}
+    >
+      {permissions => [
+        permissions === ADMIN ?
+          <Resource
+            name="manager"
+            icon={ManagerIcon}
+            list={Managers}
+            create={ManagerCreate}
+            show={ManagerShow}
+            edit={ManagerEdit}
+            remove={ManagerDelete}/>
+          : undefined,
+        permissions === ADMIN || permissions === MANAGER ?
+          <Resource
+            name="institution"
+            icon={InstitutionIcon}
+            list={Institutions}
+            create={permissions === ADMIN ? InstitutionCreate : null}
+            show={InstitutionShow}
+            edit={permissions === ADMIN ? InstitutionEdit : null}
+            remove={InstitutionDelete}/>
+          : undefined,
+        permissions === MANAGER ?
+          <Resource
+            name="therapist"
+            icon={TherapistIcon}
+            list={Therapists}
+            create={TherapistCreate}
+            show={TherapistShow}
+            edit={TherapistEdit}
+            remove={TherapistDelete}/>
+          : undefined,
+        permissions === THERAPIST ?
+          <Resource
+            name="patient"
+            icon={PatientIcon}
+            list={Patients}
+            create={PatientCreate}
+            edit={PatientEdit}
+            remove={PatientDelete}/>
+          : undefined,
+        permissions === THERAPIST ?
+          <Resource
+            name="games-session"
+            icon={SessionIcon}
+            list={Sessions}
+            edit={SessionEdit}
+            create={SessionCreate}
+            remove={SessionDelete}/>
+          : undefined,
+        permissions === THERAPIST ?
+          <Resource
+            name="assigned-session"
+            icon={AssignedSessionIcon}
+            create={AssignedSessionCreate}
+            //showList={false}
+            list={AssignedSessionList}
+            edit={AssignedSessionEdit}
+            show={AssignedSessionShow}
+            remove={AssignedSessionDelete}
+          /> : undefined,
+        permissions === THERAPIST ?
+          <Resource name="game-result"/>
+          : undefined
+      ]}
+    </Admin>;
+  }
+}
